@@ -14,6 +14,17 @@
 		21A26E1B1EE0F73F007AC2A9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21A26E191EE0F73F007AC2A9 /* LaunchScreen.storyboard */; };
 		21A26E261EE0F73F007AC2A9 /* YQPhotoBrowserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A26E251EE0F73F007AC2A9 /* YQPhotoBrowserTests.swift */; };
 		21A26E311EE0F73F007AC2A9 /* YQPhotoBrowserUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A26E301EE0F73F007AC2A9 /* YQPhotoBrowserUITests.swift */; };
+		21A26E401EE0FB7B007AC2A9 /* YQPhotoBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A26E3F1EE0FB7B007AC2A9 /* YQPhotoBrowser.swift */; };
+		21A26E411EE0FB7B007AC2A9 /* YQPhotoBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A26E3F1EE0FB7B007AC2A9 /* YQPhotoBrowser.swift */; };
+		21A26E421EE0FB7B007AC2A9 /* YQPhotoBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A26E3F1EE0FB7B007AC2A9 /* YQPhotoBrowser.swift */; };
+		21A26E441EE0FF15007AC2A9 /* YQPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A26E431EE0FF15007AC2A9 /* YQPhotoCell.swift */; };
+		21A26E451EE0FF15007AC2A9 /* YQPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A26E431EE0FF15007AC2A9 /* YQPhotoCell.swift */; };
+		21A26E461EE0FF15007AC2A9 /* YQPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A26E431EE0FF15007AC2A9 /* YQPhotoCell.swift */; };
+		21A26E491EE1645F007AC2A9 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A26E471EE1645F007AC2A9 /* TableViewCell.swift */; };
+		21A26E4A1EE1645F007AC2A9 /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 21A26E481EE1645F007AC2A9 /* TableViewCell.xib */; };
+		6DD222D06A0BA5E4A4243EF7 /* Pods_YQPhotoBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE2D63E5E1FDBBCCF7D9337F /* Pods_YQPhotoBrowser.framework */; };
+		A50A235A84055E5455951C02 /* Pods_YQPhotoBrowserTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79CE28A44B475B77A492EAAC /* Pods_YQPhotoBrowserTests.framework */; };
+		DA46E38AD5F0C051C9369921 /* Pods_YQPhotoBrowserUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F8C217C04A9F0DBE3B422A /* Pods_YQPhotoBrowserUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +45,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		12565D92D00FFBE88EC3F7A6 /* Pods-YQPhotoBrowser.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YQPhotoBrowser.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YQPhotoBrowser/Pods-YQPhotoBrowser.debug.xcconfig"; sourceTree = "<group>"; };
+		13AEA22E00492704BFC5762D /* Pods-YQPhotoBrowser.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YQPhotoBrowser.release.xcconfig"; path = "Pods/Target Support Files/Pods-YQPhotoBrowser/Pods-YQPhotoBrowser.release.xcconfig"; sourceTree = "<group>"; };
+		17589E81880A050BC67C257C /* Pods-YQPhotoBrowserTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YQPhotoBrowserTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YQPhotoBrowserTests/Pods-YQPhotoBrowserTests.debug.xcconfig"; sourceTree = "<group>"; };
 		21A26E0D1EE0F73F007AC2A9 /* YQPhotoBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YQPhotoBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21A26E101EE0F73F007AC2A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21A26E121EE0F73F007AC2A9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -47,6 +61,16 @@
 		21A26E2C1EE0F73F007AC2A9 /* YQPhotoBrowserUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YQPhotoBrowserUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		21A26E301EE0F73F007AC2A9 /* YQPhotoBrowserUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YQPhotoBrowserUITests.swift; sourceTree = "<group>"; };
 		21A26E321EE0F73F007AC2A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		21A26E3F1EE0FB7B007AC2A9 /* YQPhotoBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YQPhotoBrowser.swift; sourceTree = "<group>"; };
+		21A26E431EE0FF15007AC2A9 /* YQPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YQPhotoCell.swift; sourceTree = "<group>"; };
+		21A26E471EE1645F007AC2A9 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		21A26E481EE1645F007AC2A9 /* TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableViewCell.xib; sourceTree = "<group>"; };
+		42F8C217C04A9F0DBE3B422A /* Pods_YQPhotoBrowserUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YQPhotoBrowserUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		79CE28A44B475B77A492EAAC /* Pods_YQPhotoBrowserTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YQPhotoBrowserTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A39E044B85EAF11663A39387 /* Pods-YQPhotoBrowserUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YQPhotoBrowserUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YQPhotoBrowserUITests/Pods-YQPhotoBrowserUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		BE2D63E5E1FDBBCCF7D9337F /* Pods_YQPhotoBrowser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YQPhotoBrowser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D6FACE5283AA856A079DC3BF /* Pods-YQPhotoBrowserUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YQPhotoBrowserUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-YQPhotoBrowserUITests/Pods-YQPhotoBrowserUITests.release.xcconfig"; sourceTree = "<group>"; };
+		E827EEA0CE0AE1BC20BFF3A5 /* Pods-YQPhotoBrowserTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YQPhotoBrowserTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-YQPhotoBrowserTests/Pods-YQPhotoBrowserTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6DD222D06A0BA5E4A4243EF7 /* Pods_YQPhotoBrowser.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A50A235A84055E5455951C02 /* Pods_YQPhotoBrowserTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA46E38AD5F0C051C9369921 /* Pods_YQPhotoBrowserUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,10 +104,13 @@
 		21A26E041EE0F73F007AC2A9 = {
 			isa = PBXGroup;
 			children = (
+				21A26E3E1EE0FAAF007AC2A9 /* Classes */,
 				21A26E0F1EE0F73F007AC2A9 /* YQPhotoBrowser */,
 				21A26E241EE0F73F007AC2A9 /* YQPhotoBrowserTests */,
 				21A26E2F1EE0F73F007AC2A9 /* YQPhotoBrowserUITests */,
 				21A26E0E1EE0F73F007AC2A9 /* Products */,
+				6FDCA5A5B1CA5691A939DE6C /* Pods */,
+				B96F1B5592434CF81518A243 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -103,6 +133,8 @@
 				21A26E171EE0F73F007AC2A9 /* Assets.xcassets */,
 				21A26E191EE0F73F007AC2A9 /* LaunchScreen.storyboard */,
 				21A26E1C1EE0F73F007AC2A9 /* Info.plist */,
+				21A26E471EE1645F007AC2A9 /* TableViewCell.swift */,
+				21A26E481EE1645F007AC2A9 /* TableViewCell.xib */,
 			);
 			path = YQPhotoBrowser;
 			sourceTree = "<group>";
@@ -125,6 +157,38 @@
 			path = YQPhotoBrowserUITests;
 			sourceTree = "<group>";
 		};
+		21A26E3E1EE0FAAF007AC2A9 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				21A26E3F1EE0FB7B007AC2A9 /* YQPhotoBrowser.swift */,
+				21A26E431EE0FF15007AC2A9 /* YQPhotoCell.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		6FDCA5A5B1CA5691A939DE6C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				12565D92D00FFBE88EC3F7A6 /* Pods-YQPhotoBrowser.debug.xcconfig */,
+				13AEA22E00492704BFC5762D /* Pods-YQPhotoBrowser.release.xcconfig */,
+				17589E81880A050BC67C257C /* Pods-YQPhotoBrowserTests.debug.xcconfig */,
+				E827EEA0CE0AE1BC20BFF3A5 /* Pods-YQPhotoBrowserTests.release.xcconfig */,
+				A39E044B85EAF11663A39387 /* Pods-YQPhotoBrowserUITests.debug.xcconfig */,
+				D6FACE5283AA856A079DC3BF /* Pods-YQPhotoBrowserUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		B96F1B5592434CF81518A243 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BE2D63E5E1FDBBCCF7D9337F /* Pods_YQPhotoBrowser.framework */,
+				79CE28A44B475B77A492EAAC /* Pods_YQPhotoBrowserTests.framework */,
+				42F8C217C04A9F0DBE3B422A /* Pods_YQPhotoBrowserUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -132,9 +196,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 21A26E351EE0F73F007AC2A9 /* Build configuration list for PBXNativeTarget "YQPhotoBrowser" */;
 			buildPhases = (
+				8D128CA856D9AC4E3E556BBE /* [CP] Check Pods Manifest.lock */,
 				21A26E091EE0F73F007AC2A9 /* Sources */,
 				21A26E0A1EE0F73F007AC2A9 /* Frameworks */,
 				21A26E0B1EE0F73F007AC2A9 /* Resources */,
+				427FCEC5AF9C656B01FB2D9F /* [CP] Embed Pods Frameworks */,
+				789131AE613670A19F1EDD19 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -149,9 +216,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 21A26E381EE0F73F007AC2A9 /* Build configuration list for PBXNativeTarget "YQPhotoBrowserTests" */;
 			buildPhases = (
+				2ADF53D0FFF2622655529D8A /* [CP] Check Pods Manifest.lock */,
 				21A26E1D1EE0F73F007AC2A9 /* Sources */,
 				21A26E1E1EE0F73F007AC2A9 /* Frameworks */,
 				21A26E1F1EE0F73F007AC2A9 /* Resources */,
+				A3A05E528340F80CC71FC659 /* [CP] Embed Pods Frameworks */,
+				0D9A9BA788D882B78DBE7198 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -167,9 +237,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 21A26E3B1EE0F73F007AC2A9 /* Build configuration list for PBXNativeTarget "YQPhotoBrowserUITests" */;
 			buildPhases = (
+				BD76FDBB338E47EB8A961398 /* [CP] Check Pods Manifest.lock */,
 				21A26E281EE0F73F007AC2A9 /* Sources */,
 				21A26E291EE0F73F007AC2A9 /* Frameworks */,
 				21A26E2A1EE0F73F007AC2A9 /* Resources */,
+				E63F7B7062341096F016890F /* [CP] Embed Pods Frameworks */,
+				F059027FD85F85836CA08C19 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -236,6 +309,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				21A26E1B1EE0F73F007AC2A9 /* LaunchScreen.storyboard in Resources */,
+				21A26E4A1EE1645F007AC2A9 /* TableViewCell.xib in Resources */,
 				21A26E181EE0F73F007AC2A9 /* Assets.xcassets in Resources */,
 				21A26E161EE0F73F007AC2A9 /* Main.storyboard in Resources */,
 			);
@@ -257,12 +331,153 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0D9A9BA788D882B78DBE7198 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YQPhotoBrowserTests/Pods-YQPhotoBrowserTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2ADF53D0FFF2622655529D8A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		427FCEC5AF9C656B01FB2D9F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YQPhotoBrowser/Pods-YQPhotoBrowser-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		789131AE613670A19F1EDD19 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YQPhotoBrowser/Pods-YQPhotoBrowser-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8D128CA856D9AC4E3E556BBE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A3A05E528340F80CC71FC659 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YQPhotoBrowserTests/Pods-YQPhotoBrowserTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BD76FDBB338E47EB8A961398 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E63F7B7062341096F016890F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YQPhotoBrowserUITests/Pods-YQPhotoBrowserUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F059027FD85F85836CA08C19 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YQPhotoBrowserUITests/Pods-YQPhotoBrowserUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		21A26E091EE0F73F007AC2A9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21A26E491EE1645F007AC2A9 /* TableViewCell.swift in Sources */,
+				21A26E441EE0FF15007AC2A9 /* YQPhotoCell.swift in Sources */,
 				21A26E131EE0F73F007AC2A9 /* ViewController.swift in Sources */,
+				21A26E401EE0FB7B007AC2A9 /* YQPhotoBrowser.swift in Sources */,
 				21A26E111EE0F73F007AC2A9 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -271,7 +486,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21A26E451EE0FF15007AC2A9 /* YQPhotoCell.swift in Sources */,
 				21A26E261EE0F73F007AC2A9 /* YQPhotoBrowserTests.swift in Sources */,
+				21A26E411EE0FB7B007AC2A9 /* YQPhotoBrowser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,7 +496,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21A26E461EE0FF15007AC2A9 /* YQPhotoCell.swift in Sources */,
 				21A26E311EE0F73F007AC2A9 /* YQPhotoBrowserUITests.swift in Sources */,
+				21A26E421EE0FB7B007AC2A9 /* YQPhotoBrowser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,10 +634,12 @@
 		};
 		21A26E361EE0F73F007AC2A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 12565D92D00FFBE88EC3F7A6 /* Pods-YQPhotoBrowser.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = GP4MMMES25;
 				INFOPLIST_FILE = YQPhotoBrowser/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.iqilu..YQPhotoBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -428,10 +649,12 @@
 		};
 		21A26E371EE0F73F007AC2A9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 13AEA22E00492704BFC5762D /* Pods-YQPhotoBrowser.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = GP4MMMES25;
 				INFOPLIST_FILE = YQPhotoBrowser/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.iqilu..YQPhotoBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -441,6 +664,7 @@
 		};
 		21A26E391EE0F73F007AC2A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 17589E81880A050BC67C257C /* Pods-YQPhotoBrowserTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -456,6 +680,7 @@
 		};
 		21A26E3A1EE0F73F007AC2A9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E827EEA0CE0AE1BC20BFF3A5 /* Pods-YQPhotoBrowserTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -471,6 +696,7 @@
 		};
 		21A26E3C1EE0F73F007AC2A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A39E044B85EAF11663A39387 /* Pods-YQPhotoBrowserUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = GP4MMMES25;
@@ -485,6 +711,7 @@
 		};
 		21A26E3D1EE0F73F007AC2A9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D6FACE5283AA856A079DC3BF /* Pods-YQPhotoBrowserUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = GP4MMMES25;
@@ -516,6 +743,7 @@
 				21A26E371EE0F73F007AC2A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		21A26E381EE0F73F007AC2A9 /* Build configuration list for PBXNativeTarget "YQPhotoBrowserTests" */ = {
 			isa = XCConfigurationList;
@@ -524,6 +752,7 @@
 				21A26E3A1EE0F73F007AC2A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		21A26E3B1EE0F73F007AC2A9 /* Build configuration list for PBXNativeTarget "YQPhotoBrowserUITests" */ = {
 			isa = XCConfigurationList;
@@ -532,6 +761,7 @@
 				21A26E3D1EE0F73F007AC2A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
