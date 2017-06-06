@@ -22,6 +22,7 @@
 		21A26E461EE0FF15007AC2A9 /* YQPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A26E431EE0FF15007AC2A9 /* YQPhotoCell.swift */; };
 		21A26E491EE1645F007AC2A9 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A26E471EE1645F007AC2A9 /* TableViewCell.swift */; };
 		21A26E4A1EE1645F007AC2A9 /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 21A26E481EE1645F007AC2A9 /* TableViewCell.xib */; };
+		21F1E1351EE68575003D6DA5 /* YQExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F1E1341EE68575003D6DA5 /* YQExtension.swift */; };
 		6DD222D06A0BA5E4A4243EF7 /* Pods_YQPhotoBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE2D63E5E1FDBBCCF7D9337F /* Pods_YQPhotoBrowser.framework */; };
 		A50A235A84055E5455951C02 /* Pods_YQPhotoBrowserTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79CE28A44B475B77A492EAAC /* Pods_YQPhotoBrowserTests.framework */; };
 		DA46E38AD5F0C051C9369921 /* Pods_YQPhotoBrowserUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F8C217C04A9F0DBE3B422A /* Pods_YQPhotoBrowserUITests.framework */; };
@@ -65,6 +66,7 @@
 		21A26E431EE0FF15007AC2A9 /* YQPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YQPhotoCell.swift; sourceTree = "<group>"; };
 		21A26E471EE1645F007AC2A9 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		21A26E481EE1645F007AC2A9 /* TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableViewCell.xib; sourceTree = "<group>"; };
+		21F1E1341EE68575003D6DA5 /* YQExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YQExtension.swift; sourceTree = "<group>"; };
 		42F8C217C04A9F0DBE3B422A /* Pods_YQPhotoBrowserUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YQPhotoBrowserUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		79CE28A44B475B77A492EAAC /* Pods_YQPhotoBrowserTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YQPhotoBrowserTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A39E044B85EAF11663A39387 /* Pods-YQPhotoBrowserUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YQPhotoBrowserUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YQPhotoBrowserUITests/Pods-YQPhotoBrowserUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 			children = (
 				21A26E3F1EE0FB7B007AC2A9 /* YQPhotoBrowser.swift */,
 				21A26E431EE0FF15007AC2A9 /* YQPhotoCell.swift */,
+				21F1E1341EE68575003D6DA5 /* YQExtension.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -477,6 +480,7 @@
 				21A26E491EE1645F007AC2A9 /* TableViewCell.swift in Sources */,
 				21A26E441EE0FF15007AC2A9 /* YQPhotoCell.swift in Sources */,
 				21A26E131EE0F73F007AC2A9 /* ViewController.swift in Sources */,
+				21F1E1351EE68575003D6DA5 /* YQExtension.swift in Sources */,
 				21A26E401EE0FB7B007AC2A9 /* YQPhotoBrowser.swift in Sources */,
 				21A26E111EE0F73F007AC2A9 /* AppDelegate.swift in Sources */,
 			);
@@ -641,7 +645,7 @@
 				INFOPLIST_FILE = YQPhotoBrowser/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.iqilu..YQPhotoBrowser;
+				PRODUCT_BUNDLE_IDENTIFIER = com.iqilu.YQPhotoBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -656,7 +660,7 @@
 				INFOPLIST_FILE = YQPhotoBrowser/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.iqilu..YQPhotoBrowser;
+				PRODUCT_BUNDLE_IDENTIFIER = com.iqilu.YQPhotoBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

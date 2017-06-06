@@ -27,10 +27,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName: "\(TableViewCell.self)", bundle: nil), forCellReuseIdentifier: "\(TableViewCell.self)")
-        tableView.rowHeight = 120.0
+        tableView.rowHeight = 200.0
         tableView.reloadData()
+
     }
 
+    @IBAction func show(_ sender: UIButton) {
+//        YQPhotoBrowser.presented(by: self, with: nil, numberOfItems: dataArray.count) { (index) -> URL in
+//            return URL(string: self.dataArray[index])!
+//        }
+    }
+    @IBOutlet weak var showPhotos: UIButton!
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -46,5 +53,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return cell
     }
 
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let imageView = (tableView.cellForRow(at: indexPath) as! TableViewCell).imgView
+        YQPhotoBrowser.presented(by: self, with: imageView, numberOfItems: dataArray.count, selectedIndex: indexPath.row) { (index) -> URL in
+            return URL(string: self.dataArray[index])!
+        }
+//        let con = YQPhotoBrowser()
+//        self.present(con, animated: true, completion: nil)
+    }
+    
 }
 
