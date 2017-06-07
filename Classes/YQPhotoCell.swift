@@ -38,13 +38,7 @@ class YQProgressLayer: CAShapeLayer {
     }
 }
 
-protocol YQPhotoCellDelegate {
-    func isPresented() -> Bool
-    func shouldDismiss()
-}
-
 class YQPhotoCell: UICollectionViewCell {
-    var delegate: YQPhotoCellDelegate?
     var beginPoint = CGPoint.zero
     var url: URL? {
         willSet {
@@ -58,17 +52,18 @@ class YQPhotoCell: UICollectionViewCell {
             }
             
             if u.isFileURL {
-                imageView.image = UIImage(contentsOfFile: u.absoluteString)
+                imageView.image = UIImage(contentsOfFile: u.path)
                 self.resizeSubviews()
             } else {
                 self.progressLayer.strokeEnd = 0
                 self.progressLayer.position = CGPoint(x: self.width / 2, y: self.height / 2)
                 self.progressLayer.isHidden = false
-            
+                self.imageContainerView.isHidden = true
                 imageView.kf.setImage(with: u, placeholder: nil, options: [.backgroundDecode], progressBlock: { (receivedSize: Int64, totalSize: Int64) in
                     self.progressLayer.progress = Double(receivedSize) / Double(totalSize)
                 }, completionHandler: { (image, error, cacheType, url) in
                     self.imageView.image = image
+                    self.imageContainerView.isHidden = false
                     self.progressLayer.isHidden = true
                     self.resizeSubviews()
                 })
@@ -80,7 +75,7 @@ class YQPhotoCell: UICollectionViewCell {
     let imageView: UIImageView
     lazy var progressLayer: YQProgressLayer = {
         let layer = YQProgressLayer.create()
-        self.layer.addSublayer(layer)
+        self.scrollView.layer.addSublayer(layer)
         return layer
     }()
     
@@ -167,68 +162,6 @@ extension YQPhotoCell {
         }
 
     }
-    
-//    func panAction(gesture: UIPanGestureRecognizer) {
-//        
-//        switch gesture.state {
-//        case .began:
-//            if let del = delegate, del.isPresented() {
-//                beginPoint = gesture.location(in: self)
-//            } else {
-//                beginPoint = CGPoint.zero
-//            }
-//        case .changed:
-//            guard !beginPoint.equalTo(CGPoint.zero) else {
-//                return
-//            }
-//            let p = gesture.location(in: self)
-//            let deltaY = p.y - beginPoint.y
-//            scrollView.frame.origin.y = deltaY
-//            var alpha = (160 - fabs(deltaY) + 50) / 160
-//            alpha = yq_clamp(alpha, 0, 1)
-//            UIView.animate(withDuration: 0.1, delay: 0, options: [.beginFromCurrentState, .allowUserInteraction, .curveLinear], animations: { 
-//                
-//            }, completion: nil)
-//            
-//        case .ended:
-//            guard !beginPoint.equalTo(CGPoint.zero) else {
-//                return
-//            }
-//            let v = gesture.velocity(in: self)
-//            let p = gesture.location(in: self)
-//            let deltaY = p.y - beginPoint.y
-//            if fabs(v.y) > 1000 || fabs(p.y) > 120 {
-//                let moveToTop = v.y < -50 && deltaY < 0
-//                var vy = fabs(v.y)
-//                if vy < 1 {
-//                    vy =  1
-//                }
-//                var duration = (moveToTop ? scrollView.frame.maxY : self.bounds.height - scrollView.frame.minY) / vy
-//                duration *= 0.8
-//                duration = yq_clamp(duration, 0.05, 0.3)
-//                UIView.animate(withDuration: TimeInterval(duration), delay: 0, options: [.curveLinear, .beginFromCurrentState], animations: { 
-//                    if moveToTop {
-//                        self.scrollView.frame.origin.y = 0
-//                    } else {
-//                        self.scrollView.frame.origin.y = self.bounds.height
-//                    }
-//                }, completion: { (finished) in
-//                    guard let del = self.delegate else {
-//                        return
-//                    }
-//                    del.shouldDismiss()
-//                })
-//            }
-//        case .cancelled:
-//            UIView.animate(withDuration: 0.4, delay: 0, options: [.curveLinear, .beginFromCurrentState], animations: {
-//                self.scrollView.frame.origin.y = 0
-//            }, completion: { (finished) in
-//                
-//            })
-//        default:
-//            break
-//        }
-//    }
 }
 
 extension YQPhotoCell: UIScrollViewDelegate {

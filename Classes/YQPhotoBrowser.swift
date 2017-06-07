@@ -8,15 +8,15 @@
 
 import UIKit
 
-typealias YQPhotoGetter = (Int) -> URL
+public typealias YQPhotoGetter = (Int) -> URL
 
-open class YQPhotoBrowser: UIViewController {
+public class YQPhotoBrowser: UIViewController {
     
     var numberOfItems = 0
-    private var collectionView: UICollectionView!
     var urlForItemAtIndex: YQPhotoGetter?
     var selectedIndex = 0
     var backgroundImage: UIImage?
+    private var collectionView: UICollectionView!
     private var tempImgView: UIImageView?
     private weak var paningCell: YQPhotoCell?
     private var beginPoint = CGPoint.zero
@@ -103,7 +103,7 @@ open class YQPhotoBrowser: UIViewController {
     }
     
     
-    class func presented(by presentedController: UIViewController, with imageView: UIImageView?, numberOfItems: Int, selectedIndex: Int, getter: @escaping YQPhotoGetter) {
+    public class func presented(by presentedController: UIViewController, with imageView: UIImageView?, numberOfItems: Int, selectedIndex: Int, getter: @escaping YQPhotoGetter) {
         let browser = YQPhotoBrowser()
         if let imgView = imageView {
             let rect = imgView.superview!.convert(imgView.frame, to: nil)
@@ -167,16 +167,21 @@ open class YQPhotoBrowser: UIViewController {
             let v = gesture.velocity(in: cell)
             let p = gesture.location(in: cell)
             let deltaY = p.y - beginPoint.y
+            
             if fabs(v.y) > 1000 || fabs(deltaY) > 160 {
                 isPresented = false
-                let moveToTop = v.y < -50 || deltaY < 0
+                var moveToTop = deltaY < 0
                 var vy = fabs(v.y)
+                if vy > 100 {
+                    moveToTop = v.y < 0
+                }
                 if vy < 1 {
                     vy =  1
                 }
+                
                 var duration = (moveToTop ? cell.scrollView.bottom : cell.height - cell.scrollView.top) / vy
                 duration *= 0.8
-                duration = yq_clamp(duration, 0.05, 0.3)
+                duration = yq_clamp(duration, 0.05, 0.25)
                 UIView.animate(withDuration: TimeInterval(duration), delay: 0, options: [.curveLinear, .beginFromCurrentState], animations: {
                     if moveToTop {
                         cell.scrollView.bottom = 0
@@ -232,44 +237,4 @@ extension YQPhotoBrowser: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
 }
-
-//MARK: YQPhotoCell
-
-//extension YQPhotoBrowser: YQPhotoCellDelegate {
-//   
-//    func shouldDismiss() {
-//        self.dismiss(animated: false, completion: nil)
-//    }
-//}
-
-//MARK: Action 
-
-// MARK: transition
-
-//extension YQPhotoBrowser: UIViewControllerTransitioningDelegate {
-//    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-//        
-//        return self
-//    }
-//    
-//    
-//    
-//    public func interactionControllerForPresentation(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-//        return nil
-//    }
-//    
-//    public func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-//        return nil
-//    }
-//}
-//
-//extension YQPhotoBrowser: UIViewControllerAnimatedTransitioning {
-//    public func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-//        return 0.3
-//    }
-//    
-//    public func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-//        <#code#>
-//    }
-//}
 
