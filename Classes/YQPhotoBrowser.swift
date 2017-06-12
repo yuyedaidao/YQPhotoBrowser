@@ -17,7 +17,7 @@ public class YQPhotoBrowser: UIViewController {
     var selectedIndex = 0
     var backgroundImage: UIImage?
     private var collectionView: UICollectionView!
-    private var tempImgView: UIImageView?
+    private var tempImgView: YQPhotoImageView?
     private weak var paningCell: YQPhotoCell?
     private var beginPoint = CGPoint.zero
     private var isPresented = false
@@ -107,10 +107,9 @@ public class YQPhotoBrowser: UIViewController {
         let browser = YQPhotoBrowser()
         if let imgView = imageView {
             let rect = imgView.superview!.convert(imgView.frame, to: nil)
-            let tempImgView = UIImageView(image: imgView.image)
+            let tempImgView = YQPhotoImageView(image: imgView.image)
             tempImgView.frame = rect
-            tempImgView.contentMode = imgView.contentMode
-            tempImgView.clipsToBounds = imgView.clipsToBounds
+            tempImgView.clipsToBounds = true
             browser.tempImgView = tempImgView
         }
         browser.numberOfItems = numberOfItems
