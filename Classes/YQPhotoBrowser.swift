@@ -21,6 +21,7 @@ public class YQPhotoBrowser: UIViewController {
     private weak var paningCell: YQPhotoCell?
     private var beginPoint = CGPoint.zero
     private var isPresented = false
+    private var isFirstAppear = true
     private var backgroundImgView: UIImageView?
     private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
     override open func viewDidLoad() {
@@ -47,13 +48,18 @@ public class YQPhotoBrowser: UIViewController {
 
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        UIView.animate(withDuration: 0.3, animations: { 
-            self.blurView.alpha = 1
-            self.tempImgView?.frame = self.adjustTempImgViewSize()
-        }) { (finished) in
-            self.collectionView.isHidden = false
-            self.isPresented = true
-            self.tempImgView?.removeFromSuperview()
+        if isFirstAppear {
+            isFirstAppear = false
+            let rect = adjustTempImgViewSize()
+            UIView.animate(withDuration: 0.25, delay: 0, options: [.layoutSubviews], animations: {
+                self.blurView.alpha = 1
+                self.tempImgView?.frame = rect
+            }) { (finished) in
+                self.collectionView.isHidden = false
+                self.isPresented = true
+                self.tempImgView?.removeFromSuperview()
+            }
+
         }
     }
     func adjustTempImgViewSize() -> CGRect{

@@ -58,8 +58,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         YQPhotoBrowser.presented(by: self, with: imageView, numberOfItems: dataArray.count, selectedIndex: indexPath.row) { (index) -> URL in
             return URL(string: self.dataArray[index])!
         }
-//        let con = YQPhotoBrowser()
-//        self.present(con, animated: true, completion: nil)
     }
     
 }
