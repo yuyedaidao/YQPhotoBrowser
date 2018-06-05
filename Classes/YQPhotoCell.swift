@@ -151,7 +151,7 @@ class YQPhotoCell: UICollectionViewCell {
 //MARK: Action
 
 extension YQPhotoCell {
-    func doubleTapAction(gesture: UITapGestureRecognizer) {
+    @objc func doubleTapAction(gesture: UITapGestureRecognizer) {
         if (scrollView.zoomScale > 1) {
            scrollView.setZoomScale(1, animated: true)
         } else {

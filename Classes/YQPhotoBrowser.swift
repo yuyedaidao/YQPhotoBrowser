@@ -139,7 +139,7 @@ public class YQPhotoBrowser: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func panAction(gesture: UIPanGestureRecognizer) {
+    @objc func panAction(gesture: UIPanGestureRecognizer) {
         
         switch gesture.state {
         case .began:
