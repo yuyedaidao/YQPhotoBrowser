@@ -4,7 +4,7 @@ platform :ios, '9.0'
 target 'YQPhotoBrowser' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
-  pod 'Kingfisher', '~> 3.0'
+  pod 'Kingfisher', '~> 4.0'
   # Pods for YQPhotoBrowser
 
   target 'YQPhotoBrowserTests' do
