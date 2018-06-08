@@ -11,7 +11,7 @@ import UIKit
 public typealias YQPhotoGetter = (Int) -> URL
 
 public class YQPhotoBrowser: UIViewController {
-    
+
     var numberOfItems = 0
     var urlForItemAtIndex: YQPhotoGetter?
     var selectedIndex = 0
@@ -37,11 +37,11 @@ public class YQPhotoBrowser: UIViewController {
         view.isUserInteractionEnabled = true
         view.addGestureRecognizer(pan)
         prepareCollectionView()
-        
+
         if let temp = tempImgView {
             view.addSubview(temp)
         }
-        
+
         self.blurView.alpha = 0
 
     }
@@ -70,15 +70,16 @@ public class YQPhotoBrowser: UIViewController {
                 return rect
             }
             if image.size.height / image.size.width > UIScreen.main.height / UIScreen.main.width {
-                rect.size.height = floor(image.size.height / image.size.width * UIScreen.main.width)
+                rect.size.height = UIScreen.main.height
+                rect.size.width = floor(image.size.width / image.size.height * UIScreen.main.height)
             } else {
                 var height = image.size.height / image.size.width * UIScreen.main.width
                 if height < 1 || height.isNaN {
                     height = UIScreen.main.height
                 }
                 rect.size.height = floor(height)
-                rect.origin = CGPoint(x: 0, y: UIScreen.main.height / 2 - rect.size.height / 2)
             }
+            rect.origin = CGPoint(x: (UIScreen.main.width - rect.size.width) / 2, y: UIScreen.main.height / 2 - rect.size.height / 2)
             if (imgView.height > UIScreen.main.height && imgView.height - UIScreen.main.height <= 1) {
                 rect.size.height = UIScreen.main.height;
             }
@@ -86,7 +87,7 @@ public class YQPhotoBrowser: UIViewController {
 
         return rect
     }
-    
+
     func prepareCollectionView() {
         let rect = UIScreen.main.bounds
         let layout = UICollectionViewFlowLayout()
@@ -105,10 +106,8 @@ public class YQPhotoBrowser: UIViewController {
         DispatchQueue.main.async {
             self.collectionView.scrollToItem(at: IndexPath(item: self.selectedIndex, section: 0), at: .left, animated: false)
         }
-        
     }
-    
-    
+
     public class func presented(by presentedController: UIViewController, with imageView: UIImageView?, numberOfItems: Int, selectedIndex: Int, getter: @escaping YQPhotoGetter) {
         let browser = YQPhotoBrowser()
         if let imgView = imageView {
@@ -121,26 +120,26 @@ public class YQPhotoBrowser: UIViewController {
         browser.numberOfItems = numberOfItems
         browser.urlForItemAtIndex = getter
         browser.selectedIndex = selectedIndex
-     
+
         if let window = UIApplication.shared.keyWindow {
             UIGraphicsBeginImageContext(window.bounds.size)
             window.layer.render(in: UIGraphicsGetCurrentContext()!)
             browser.backgroundImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
         }
-        
+
         presentedController.present(browser, animated: false)
- 
+
     }
-    
- 
+
+
     override open func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
     @objc func panAction(gesture: UIPanGestureRecognizer) {
-        
+
         switch gesture.state {
         case .began:
             guard let indexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)), let cell = collectionView.cellForItem(at: indexPath) as? YQPhotoCell else {
@@ -164,7 +163,7 @@ public class YQPhotoBrowser: UIViewController {
             UIView.animate(withDuration: 0.1, delay: 0, options: [.beginFromCurrentState, .allowUserInteraction, .curveLinear], animations: {
                 self.blurView.alpha = alpha
             }, completion: nil)
-            
+
         case .ended:
             guard let cell = paningCell, !beginPoint.equalTo(CGPoint.zero) else {
                 return
@@ -172,7 +171,7 @@ public class YQPhotoBrowser: UIViewController {
             let v = gesture.velocity(in: cell)
             let p = gesture.location(in: cell)
             let deltaY = p.y - beginPoint.y
-            
+
             if fabs(v.y) > 1000 || fabs(deltaY) > 160 {
                 isPresented = false
                 var moveToTop = deltaY < 0
@@ -183,7 +182,7 @@ public class YQPhotoBrowser: UIViewController {
                 if vy < 1 {
                     vy =  1
                 }
-                
+
                 var duration = (moveToTop ? cell.scrollView.bottom : cell.height - cell.scrollView.top) / vy
                 duration *= 0.8
                 duration = yq_clamp(duration, 0.05, 0.25)
@@ -198,7 +197,7 @@ public class YQPhotoBrowser: UIViewController {
                     self.dismiss(animated: false, completion: nil)
                 })
             } else {
-                UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: v.y / 1000, options: [.curveEaseInOut, .allowUserInteraction, .beginFromCurrentState], animations: { 
+                UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: v.y / 1000, options: [.curveEaseInOut, .allowUserInteraction, .beginFromCurrentState], animations: {
                     cell.scrollView.top = 0
                     self.blurView.alpha = 1
                 }, completion: nil)
@@ -213,17 +212,17 @@ public class YQPhotoBrowser: UIViewController {
             break
         }
 
-        
+
     }
     /*
-    // MARK: - Navigation
+     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
 
 }
 
@@ -236,10 +235,10 @@ extension YQPhotoBrowser: UICollectionViewDelegate, UICollectionViewDataSource {
         }
         return cell
     }
-    
+
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return numberOfItems
     }
-    
+
 }
 

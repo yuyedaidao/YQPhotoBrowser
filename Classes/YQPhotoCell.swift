@@ -50,7 +50,7 @@ class YQPhotoCell: UICollectionViewCell {
             guard let u = newValue else {
                 return
             }
-            
+
             if u.isFileURL {
                 imageView.image = UIImage(contentsOfFile: u.path)
                 self.resizeSubviews()
@@ -78,7 +78,7 @@ class YQPhotoCell: UICollectionViewCell {
         self.scrollView.layer.addSublayer(layer)
         return layer
     }()
-    
+
     override init(frame: CGRect) {
         scrollView = UIScrollView()
         imageContainerView = UIView()
@@ -94,36 +94,35 @@ class YQPhotoCell: UICollectionViewCell {
         addSubview(scrollView)
         scrollView.addSubview(imageContainerView)
         imageContainerView.addSubview(imageView)
-        
-        
+
         let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapAction(gesture:)))
         tap.numberOfTapsRequired = 2
         self.addGestureRecognizer(tap)
-        
+
     }
-    
+
     override func prepareForReuse() {
         scrollView.setZoomScale(1, animated: false)
     }
-    
-    
+
     private func resizeSubviews() {
-        
+
         imageContainerView.frame.origin = CGPoint.zero
         imageContainerView.width = scrollView.width
         guard let image = imageView.image else {
             return
         }
         if image.size.height / image.size.width > scrollView.height / scrollView.width {
-            imageContainerView.height = floor(image.size.height / image.size.width * scrollView.width)
+            imageContainerView.height = scrollView.height
+            imageContainerView.width = floor(image.size.width / image.size.height * scrollView.height)
         } else {
             var height = image.size.height / image.size.width * scrollView.width
             if height < 1 || height.isNaN {
                 height = scrollView.height
             }
             imageContainerView.height = floor(height)
-            imageContainerView.center = CGPoint(x: imageContainerView.center.x, y: scrollView.height / 2)
         }
+        imageContainerView.center = CGPoint(x: scrollView.width / 2, y: scrollView.height / 2)
         if (imageContainerView.height > scrollView.height && imageContainerView.height - scrollView.height <= 1) {
             imageContainerView.height = scrollView.height;
         }
@@ -137,12 +136,12 @@ class YQPhotoCell: UICollectionViewCell {
         imageView.frame = imageContainerView.bounds
         scrollView.maximumZoomScale = 3
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         scrollView.frame = self.bounds
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -153,7 +152,7 @@ class YQPhotoCell: UICollectionViewCell {
 extension YQPhotoCell {
     @objc func doubleTapAction(gesture: UITapGestureRecognizer) {
         if (scrollView.zoomScale > 1) {
-           scrollView.setZoomScale(1, animated: true)
+            scrollView.setZoomScale(1, animated: true)
         } else {
             let location = gesture.location(in: imageView)
             let xSize = scrollView.width / scrollView.maximumZoomScale
@@ -168,7 +167,7 @@ extension YQPhotoCell: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageContainerView
     }
-    
+
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
         let offsetX = scrollView.bounds.width > scrollView.contentSize.width ? (scrollView.bounds.width - scrollView.contentSize.width) * 0.5 : 0
         let offsetY = scrollView.bounds.height > scrollView.contentSize.height ? (scrollView.bounds.height - scrollView.contentSize.height) * 0.5 : 0.0
