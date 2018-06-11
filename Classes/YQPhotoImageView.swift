@@ -7,10 +7,17 @@
 //
 
 import UIKit
+import Kingfisher
 
-class YQPhotoImageView: UIView {
+protocol YQPhotoImageViewProxy where Self: UIView {
+    var image: UIImage? {get}
+}
 
-    let imgView = UIImageView()
+extension UIImageView: YQPhotoImageViewProxy {}
+
+class YQPhotoImageView: UIView, YQPhotoImageViewProxy {
+
+    let imgView = AnimatedImageView()
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -18,7 +25,6 @@ class YQPhotoImageView: UIView {
         // Drawing code
     }
     */
-    
     var image: UIImage? {
         didSet {
             imgView.image = image

@@ -82,3 +82,17 @@ extension UIScreen {
         }
     }
 }
+
+extension CGRect {
+    var center: CGPoint {
+        get {
+            return CGPoint(x: midX, y: midY)
+        }
+        set {
+            var rect = self
+            rect.origin = CGPoint(x: newValue.x - width / 2, y: newValue.y - height / 2)
+            self = rect
+        }
+    }
+
+}
