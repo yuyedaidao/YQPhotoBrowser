@@ -11,6 +11,20 @@ import UIKit
 
 class YQPhotoAnimater: UIPercentDrivenInteractiveTransition {
     var tempImgView: UIImageView?
+    var toImgView: UIImageView?
+    override func finish() {
+        guard let imgView = toImgView else {
+            UIView.animate(withDuration: 0.25, animations: {
+                self.tempImgView?.frame = CGRect(x: 0, y: UIScreen.main.height - 50, width: 50, height: 50)
+                
+            }, completion: {finished in
+                super.finish()
+                self.tempImgView?.removeFromSuperview()
+            })
+            return
+        }
+        super.finish()
+    }
 }
 
 extension YQPhotoAnimater: UIViewControllerTransitioningDelegate {
@@ -76,7 +90,7 @@ class YQPhotoPresentAnimater: NSObject, UIViewControllerAnimatedTransitioning {
         }
         rect.origin = CGPoint(x: (UIScreen.main.width - rect.size.width) / 2, y: UIScreen.main.height / 2 - rect.size.height / 2)
         if (imgView.height > UIScreen.main.height && imgView.height - UIScreen.main.height <= 1) {
-            rect.size.height = UIScreen.main.height;
+            rect.size.height = UIScreen.main.height
         }
         return rect
     }
@@ -101,7 +115,6 @@ class YQPhotoDismissAnimater: NSObject, UIViewControllerAnimatedTransitioning {
         containerView.addSubview(imgView)
         UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0.0, options: [.curveLinear, .beginFromCurrentState], animations: {
             fromView.alpha = 0
-            imgView.frame = CGRect.zero
         }) { (finished) in
             transitionContext.completeTransition(finished)
             if !finished {
@@ -109,7 +122,6 @@ class YQPhotoDismissAnimater: NSObject, UIViewControllerAnimatedTransitioning {
             }
             fromView.removeFromSuperview()
             imgView.removeFromSuperview()
-
         }
     }
 
