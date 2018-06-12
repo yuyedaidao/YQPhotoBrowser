@@ -17,7 +17,6 @@ public class YQPhotoBrowser: UIViewController {
     var selectedIndex = 0
     private var collectionView: UICollectionView!
     private var tempImgView: UIImageView?
-    private var beginRect = CGRect.zero
     private var beginPoint = CGPoint.zero
     private let animater = YQPhotoAnimater()
 
@@ -35,20 +34,6 @@ public class YQPhotoBrowser: UIViewController {
 
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        /*
-         if isFirstAppear {
-             isFirstAppear = false
-             let rect = adjustTempImgViewSize()
-             UIView.animate(withDuration: 0.25, delay: 0, options: [.layoutSubviews], animations: {
-             self.blurView.alpha = 1
-             self.tempImgView?.frame = rect
-             }) { (finished) in
-             self.collectionView.isHidden = false
-             self.isPresented = true
-             self.tempImgView?.removeFromSuperview()
-             }
-         }
-         */
     }
 
     func prepareCollectionView() {
@@ -88,7 +73,6 @@ public class YQPhotoBrowser: UIViewController {
 
     override open func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     @objc func panAction(gesture: UIPanGestureRecognizer) {
@@ -98,23 +82,17 @@ public class YQPhotoBrowser: UIViewController {
             guard let indexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)), let cell = collectionView.cellForItem(at: indexPath) as? YQPhotoCell else {
                 return
             }
-
             beginPoint = gesture.location(in: view)
             tempImgView = UIImageView(image: cell.imageView.image)
             tempImgView!.frame = cell.imageView.superview!.convert(cell.imageView.frame, to: nil)
             animater.tempImgView = tempImgView
-            animater.wantsInteractiveStart = false
-            beginRect = tempImgView!.frame
             collectionView.isHidden = true
             dismiss(animated: true) {
 
             }
         case .changed:
             let p = gesture.location(in: view)
-            let deltaY = p.y - beginPoint.y
-            let delta = max(0, deltaY) / UIScreen.main.height
-            animater.update(delta)
-            animater.tempImgView?.center = CGPoint(x: self.beginRect.center.x + p.x - self.beginPoint.x, y: self.beginRect.center.y + deltaY)
+            animater.move(CGPoint(x: p.x - beginPoint.x, y: p.y - beginPoint.y))
         case .ended:
             let p = gesture.location(in: view)
             let deltaY = p.y - beginPoint.y
