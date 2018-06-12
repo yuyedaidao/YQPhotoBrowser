@@ -29,15 +29,22 @@ import UIKit
 //
 //}
 
+protocol YQPhotoDismissAimaterDelegate {
+    func animaterWillStartInteractiveTransition(_ animater: YQPhotoAnimater)
+    func animaterDidEndInteractiveTransition(_ animater: YQPhotoAnimater)
+}
+
+
 class YQPhotoAnimater: NSObject, UIViewControllerInteractiveTransitioning {
     func startInteractiveTransition(_ transitionContext: UIViewControllerContextTransitioning) {
-        guard let imgView = tempImgView, let  fromView = transitionContext.view(forKey: .from), let toView = transitionContext.view(forKey: .to) else {return}
+        guard let imgView = tempImgView, let toView = transitionContext.view(forKey: .to) else {return}
         self.transitionContext = transitionContext
         let containerView = transitionContext.containerView
         containerView.addSubview(toView)
-        containerView.addSubview(fromView)
+        containerView.sendSubview(toBack: toView)
         containerView.addSubview(imgView)
         beginFrame = imgView.frame
+        delegate?.animaterWillStartInteractiveTransition(self)
     }
 
     var wantsInteractiveStart: Bool {
@@ -47,7 +54,12 @@ class YQPhotoAnimater: NSObject, UIViewControllerInteractiveTransitioning {
     var toImgView: UIImageView?
     private var transitionContext: UIViewControllerContextTransitioning?
     private var beginFrame: CGRect!
-
+    var delegate: YQPhotoDismissAimaterDelegate?
+    
+    public init(_ delegate: YQPhotoDismissAimaterDelegate? = nil) {
+        self.delegate = delegate
+    }
+    
     func finish() {
         guard let tempImgView = tempImgView, let fromView = self.transitionContext?.view(forKey: .from) else {
             fatalError()
@@ -80,12 +92,13 @@ class YQPhotoAnimater: NSObject, UIViewControllerInteractiveTransitioning {
             imgView.removeFromSuperview()
             self.transitionContext?.cancelInteractiveTransition()
             self.transitionContext?.completeTransition(false)
+            self.delegate?.animaterDidEndInteractiveTransition(self)
         })
     }
 
     func move(_ offset: CGPoint) {
-        guard offset.y >= 0, let imgView = tempImgView, let fromView = self.transitionContext?.view(forKey: .from) else {return}
-        let delta = 1 - offset.y / UIScreen.main.height
+        guard let imgView = tempImgView, let fromView = self.transitionContext?.view(forKey: .from) else {return}
+        let delta = yq_clamp(1 - offset.y / UIScreen.main.height, 0, 1)
         fromView.alpha = delta
         let beginCenter = beginFrame.center
         let width = beginFrame.width * delta

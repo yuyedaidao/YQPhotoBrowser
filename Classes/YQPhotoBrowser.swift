@@ -27,7 +27,8 @@ public class YQPhotoBrowser: UIViewController {
         view.isUserInteractionEnabled = true
         view.addGestureRecognizer(pan)
         prepareCollectionView()
-
+        
+        animater.delegate = self
         animater.tempImgView = tempImgView
         transitioningDelegate = animater
     }
@@ -86,7 +87,7 @@ public class YQPhotoBrowser: UIViewController {
             tempImgView = UIImageView(image: cell.imageView.image)
             tempImgView!.frame = cell.imageView.superview!.convert(cell.imageView.frame, to: nil)
             animater.tempImgView = tempImgView
-            collectionView.isHidden = true
+            
             dismiss(animated: true) {
 
             }
@@ -100,11 +101,9 @@ public class YQPhotoBrowser: UIViewController {
                 animater.finish()
             } else {
                 animater.cancel()
-                collectionView.isHidden = false
             }
         case .failed, .cancelled:
             animater.cancel()
-            collectionView.isHidden = false
         default:
             break
         }
@@ -139,4 +138,15 @@ extension YQPhotoBrowser: UICollectionViewDelegate, UICollectionViewDataSource {
 
 }
 
+extension YQPhotoBrowser: YQPhotoDismissAimaterDelegate {
+    func animaterWillStartInteractiveTransition(_ animater: YQPhotoAnimater) {
+        self.collectionView.isHidden = true
+    }
+    
+    func animaterDidEndInteractiveTransition(_ animater: YQPhotoAnimater) {
+        self.collectionView.isHidden = false
+    }
+    
+    
+}
 
