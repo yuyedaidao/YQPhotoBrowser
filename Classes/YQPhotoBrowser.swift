@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 public enum YQPhotoDismissState{
     case begin
@@ -29,6 +30,11 @@ public class YQPhotoBrowser: UIViewController {
     private var beginPoint = CGPoint.zero
     private let animater = YQPhotoAnimater()
 
+    private var backButton: UIButton!
+    private var shareButton: UIButton!
+    private var topOperationView: UIView!
+    private var bottomOperationView: UIView!
+
     override open func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
@@ -36,6 +42,7 @@ public class YQPhotoBrowser: UIViewController {
         view.isUserInteractionEnabled = true
         view.addGestureRecognizer(pan)
         prepareCollectionView()
+        prepareViews()
         animater.delegate = self
         animater.tempImgView = tempImgView
         transitioningDelegate = animater
@@ -43,6 +50,20 @@ public class YQPhotoBrowser: UIViewController {
 
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+    }
+
+    func prepareViews() {
+        topOperationView = UIView()
+        topOperationView.yq.then { (view) in
+            view.backgroundColor = UIColor.clear
+            self.view.addSubview(view)
+            view.snp.makeConstraints({ (make) in
+                make.leading.trailing.equalToSuperview()
+                make.top.equalTo(20)
+                make.height.equalTo(44)
+            })
+            backButton = UIButton(type: .custom)
+        }
     }
 
     func prepareCollectionView() {
