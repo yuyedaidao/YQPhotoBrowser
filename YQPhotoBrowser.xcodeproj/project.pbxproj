@@ -10,7 +10,6 @@
 		219BF76C1EEE7DF7005E2861 /* YQPhotoBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211F7D821EEE7AD700538855 /* YQPhotoBrowser.swift */; };
 		219BF76D1EEE7DFC005E2861 /* YQExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211F7D811EEE7AD700538855 /* YQExtension.swift */; };
 		219BF76E1EEE7DFF005E2861 /* YQPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211F7D831EEE7AD700538855 /* YQPhotoCell.swift */; };
-		219BF76F1EEE7E02005E2861 /* YQPhotoImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211F7D841EEE7AD700538855 /* YQPhotoImageView.swift */; };
 		21A26E111EE0F73F007AC2A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A26E101EE0F73F007AC2A9 /* AppDelegate.swift */; };
 		21A26E131EE0F73F007AC2A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A26E121EE0F73F007AC2A9 /* ViewController.swift */; };
 		21A26E161EE0F73F007AC2A9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21A26E141EE0F73F007AC2A9 /* Main.storyboard */; };
@@ -50,7 +49,6 @@
 		211F7D811EEE7AD700538855 /* YQExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YQExtension.swift; sourceTree = "<group>"; };
 		211F7D821EEE7AD700538855 /* YQPhotoBrowser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YQPhotoBrowser.swift; sourceTree = "<group>"; };
 		211F7D831EEE7AD700538855 /* YQPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YQPhotoCell.swift; sourceTree = "<group>"; };
-		211F7D841EEE7AD700538855 /* YQPhotoImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YQPhotoImageView.swift; sourceTree = "<group>"; };
 		21A26E0D1EE0F73F007AC2A9 /* YQPhotoBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YQPhotoBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21A26E101EE0F73F007AC2A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21A26E121EE0F73F007AC2A9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -109,7 +107,6 @@
 				211F7D811EEE7AD700538855 /* YQExtension.swift */,
 				211F7D821EEE7AD700538855 /* YQPhotoBrowser.swift */,
 				211F7D831EEE7AD700538855 /* YQPhotoCell.swift */,
-				211F7D841EEE7AD700538855 /* YQPhotoImageView.swift */,
 				555A247A20CE12DC0079D465 /* YQPhotoAnimater.swift */,
 			);
 			path = Classes;
@@ -495,7 +492,6 @@
 				219BF76D1EEE7DFC005E2861 /* YQExtension.swift in Sources */,
 				21A26E491EE1645F007AC2A9 /* TableViewCell.swift in Sources */,
 				21A26E131EE0F73F007AC2A9 /* ViewController.swift in Sources */,
-				219BF76F1EEE7E02005E2861 /* YQPhotoImageView.swift in Sources */,
 				555A247B20CE12DC0079D465 /* YQPhotoAnimater.swift in Sources */,
 				21A26E111EE0F73F007AC2A9 /* AppDelegate.swift in Sources */,
 				219BF76C1EEE7DF7005E2861 /* YQPhotoBrowser.swift in Sources */,

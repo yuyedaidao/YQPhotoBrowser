@@ -8,13 +8,22 @@
 
 import UIKit
 
-public typealias YQPhotoGetter = (Int) -> URL
-private let kTriggerOffset: CGFloat = 120.0
+public enum YQPhotoDismissState{
+    case begin
+    case finish
+}
+private let kTriggerOffset: CGFloat = 140.0
 public class YQPhotoBrowser: UIViewController {
-
-    var numberOfItems = 0
-    var urlForItemAtIndex: YQPhotoGetter?
-    var selectedIndex = 0
+    var numberOfSections:(() -> Int)?
+    var numberOfItems:((Int) -> Int)?
+    var itemUrl: ((IndexPath) -> URL)?
+    var dismission: ((IndexPath, YQPhotoDismissState) -> UIImageView?)?
+    var selectedIndex = IndexPath(item: 0, section: 0) {
+        didSet {
+            selected?(selectedIndex)
+        }
+    }
+    private var selected: ((IndexPath) -> Void)?
     private var collectionView: UICollectionView!
     private var tempImgView: UIImageView?
     private var beginPoint = CGPoint.zero
@@ -27,7 +36,6 @@ public class YQPhotoBrowser: UIViewController {
         view.isUserInteractionEnabled = true
         view.addGestureRecognizer(pan)
         prepareCollectionView()
-        
         animater.delegate = self
         animater.tempImgView = tempImgView
         transitioningDelegate = animater
@@ -52,45 +60,44 @@ public class YQPhotoBrowser: UIViewController {
         collectionView.dataSource = self
         view.addSubview(collectionView)
         DispatchQueue.main.async {
-            self.collectionView.scrollToItem(at: IndexPath(item: self.selectedIndex, section: 0), at: .left, animated: false)
+            self.collectionView.scrollToItem(at: self.selectedIndex, at: .left, animated: false)
         }
     }
 
-    public class func presented(by presentedController: UIViewController, with imageView: UIImageView?, numberOfItems: Int, selectedIndex: Int, getter: @escaping YQPhotoGetter) {
+    public class func presented(by presentedController: UIViewController, with imageView: UIImageView?, numberOfSections:(() -> Int)? = nil, numberOfItems: ((Int) -> Int)? = nil, defaultIndex: IndexPath, itemUrl: @escaping((IndexPath) -> URL), selected: ((IndexPath) -> Void)? = nil, dismiss:((IndexPath,YQPhotoDismissState) -> UIImageView?)? = nil) {
         let browser = YQPhotoBrowser()
         if let imgView = imageView {
             let rect = imgView.superview!.convert(imgView.frame, to: nil)
             let tempImgView = UIImageView(image: imageView?.image)
             tempImgView.frame = rect
             tempImgView.clipsToBounds = true
+            tempImgView.contentMode = .scaleAspectFill
             browser.tempImgView = tempImgView
         }
+        browser.numberOfSections = numberOfSections
         browser.numberOfItems = numberOfItems
-        browser.urlForItemAtIndex = getter
-        browser.selectedIndex = selectedIndex
+        browser.itemUrl = itemUrl
+        browser.selectedIndex = defaultIndex
+        browser.dismission = dismiss
+        browser.selected = selected
         presentedController.present(browser, animated: true)
     }
-
 
     override open func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 
     @objc func panAction(gesture: UIPanGestureRecognizer) {
-
         switch gesture.state {
         case .began:
             guard let indexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)), let cell = collectionView.cellForItem(at: indexPath) as? YQPhotoCell else {
                 return
             }
             beginPoint = gesture.location(in: view)
-            tempImgView = UIImageView(image: cell.imageView.image)
+            tempImgView = animatableImageView(cell.imageView.image)
             tempImgView!.frame = cell.imageView.superview!.convert(cell.imageView.frame, to: nil)
             animater.tempImgView = tempImgView
-            
-            dismiss(animated: true) {
-
-            }
+            dismiss(animated: true)
         case .changed:
             let p = gesture.location(in: view)
             animater.move(CGPoint(x: p.x - beginPoint.x, y: p.y - beginPoint.y))
@@ -107,18 +114,14 @@ public class YQPhotoBrowser: UIViewController {
         default:
             break
         }
-
-
     }
-    /*
-     // MARK: - Navigation
 
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    func animatableImageView(_ image: UIImage?) -> UIImageView {
+        let imgView = UIImageView(image: image)
+        imgView.contentMode = .scaleAspectFill
+        imgView.clipsToBounds = true
+        return imgView
+    }
 
 }
 
@@ -126,25 +129,62 @@ public class YQPhotoBrowser: UIViewController {
 extension YQPhotoBrowser: UICollectionViewDelegate, UICollectionViewDataSource {
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(YQPhotoCell.self)", for: indexPath) as! YQPhotoCell
-        if let closure = urlForItemAtIndex {
-            cell.url = closure(indexPath.item)
+        if let closure = itemUrl {
+            cell.url = closure(indexPath)
         }
         return cell
     }
 
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return numberOfItems
+        return numberOfItems?(section) ?? 0
     }
 
+    public func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return numberOfSections?() ?? 1
+    }
+
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        findCurrentIndex()
+    }
+
+    public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        guard !decelerate else {
+            return
+        }
+        findCurrentIndex()
+    }
+
+    func findCurrentIndex() {
+        for cell in collectionView.visibleCells {
+            if cell.frame.minX == collectionView.contentOffset.x {
+                selectedIndex = collectionView.indexPath(for: cell)!
+                break
+            }
+        }
+    }
 }
 
-extension YQPhotoBrowser: YQPhotoDismissAimaterDelegate {
-    func animaterWillStartInteractiveTransition(_ animater: YQPhotoAnimater) {
-        self.collectionView.isHidden = true
+extension YQPhotoBrowser: YQPhotoAimaterDelegate {
+
+    func animaterWillStartPresentTransition(_ animater: YQPhotoAnimater?) {
+        collectionView.isHidden = true
     }
-    
-    func animaterDidEndInteractiveTransition(_ animater: YQPhotoAnimater) {
-        self.collectionView.isHidden = false
+
+    func animaterDidEndPresentTransition(_ animater: YQPhotoAnimater?) {
+        collectionView.isHidden = false
+    }
+
+    func animaterWillStartInteractiveTransition(_ animater: YQPhotoAnimater?) {
+        collectionView.isHidden = true
+        guard let imgView = dismission?(selectedIndex,.begin) else {return}
+        imgView.isHidden = true
+        animater?.toImgView = imgView
+    }
+
+    func animaterDidEndInteractiveTransition(_ animater: YQPhotoAnimater?) {
+        collectionView.isHidden = false
+        let _ = dismission?(selectedIndex,.finish)
+        animater?.toImgView?.isHidden = false
     }
     
     

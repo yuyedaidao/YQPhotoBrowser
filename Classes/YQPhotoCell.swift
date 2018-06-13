@@ -83,6 +83,7 @@ class YQPhotoCell: UICollectionViewCell {
         scrollView = UIScrollView()
         imageContainerView = UIView()
         imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
         super.init(frame: frame)
         scrollView.frame = bounds
         scrollView.delegate = self
