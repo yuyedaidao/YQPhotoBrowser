@@ -55,14 +55,54 @@ public class YQPhotoBrowser: UIViewController {
     func prepareViews() {
         topOperationView = UIView()
         topOperationView.yq.then { (view) in
-            view.backgroundColor = UIColor.clear
+            view.backgroundColor = UIColor.red
             self.view.addSubview(view)
             view.snp.makeConstraints({ (make) in
                 make.leading.trailing.equalToSuperview()
-                make.top.equalTo(20)
+                if #available(iOS 11.0, *) {
+                    make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(20)
+                } else {
+                    // Fallback on earlier versions
+                    make.top.equalTo(20)
+                }
                 make.height.equalTo(44)
             })
             backButton = UIButton(type: .custom)
+            backButton.yq.then({ (button) in
+                view.addSubview(button)
+                button.snp.makeConstraints({ (make) in
+                    make.width.height.equalTo(30)
+                    make.leading.equalTo(15)
+                    make.centerY.equalTo(view)
+                })
+                button.addTarget(self, action: #selector(backAction), for: .touchUpInside)
+            })
+        }
+
+        bottomOperationView = UIView()
+        bottomOperationView.yq.then { (view) in
+            view.backgroundColor = UIColor.blue
+            self.view.addSubview(view)
+            view.snp.makeConstraints({ (make) in
+                make.leading.trailing.equalToSuperview()
+                if #available(iOS 11.0, *) {
+                    make.bottom.equalTo(self.bottomLayoutGuide.snp.top).offset(-20)
+                } else {
+                    // Fallback on earlier versions
+                    make.bottom.equalTo(-20)
+                }
+                make.height.equalTo(44)
+            })
+            shareButton = UIButton(type: .custom)
+            shareButton.yq.then({ (button) in
+                view.addSubview(button)
+                button.snp.makeConstraints({ (make) in
+                    make.width.height.equalTo(30)
+                    make.leading.equalTo(15)
+                    make.centerY.equalTo(view)
+                })
+                button.addTarget(self, action: #selector(shareAction), for: .touchUpInside)
+            })
         }
     }
 
@@ -108,6 +148,13 @@ public class YQPhotoBrowser: UIViewController {
         super.didReceiveMemoryWarning()
     }
 
+    func animatableImageView(_ image: UIImage?) -> UIImageView {
+        let imgView = UIImageView(image: image)
+        imgView.contentMode = .scaleAspectFill
+        imgView.clipsToBounds = true
+        return imgView
+    }
+
     @objc func panAction(gesture: UIPanGestureRecognizer) {
         switch gesture.state {
         case .began:
@@ -137,11 +184,16 @@ public class YQPhotoBrowser: UIViewController {
         }
     }
 
-    func animatableImageView(_ image: UIImage?) -> UIImageView {
-        let imgView = UIImageView(image: image)
-        imgView.contentMode = .scaleAspectFill
-        imgView.clipsToBounds = true
-        return imgView
+    @objc func backAction() {
+        dismiss(animated: true)
+    }
+
+    @objc func shareAction() {
+        let shareController = UIActivityViewController(activityItems: [self.itemUrl!(self.selectedIndex)], applicationActivities: nil)
+        shareController.completionWithItemsHandler = {(activityType, completed, returnItems, error) in
+
+        }
+        present(shareController, animated: true)
     }
 
 }
