@@ -38,8 +38,12 @@ class YQProgressLayer: CAShapeLayer {
     }
 }
 
+protocol YQPhotoCellDelegate: NSObjectProtocol {
+    func clickOnce(_ cell: YQPhotoCell)
+}
 class YQPhotoCell: UICollectionViewCell {
     var beginPoint = CGPoint.zero
+    weak var delegate: YQPhotoCellDelegate?
     var url: URL? {
         willSet {
             guard newValue != url else {
@@ -96,10 +100,13 @@ class YQPhotoCell: UICollectionViewCell {
         scrollView.addSubview(imageContainerView)
         imageContainerView.addSubview(imageView)
 
-        let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapAction(gesture:)))
-        tap.numberOfTapsRequired = 2
-        self.addGestureRecognizer(tap)
-
+        let oneTap = UITapGestureRecognizer(target: self, action: #selector(oneTapAction(gesture:)))
+        oneTap.numberOfTapsRequired = 1
+        self.addGestureRecognizer(oneTap)
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(doubleTapAction(gesture:)))
+        doubleTap.numberOfTapsRequired = 2
+        self.addGestureRecognizer(doubleTap)
+        oneTap.require(toFail: doubleTap)
     }
 
     override func prepareForReuse() {
@@ -107,7 +114,6 @@ class YQPhotoCell: UICollectionViewCell {
     }
 
     private func resizeSubviews() {
-
         imageContainerView.frame.origin = CGPoint.zero
         imageContainerView.width = scrollView.width
         guard let image = imageView.image else {
@@ -149,7 +155,6 @@ class YQPhotoCell: UICollectionViewCell {
 }
 
 //MARK: Action
-
 extension YQPhotoCell {
     @objc func doubleTapAction(gesture: UITapGestureRecognizer) {
         if (scrollView.zoomScale > 1) {
@@ -160,7 +165,10 @@ extension YQPhotoCell {
             let ySize = scrollView.height / scrollView.maximumZoomScale
             scrollView.zoom(to: CGRect(x: location.x - xSize / 2, y: location.y - ySize / 2, width: xSize, height: ySize), animated: true)
         }
+    }
 
+    @objc func oneTapAction(gesture: UITapGestureRecognizer) {
+        delegate?.clickOnce(self)
     }
 }
 

@@ -13,7 +13,7 @@ public enum YQPhotoDismissState{
     case begin
     case finish
 }
-private let kTriggerOffset: CGFloat = 140.0
+private let kTriggerOffset: CGFloat = 60.0
 public class YQPhotoBrowser: UIViewController {
     var numberOfSections:(() -> Int)?
     var numberOfItems:((Int) -> Int)?
@@ -34,10 +34,11 @@ public class YQPhotoBrowser: UIViewController {
     private var shareButton: UIButton!
     private var topOperationView: UIView!
     private var bottomOperationView: UIView!
+    private var isHiddenStatusBar = false
 
     override open func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor.black
         let pan = UIPanGestureRecognizer(target: self, action: #selector(panAction(gesture:)))
         view.isUserInteractionEnabled = true
         view.addGestureRecognizer(pan)
@@ -55,7 +56,7 @@ public class YQPhotoBrowser: UIViewController {
     func prepareViews() {
         topOperationView = UIView()
         topOperationView.yq.then { (view) in
-            view.backgroundColor = UIColor.red
+            view.backgroundColor = UIColor.clear
             self.view.addSubview(view)
             view.snp.makeConstraints({ (make) in
                 make.leading.trailing.equalToSuperview()
@@ -70,6 +71,8 @@ public class YQPhotoBrowser: UIViewController {
             backButton = UIButton(type: .custom)
             backButton.yq.then({ (button) in
                 view.addSubview(button)
+                button.setImage(UIImage(named: "back"), for: .normal)
+                button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
                 button.snp.makeConstraints({ (make) in
                     make.width.height.equalTo(30)
                     make.leading.equalTo(15)
@@ -77,11 +80,23 @@ public class YQPhotoBrowser: UIViewController {
                 })
                 button.addTarget(self, action: #selector(backAction), for: .touchUpInside)
             })
+            shareButton = UIButton(type: .custom)
+            shareButton.yq.then({ (button) in
+                view.addSubview(button)
+                button.setImage(UIImage(named: "share"), for: .normal)
+                button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
+                button.snp.makeConstraints({ (make) in
+                    make.width.height.equalTo(30)
+                    make.trailing.equalTo(-15)
+                    make.centerY.equalTo(view)
+                })
+                button.addTarget(self, action: #selector(shareAction), for: .touchUpInside)
+            })
         }
 
         bottomOperationView = UIView()
         bottomOperationView.yq.then { (view) in
-            view.backgroundColor = UIColor.blue
+            view.backgroundColor = UIColor.clear
             self.view.addSubview(view)
             view.snp.makeConstraints({ (make) in
                 make.leading.trailing.equalToSuperview()
@@ -93,16 +108,7 @@ public class YQPhotoBrowser: UIViewController {
                 }
                 make.height.equalTo(44)
             })
-            shareButton = UIButton(type: .custom)
-            shareButton.yq.then({ (button) in
-                view.addSubview(button)
-                button.snp.makeConstraints({ (make) in
-                    make.width.height.equalTo(30)
-                    make.leading.equalTo(15)
-                    make.centerY.equalTo(view)
-                })
-                button.addTarget(self, action: #selector(shareAction), for: .touchUpInside)
-            })
+
         }
     }
 
@@ -125,7 +131,7 @@ public class YQPhotoBrowser: UIViewController {
         }
     }
 
-    public class func presented(by presentedController: UIViewController, with imageView: UIImageView?, numberOfSections:(() -> Int)? = nil, numberOfItems: ((Int) -> Int)? = nil, defaultIndex: IndexPath, itemUrl: @escaping((IndexPath) -> URL), selected: ((IndexPath) -> Void)? = nil, dismiss:((IndexPath,YQPhotoDismissState) -> UIImageView?)? = nil) {
+    public class func presented(by presentedController: UIViewController, with imageView: UIImageView?, numberOfSections:(() -> Int)? = nil, numberOfItems: ((Int) -> Int)? = nil, defaultIndex: IndexPath, itemUrl: @escaping((IndexPath) -> URL), selected:((IndexPath) -> Void)? = nil, dismiss:((IndexPath,YQPhotoDismissState) -> UIImageView?)? = nil) {
         let browser = YQPhotoBrowser()
         if let imgView = imageView {
             let rect = imgView.superview!.convert(imgView.frame, to: nil)
@@ -148,13 +154,10 @@ public class YQPhotoBrowser: UIViewController {
         super.didReceiveMemoryWarning()
     }
 
-    func animatableImageView(_ image: UIImage?) -> UIImageView {
-        let imgView = UIImageView(image: image)
-        imgView.contentMode = .scaleAspectFill
-        imgView.clipsToBounds = true
-        return imgView
-    }
+}
 
+// MARK: - Action
+extension YQPhotoBrowser {
     @objc func panAction(gesture: UIPanGestureRecognizer) {
         switch gesture.state {
         case .began:
@@ -162,9 +165,6 @@ public class YQPhotoBrowser: UIViewController {
                 return
             }
             beginPoint = gesture.location(in: view)
-            tempImgView = animatableImageView(cell.imageView.image)
-            tempImgView!.frame = cell.imageView.superview!.convert(cell.imageView.frame, to: nil)
-            animater.tempImgView = tempImgView
             dismiss(animated: true)
         case .changed:
             let p = gesture.location(in: view)
@@ -172,7 +172,7 @@ public class YQPhotoBrowser: UIViewController {
         case .ended:
             let p = gesture.location(in: view)
             let deltaY = p.y - beginPoint.y
-            if deltaY > kTriggerOffset {
+            if deltaY > kTriggerOffset || gesture.velocity(in: view).y > 1200 {
                 animater.finish()
             } else {
                 animater.cancel()
@@ -185,6 +185,7 @@ public class YQPhotoBrowser: UIViewController {
     }
 
     @objc func backAction() {
+        animater.isInteractive = false
         dismiss(animated: true)
     }
 
@@ -198,13 +199,26 @@ public class YQPhotoBrowser: UIViewController {
         }
         present(shareController, animated: true)
     }
+}
 
+// MARK: - StatusBar
+extension YQPhotoBrowser {
+    public override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    public override var prefersStatusBarHidden: Bool {
+        return isHiddenStatusBar
+    }
+    public override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return UIStatusBarAnimation.fade
+    }
 }
 
 // MARK: UICollectionView
-extension YQPhotoBrowser: UICollectionViewDelegate, UICollectionViewDataSource {
+extension YQPhotoBrowser: UICollectionViewDelegate, UICollectionViewDataSource, YQPhotoCellDelegate {
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(YQPhotoCell.self)", for: indexPath) as! YQPhotoCell
+        cell.delegate = self
         if let closure = itemUrl {
             cell.url = closure(indexPath)
         }
@@ -230,11 +244,29 @@ extension YQPhotoBrowser: UICollectionViewDelegate, UICollectionViewDataSource {
         findCurrentIndex()
     }
 
+    func clickOnce(_ cell: YQPhotoCell) {
+        clearScreen()
+    }
+
     func findCurrentIndex() {
         for cell in collectionView.visibleCells {
             if cell.frame.minX == collectionView.contentOffset.x {
                 selectedIndex = collectionView.indexPath(for: cell)!
                 break
+            }
+        }
+    }
+
+    func clearScreen() {
+        isHiddenStatusBar = !isHiddenStatusBar
+        UIView.animate(withDuration: 0.15) {
+            self.setNeedsStatusBarAppearanceUpdate()
+            if self.isHiddenStatusBar {
+                self.topOperationView.alpha = 0
+                self.bottomOperationView.alpha = 0
+            } else {
+                self.topOperationView.alpha = 1
+                self.bottomOperationView.alpha = 1
             }
         }
     }
@@ -250,19 +282,19 @@ extension YQPhotoBrowser: YQPhotoAimaterDelegate {
         collectionView.isHidden = false
     }
 
-    func animaterWillStartInteractiveTransition(_ animater: YQPhotoAnimater?) {
+    func animaterWillStartInteractiveTransition(_ animater: YQPhotoAnimater?) -> (UIImageView, UIImageView?){
         collectionView.isHidden = true
-        guard let imgView = dismission?(selectedIndex,.begin) else {return}
-        imgView.isHidden = true
-        animater?.toImgView = imgView
+        let fromImgView = (collectionView.cellForItem(at: selectedIndex) as! YQPhotoCell).imageView
+        let toImgView = dismission?(selectedIndex,.begin)
+        toImgView?.isHidden = true
+        return (fromImgView, toImgView)
     }
 
-    func animaterDidEndInteractiveTransition(_ animater: YQPhotoAnimater?) {
+    func animaterDidEndInteractiveTransition(_ animater: YQPhotoAnimater?, _ toImageView: UIImageView?) {
         collectionView.isHidden = false
         let _ = dismission?(selectedIndex,.finish)
-        animater?.toImgView?.isHidden = false
+        toImageView?.isHidden = false
     }
-    
-    
+
 }
 

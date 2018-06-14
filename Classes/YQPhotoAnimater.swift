@@ -30,8 +30,8 @@ import UIKit
 //}
 
 protocol YQPhotoAimaterDelegate {
-    func animaterWillStartInteractiveTransition(_ animater: YQPhotoAnimater?)
-    func animaterDidEndInteractiveTransition(_ animater: YQPhotoAnimater?)
+    func animaterWillStartInteractiveTransition(_ animater: YQPhotoAnimater?) -> (UIImageView, UIImageView?)
+    func animaterDidEndInteractiveTransition(_ animater: YQPhotoAnimater?, _ toImageView: UIImageView?)
     func animaterWillStartPresentTransition(_ animater: YQPhotoAnimater?)
     func animaterDidEndPresentTransition(_ animater: YQPhotoAnimater?)
 }
@@ -47,7 +47,7 @@ class YQPhotoAnimater: NSObject {
     }
     var delegate: YQPhotoAimaterDelegate?
     fileprivate weak var dismissAnimater: YQPhotoDismissAnimater?
-
+    var isInteractive = true
     public init(_ delegate: YQPhotoAimaterDelegate? = nil) {
         self.delegate = delegate
     }
@@ -63,6 +63,7 @@ class YQPhotoAnimater: NSObject {
     func move(_ offset: CGPoint) {
         dismissAnimater?.move(offset)
     }
+
 }
 
 extension YQPhotoAnimater: UIViewControllerTransitioningDelegate {
@@ -75,7 +76,7 @@ extension YQPhotoAnimater: UIViewControllerTransitioningDelegate {
     }
 
     func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        return YQPhotoDismissAnimater(self,tempImgView,toImgView)
+        return  isInteractive ? YQPhotoDismissAnimater(self,tempImgView,toImgView) : nil
     }
 }
 
@@ -113,7 +114,7 @@ class YQPhotoPresentAnimater: NSObject, UIViewControllerAnimatedTransitioning {
         }
     }
 
-    func finalFrame(_ imgView: UIImageView) -> CGRect{
+    func finalFrame(_ imgView: UIImageView) -> CGRect {
         var rect = CGRect.zero
         rect.size.width = UIScreen.main.width
         guard let image = imgView.image else {
@@ -137,10 +138,50 @@ class YQPhotoPresentAnimater: NSObject, UIViewControllerAnimatedTransitioning {
     }
 }
 
+fileprivate func animatableImageView(_ image: UIImage?) -> UIImageView {
+    let imgView = UIImageView(image: image)
+    imgView.contentMode = .scaleAspectFill
+    imgView.clipsToBounds = true
+    return imgView
+}
+
 class YQPhotoDismissAnimater: NSObject, UIViewControllerAnimatedTransitioning, UIViewControllerInteractiveTransitioning  {
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        fatalError("需要实现非交互时动画效果")
+        guard let (fromImgView, toImgView) = animater?.delegate?.animaterWillStartInteractiveTransition(animater), let superFromImgView = fromImgView.superview else {
+            fatalError("需要在animaterWillStartInteractiveTransition里返回当前的UIImageView")
+        }
+        let tempImgView = animatableImageView(fromImgView.image)
+        self.tempImgView = tempImgView
+        self.toImgView = toImgView
+        tempImgView.frame = superFromImgView.convert(fromImgView.frame, to: nil)
+        beginFrame = tempImgView.frame
+        guard let toView = transitionContext.view(forKey: .to) else {return}
+        self.transitionContext = transitionContext
+        let containerView = transitionContext.containerView
+        containerView.addSubview(toView)
+        containerView.sendSubview(toBack: toView)
+        containerView.addSubview(tempImgView)
+        guard let fromView = transitionContext.view(forKey: .from) else {
+            fatalError()
+        }
+        var rect: CGRect
+        if let imgView = toImgView, let superView = imgView.superview {
+            rect = superView.convert(imgView.frame, to: nil)
+        } else {
+            rect = CGRect(x: 0, y: 0, width: 50, height: 50)
+            rect.center = CGPoint(x: UIScreen.main.width / 2, y: UIScreen.main.height + rect.height / 2)
+        }
+        UIView.animate(withDuration: 0.25, delay: 0.0, options: [.curveEaseInOut, .beginFromCurrentState], animations: {
+            tempImgView.frame = rect
+            fromView.alpha = 0
+        }, completion: {finished in
+            tempImgView.removeFromSuperview()
+            self.transitionContext?.completeTransition(true)
+            self.transitionContext?.finishInteractiveTransition()
+            self.animater?.delegate?.animaterDidEndInteractiveTransition(self.animater, self.toImgView)
+        })
     }
+
     private var tempImgView: UIImageView?
     fileprivate weak var toImgView: UIImageView?
     private weak var animater: YQPhotoAnimater?
@@ -160,14 +201,20 @@ class YQPhotoDismissAnimater: NSObject, UIViewControllerAnimatedTransitioning, U
     }
 
     func startInteractiveTransition(_ transitionContext: UIViewControllerContextTransitioning) {
-        guard let imgView = tempImgView, let toView = transitionContext.view(forKey: .to) else {return}
+        guard let (fromImgView, toImgView) = animater?.delegate?.animaterWillStartInteractiveTransition(animater), let superFromImgView = fromImgView.superview else {
+            fatalError("需要在animaterWillStartInteractiveTransition里返回当前的UIImageView")
+        }
+        let tempImgView = animatableImageView(fromImgView.image)
+        self.tempImgView = tempImgView
+        self.toImgView = toImgView
+        tempImgView.frame = superFromImgView.convert(fromImgView.frame, to: nil)
+        beginFrame = tempImgView.frame
+        guard let toView = transitionContext.view(forKey: .to) else {return}
         self.transitionContext = transitionContext
         let containerView = transitionContext.containerView
         containerView.addSubview(toView)
         containerView.sendSubview(toBack: toView)
-        containerView.addSubview(imgView)
-        beginFrame = imgView.frame
-        animater?.delegate?.animaterWillStartInteractiveTransition(animater)
+        containerView.addSubview(tempImgView)
     }
 
     func finish() {
@@ -186,9 +233,9 @@ class YQPhotoDismissAnimater: NSObject, UIViewControllerAnimatedTransitioning, U
             fromView.alpha = 0
         }, completion: {finished in
             tempImgView.removeFromSuperview()
-            self.transitionContext?.finishInteractiveTransition()
             self.transitionContext?.completeTransition(true)
-            self.animater?.delegate?.animaterDidEndInteractiveTransition(self.animater)
+            self.transitionContext?.finishInteractiveTransition()
+            self.animater?.delegate?.animaterDidEndInteractiveTransition(self.animater, self.toImgView)
         })
     }
 
@@ -196,14 +243,14 @@ class YQPhotoDismissAnimater: NSObject, UIViewControllerAnimatedTransitioning, U
         guard let imgView = tempImgView, let fromView = self.transitionContext?.view(forKey: .from) else {
             fatalError()
         }
-        UIView.animate(withDuration: 0.2, delay: 0.0, options: [.curveLinear, .beginFromCurrentState], animations: {
+        UIView.animate(withDuration: 0.2, delay: 0.0, options: [.curveEaseIn, .beginFromCurrentState], animations: {
             imgView.frame = self.beginFrame
             fromView.alpha = 1
         }, completion: {finished in
             imgView.removeFromSuperview()
-            self.transitionContext?.cancelInteractiveTransition()
             self.transitionContext?.completeTransition(false)
-            self.animater?.delegate?.animaterDidEndInteractiveTransition(self.animater)
+            self.transitionContext?.cancelInteractiveTransition()
+            self.animater?.delegate?.animaterDidEndInteractiveTransition(self.animater, self.toImgView)
         })
     }
 
