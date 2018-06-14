@@ -13,13 +13,21 @@ private let reuseIdentifier = "CollectionViewCell"
 class CollectionViewController: UICollectionViewController {
     lazy var dataArray: [String]  = {
         return ["https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1496405460191&di=480afcff086c1a4a1e4afce0341830dd&imgtype=0&src=http%3A%2F%2Fmvimg1.meitudata.com%2F56cea5d03f5493829.jpg",
+                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528993047751&di=997c4dbe0724041005216940ba87de8f&imgtype=0&src=http%3A%2F%2Fwww.sinaimg.cn%2Fdy%2Fslidenews%2F3_img%2F2017_12%2F85178_417292_127040.jpg",
                 "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1496405460181&di=276302b3cf58c4f4331f8ba4be550e2c&imgtype=0&src=http%3A%2F%2Fimg02.tooopen.com%2Fimages%2F20160427%2Ftooopen_sy_160701449393.jpg",
+                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528996792630&di=13eea2e39d7523a52c1fdc46297a36db&imgtype=0&src=http%3A%2F%2Fs13.sinaimg.cn%2Fmw690%2F006d2iVGgy6VEqNAKM48c%26690",
                 "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1496406031513&di=3f05bfecba0688fe0b1002ab8108b756&imgtype=0&src=http%3A%2F%2Fimg17.3lian.com%2Fd%2Ffile%2F201702%2F16%2Fc739f33257cb00cc209b533fdfebe85d.jpg",
+                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528996905414&di=d972614c1216afb1fcc4e7ca140ccff3&imgtype=0&src=http%3A%2F%2Fs17.mogucdn.com%2Fp1%2F160420%2F130571905_ie4geytggbsgcojqhazdambqgiyde_640x960.jpg_468x468.jpg",
                 ]
     }()
+    @IBOutlet weak var collectionLayout: UICollectionViewFlowLayout!
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let width = UIScreen.main.width / 3
+        collectionLayout.itemSize = CGSize(width: width, height: width)
+        collectionLayout.minimumInteritemSpacing = 0
+        collectionLayout.minimumLineSpacing = 0
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -53,7 +61,7 @@ class CollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 3
+        return 6
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
