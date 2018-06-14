@@ -21,6 +21,8 @@
 		21A26E4A1EE1645F007AC2A9 /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 21A26E481EE1645F007AC2A9 /* TableViewCell.xib */; };
 		555A247B20CE12DC0079D465 /* YQPhotoAnimater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555A247A20CE12DC0079D465 /* YQPhotoAnimater.swift */; };
 		556AD4E820D11CA200415511 /* YQPhotoThen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556AD4E720D11CA200415511 /* YQPhotoThen.swift */; };
+		55E3A7A320D27D2F004B2AA3 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E3A7A220D27D2F004B2AA3 /* CollectionViewCell.swift */; };
+		55E3A7A520D27D91004B2AA3 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E3A7A420D27D91004B2AA3 /* CollectionViewController.swift */; };
 		6DD222D06A0BA5E4A4243EF7 /* Pods_YQPhotoBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE2D63E5E1FDBBCCF7D9337F /* Pods_YQPhotoBrowser.framework */; };
 		A50A235A84055E5455951C02 /* Pods_YQPhotoBrowserTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79CE28A44B475B77A492EAAC /* Pods_YQPhotoBrowserTests.framework */; };
 		DA46E38AD5F0C051C9369921 /* Pods_YQPhotoBrowserUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F8C217C04A9F0DBE3B422A /* Pods_YQPhotoBrowserUITests.framework */; };
@@ -68,6 +70,8 @@
 		42F8C217C04A9F0DBE3B422A /* Pods_YQPhotoBrowserUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YQPhotoBrowserUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		555A247A20CE12DC0079D465 /* YQPhotoAnimater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YQPhotoAnimater.swift; sourceTree = "<group>"; };
 		556AD4E720D11CA200415511 /* YQPhotoThen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YQPhotoThen.swift; sourceTree = "<group>"; };
+		55E3A7A220D27D2F004B2AA3 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		55E3A7A420D27D91004B2AA3 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		79CE28A44B475B77A492EAAC /* Pods_YQPhotoBrowserTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YQPhotoBrowserTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A39E044B85EAF11663A39387 /* Pods-YQPhotoBrowserUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YQPhotoBrowserUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YQPhotoBrowserUITests/Pods-YQPhotoBrowserUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		BE2D63E5E1FDBBCCF7D9337F /* Pods_YQPhotoBrowser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YQPhotoBrowser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -149,6 +153,8 @@
 				21A26E1C1EE0F73F007AC2A9 /* Info.plist */,
 				21A26E471EE1645F007AC2A9 /* TableViewCell.swift */,
 				21A26E481EE1645F007AC2A9 /* TableViewCell.xib */,
+				55E3A7A220D27D2F004B2AA3 /* CollectionViewCell.swift */,
+				55E3A7A420D27D91004B2AA3 /* CollectionViewController.swift */,
 			);
 			path = YQPhotoBrowser;
 			sourceTree = "<group>";
@@ -495,7 +501,9 @@
 			files = (
 				219BF76E1EEE7DFF005E2861 /* YQPhotoCell.swift in Sources */,
 				219BF76D1EEE7DFC005E2861 /* YQExtension.swift in Sources */,
+				55E3A7A320D27D2F004B2AA3 /* CollectionViewCell.swift in Sources */,
 				21A26E491EE1645F007AC2A9 /* TableViewCell.swift in Sources */,
+				55E3A7A520D27D91004B2AA3 /* CollectionViewController.swift in Sources */,
 				21A26E131EE0F73F007AC2A9 /* ViewController.swift in Sources */,
 				555A247B20CE12DC0079D465 /* YQPhotoAnimater.swift in Sources */,
 				21A26E111EE0F73F007AC2A9 /* AppDelegate.swift in Sources */,
