@@ -189,7 +189,10 @@ public class YQPhotoBrowser: UIViewController {
     }
 
     @objc func shareAction() {
-        let shareController = UIActivityViewController(activityItems: [self.itemUrl!(self.selectedIndex)], applicationActivities: nil)
+        guard let cell = self.collectionView.cellForItem(at: self.selectedIndex) as? YQPhotoCell, let image = cell.imageView.image else {
+            return
+        }
+        let shareController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
         shareController.completionWithItemsHandler = {(activityType, completed, returnItems, error) in
 
         }
