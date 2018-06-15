@@ -103,10 +103,10 @@ class YQPhotoCell: UICollectionViewCell {
 
         let oneTap = UITapGestureRecognizer(target: self, action: #selector(oneTapAction(gesture:)))
         oneTap.numberOfTapsRequired = 1
-        self.addGestureRecognizer(oneTap)
+        addGestureRecognizer(oneTap)
         let doubleTap = UITapGestureRecognizer(target: self, action: #selector(doubleTapAction(gesture:)))
         doubleTap.numberOfTapsRequired = 2
-        self.addGestureRecognizer(doubleTap)
+        addGestureRecognizer(doubleTap)
         oneTap.require(toFail: doubleTap)
     }
 
