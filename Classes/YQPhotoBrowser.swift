@@ -146,26 +146,6 @@ public class YQPhotoBrowser: UIViewController {
         presentedController.present(browser, animated: true)
     }
 
-    override open func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-
-    public override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        debugPrint("willDisappear")
-    }
-
-    public override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-//        setNeedsStatusBarAppearanceUpdate()
-
-        debugPrint("willAppear")
-    }
-
-    open override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        debugPrint("didAppear")
-    }
 }
 
 // MARK: - Action
@@ -213,11 +193,9 @@ extension YQPhotoBrowser {
 // MARK: - StatusBar
 extension YQPhotoBrowser {
     public override var preferredStatusBarStyle: UIStatusBarStyle {
-        debugPrint("style")
         return .lightContent
     }
     public override var prefersStatusBarHidden: Bool {
-        debugPrint("isHiddenStatusBar \(isHiddenStatusBar)")
         return isHiddenStatusBar
     }
     public override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
@@ -306,7 +284,6 @@ extension YQPhotoBrowser: YQPhotoAimaterDelegate {
         collectionView.isHidden = false
         let _ = dismission?(selectedIndex,.finish)
         toImageView?.isHidden = false
-        setNeedsStatusBarAppearanceUpdate()
     }
 
 }

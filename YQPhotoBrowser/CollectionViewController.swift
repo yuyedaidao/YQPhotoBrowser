@@ -34,17 +34,7 @@ class CollectionViewController: UICollectionViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    public override var preferredStatusBarStyle: UIStatusBarStyle {
-        debugPrint("啊？")
-        return UIStatusBarStyle.default
-    }
-    public override var prefersStatusBarHidden: Bool {
-        debugPrint("啊！")
-        return false
-    }
-    public override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
-        return UIStatusBarAnimation.fade
-    }
+    
     /*
     // MARK: - Navigation
 
