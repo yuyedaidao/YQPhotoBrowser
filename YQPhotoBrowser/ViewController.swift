@@ -50,18 +50,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 //        YQPhotoBrowser.presented(by: self, with: imageView, numberOfItems: dataArray.count, defaultIndex: indexPath.row, itemUrl:{ (index) -> URL in
 //            return
 //        })
-        YQPhotoBrowser.presented(by: self, with: imageView, numberOfItems: { section in
-            return self.dataArray.count
-        }, defaultIndex: IndexPath(item: indexPath.row, section: 0), itemUrl: { (indexPath) -> URL in
-            return URL(string: self.dataArray[indexPath.item])!
-        }, selected: { (indexPath) in
-            print(indexPath)
-        }) { (indexPath, state) -> UIImageView? in
-            if state == .begin {
-                return (self.tableView.cellForRow(at: indexPath) as? TableViewCell)?.imgView
-            }
-            return nil
-        }
+//        YQPhotoBrowser.presented(by: self, with: imageView, numberOfItems: { section in
+//            return self.dataArray.count
+//        }, defaultIndex: IndexPath(item: indexPath.row, section: 0), itemUrl: { (indexPath) -> URL in
+//            return URL(string: self.dataArray[indexPath.item])!
+//        }, selected: { (indexPath) in
+//            print(indexPath)
+//        }) { (indexPath, state) -> UIImageView? in
+//            if state == .begin {
+//                return (self.tableView.cellForRow(at: indexPath) as? TableViewCell)?.imgView
+//            }
+//            return nil
+//        }
     }
     
 }

@@ -13,11 +13,21 @@ public enum YQPhotoDismissState{
     case begin
     case finish
 }
+
+public enum YQPhotoItemType {
+    case jpeg
+    case png
+    case gif
+    case video
+}
+
+public typealias  YQPhotoURLGetter = (IndexPath) -> (URL, YQPhotoItemType)
 private let kTriggerOffset: CGFloat = 60.0
+
 public class YQPhotoBrowser: UIViewController {
     var numberOfSections:(() -> Int)?
     var numberOfItems:((Int) -> Int)?
-    var itemUrl: ((IndexPath) -> URL)?
+    var itemUrl: YQPhotoURLGetter!
     var dismission: ((IndexPath, YQPhotoDismissState) -> UIImageView?)?
     var selectedIndex = IndexPath(item: 0, section: 0) {
         didSet {
@@ -118,6 +128,7 @@ public class YQPhotoBrowser: UIViewController {
         collectionView = UICollectionView(frame: rect, collectionViewLayout: layout)
         collectionView.backgroundColor = UIColor.clear
         collectionView.register(YQPhotoCell.self, forCellWithReuseIdentifier: "\(YQPhotoCell.self)")
+        collectionView.register(YQPhotoVideoCell.self, forCellWithReuseIdentifier: "\(YQPhotoVideoCell.self)")
         collectionView.isPagingEnabled = true
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -127,7 +138,7 @@ public class YQPhotoBrowser: UIViewController {
         }
     }
 
-    public class func presented(by presentedController: UIViewController, with imageView: UIImageView?, numberOfSections:(() -> Int)? = nil, numberOfItems: ((Int) -> Int)? = nil, defaultIndex: IndexPath, itemUrl: @escaping((IndexPath) -> URL), selected:((IndexPath) -> Void)? = nil, dismiss:((IndexPath,YQPhotoDismissState) -> UIImageView?)? = nil) {
+    public class func presented(by presentedController: UIViewController, with imageView: UIImageView?, numberOfSections:(() -> Int)? = nil, numberOfItems: ((Int) -> Int)? = nil, defaultIndex: IndexPath, itemUrl: @escaping YQPhotoURLGetter, selected:((IndexPath) -> Void)? = nil, dismiss:((IndexPath,YQPhotoDismissState) -> UIImageView?)? = nil) {
         let browser = YQPhotoBrowser()
         if let imgView = imageView {
             let rect = imgView.superview!.convert(imgView.frame, to: nil)
@@ -207,12 +218,16 @@ extension YQPhotoBrowser {
 // MARK: UICollectionView
 extension YQPhotoBrowser: UICollectionViewDelegate, UICollectionViewDataSource, YQPhotoCellDelegate {
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(YQPhotoCell.self)", for: indexPath) as! YQPhotoCell
-        cell.delegate = self
-        if let closure = itemUrl {
-            cell.url = closure(indexPath)
+        let item = itemUrl(indexPath)
+        var cell: YQPhotoCellCompatible
+        if item.1 == .video {
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(YQPhotoVideoCell.self)", for: indexPath) as! YQPhotoCellCompatible
+        } else {
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(YQPhotoCell.self)", for: indexPath) as! YQPhotoCellCompatible
         }
-        return cell
+        cell.delegate = self
+        cell.url = item.0
+        return cell as! UICollectionViewCell
     }
 
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -234,7 +249,7 @@ extension YQPhotoBrowser: UICollectionViewDelegate, UICollectionViewDataSource, 
         findCurrentIndex()
     }
 
-    func clickOnce(_ cell: YQPhotoCell) {
+    func clickOnce(_ cell: YQPhotoCellCompatible) {
         clearScreen()
     }
 

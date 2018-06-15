@@ -21,7 +21,8 @@ class CollectionViewController: UICollectionViewController {
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        let videoUrl = Bundle.main.path(forResource: "test", ofType: "MOV")
+        self.dataArray.append(videoUrl!)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -34,7 +35,7 @@ class CollectionViewController: UICollectionViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
     /*
     // MARK: - Navigation
 
@@ -55,7 +56,7 @@ class CollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 4
+        return 5
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -70,8 +71,11 @@ class CollectionViewController: UICollectionViewController {
         let imageView = (collectionView.cellForItem(at: indexPath) as! CollectionViewCell).imgView
         YQPhotoBrowser.presented(by: self, with: imageView, numberOfSections: {40}, numberOfItems: { section in
             return self.dataArray.count
-        }, defaultIndex: indexPath, itemUrl: { (indexPath) -> URL in
-            return URL(string: self.dataArray[indexPath.item])!
+        }, defaultIndex: indexPath, itemUrl: { (indexPath) -> (URL, YQPhotoItemType) in
+            if indexPath.item == 4 {
+                return (URL(fileURLWithPath: self.dataArray[indexPath.item]), .video)
+            }
+            return (URL(string: self.dataArray[indexPath.item])!, YQPhotoItemType.jpeg)
         }, selected: { (indexPath) in
             collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .centeredVertically)
         }) { (indexPath, state) -> UIImageView? in

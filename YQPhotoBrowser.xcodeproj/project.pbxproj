@@ -21,6 +21,9 @@
 		21A26E4A1EE1645F007AC2A9 /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 21A26E481EE1645F007AC2A9 /* TableViewCell.xib */; };
 		555A247B20CE12DC0079D465 /* YQPhotoAnimater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555A247A20CE12DC0079D465 /* YQPhotoAnimater.swift */; };
 		556AD4E820D11CA200415511 /* YQPhotoThen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556AD4E720D11CA200415511 /* YQPhotoThen.swift */; };
+		55CD526320D3BE5B003C33B2 /* YQPhotoVideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CD526220D3BE5B003C33B2 /* YQPhotoVideoCell.swift */; };
+		55CD526520D3BEA3003C33B2 /* YQPhotoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CD526420D3BEA3003C33B2 /* YQPhotoProtocol.swift */; };
+		55CD526720D40244003C33B2 /* test.MOV in Resources */ = {isa = PBXBuildFile; fileRef = 55CD526620D40244003C33B2 /* test.MOV */; };
 		55E3A7A320D27D2F004B2AA3 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E3A7A220D27D2F004B2AA3 /* CollectionViewCell.swift */; };
 		55E3A7A520D27D91004B2AA3 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E3A7A420D27D91004B2AA3 /* CollectionViewController.swift */; };
 		6DD222D06A0BA5E4A4243EF7 /* Pods_YQPhotoBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE2D63E5E1FDBBCCF7D9337F /* Pods_YQPhotoBrowser.framework */; };
@@ -70,6 +73,9 @@
 		42F8C217C04A9F0DBE3B422A /* Pods_YQPhotoBrowserUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YQPhotoBrowserUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		555A247A20CE12DC0079D465 /* YQPhotoAnimater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YQPhotoAnimater.swift; sourceTree = "<group>"; };
 		556AD4E720D11CA200415511 /* YQPhotoThen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YQPhotoThen.swift; sourceTree = "<group>"; };
+		55CD526220D3BE5B003C33B2 /* YQPhotoVideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YQPhotoVideoCell.swift; sourceTree = "<group>"; };
+		55CD526420D3BEA3003C33B2 /* YQPhotoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YQPhotoProtocol.swift; sourceTree = "<group>"; };
+		55CD526620D40244003C33B2 /* test.MOV */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = test.MOV; sourceTree = "<group>"; };
 		55E3A7A220D27D2F004B2AA3 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		55E3A7A420D27D91004B2AA3 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		79CE28A44B475B77A492EAAC /* Pods_YQPhotoBrowserTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YQPhotoBrowserTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -113,6 +119,8 @@
 				211F7D811EEE7AD700538855 /* YQExtension.swift */,
 				211F7D821EEE7AD700538855 /* YQPhotoBrowser.swift */,
 				211F7D831EEE7AD700538855 /* YQPhotoCell.swift */,
+				55CD526420D3BEA3003C33B2 /* YQPhotoProtocol.swift */,
+				55CD526220D3BE5B003C33B2 /* YQPhotoVideoCell.swift */,
 				555A247A20CE12DC0079D465 /* YQPhotoAnimater.swift */,
 				556AD4E720D11CA200415511 /* YQPhotoThen.swift */,
 			);
@@ -145,6 +153,7 @@
 		21A26E0F1EE0F73F007AC2A9 /* YQPhotoBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				55CD526620D40244003C33B2 /* test.MOV */,
 				21A26E101EE0F73F007AC2A9 /* AppDelegate.swift */,
 				21A26E121EE0F73F007AC2A9 /* ViewController.swift */,
 				21A26E141EE0F73F007AC2A9 /* Main.storyboard */,
@@ -321,6 +330,7 @@
 			files = (
 				21A26E1B1EE0F73F007AC2A9 /* LaunchScreen.storyboard in Resources */,
 				21A26E4A1EE1645F007AC2A9 /* TableViewCell.xib in Resources */,
+				55CD526720D40244003C33B2 /* test.MOV in Resources */,
 				21A26E181EE0F73F007AC2A9 /* Assets.xcassets in Resources */,
 				21A26E161EE0F73F007AC2A9 /* Main.storyboard in Resources */,
 			);
@@ -501,9 +511,11 @@
 			files = (
 				219BF76E1EEE7DFF005E2861 /* YQPhotoCell.swift in Sources */,
 				219BF76D1EEE7DFC005E2861 /* YQExtension.swift in Sources */,
+				55CD526520D3BEA3003C33B2 /* YQPhotoProtocol.swift in Sources */,
 				55E3A7A320D27D2F004B2AA3 /* CollectionViewCell.swift in Sources */,
 				21A26E491EE1645F007AC2A9 /* TableViewCell.swift in Sources */,
 				55E3A7A520D27D91004B2AA3 /* CollectionViewController.swift in Sources */,
+				55CD526320D3BE5B003C33B2 /* YQPhotoVideoCell.swift in Sources */,
 				21A26E131EE0F73F007AC2A9 /* ViewController.swift in Sources */,
 				555A247B20CE12DC0079D465 /* YQPhotoAnimater.swift in Sources */,
 				21A26E111EE0F73F007AC2A9 /* AppDelegate.swift in Sources */,

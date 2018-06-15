@@ -38,10 +38,8 @@ class YQProgressLayer: CAShapeLayer {
     }
 }
 
-protocol YQPhotoCellDelegate: NSObjectProtocol {
-    func clickOnce(_ cell: YQPhotoCell)
-}
-class YQPhotoCell: UICollectionViewCell {
+class YQPhotoCell: UICollectionViewCell, YQPhotoCellCompatible {
+
     var beginPoint = CGPoint.zero
     weak var delegate: YQPhotoCellDelegate?
     var url: URL? {
