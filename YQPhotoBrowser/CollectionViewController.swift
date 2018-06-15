@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 private let reuseIdentifier = "CollectionViewCell"
 
@@ -15,6 +16,7 @@ class CollectionViewController: UICollectionViewController {
         return ["https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1496405460191&di=480afcff086c1a4a1e4afce0341830dd&imgtype=0&src=http%3A%2F%2Fmvimg1.meitudata.com%2F56cea5d03f5493829.jpg",
                 "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1496405460181&di=276302b3cf58c4f4331f8ba4be550e2c&imgtype=0&src=http%3A%2F%2Fimg02.tooopen.com%2Fimages%2F20160427%2Ftooopen_sy_160701449393.jpg",
                 "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1496406031513&di=3f05bfecba0688fe0b1002ab8108b756&imgtype=0&src=http%3A%2F%2Fimg17.3lian.com%2Fd%2Ffile%2F201702%2F16%2Fc739f33257cb00cc209b533fdfebe85d.jpg",
+                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1529055821938&di=a18b1c2817d6523fdf4fc8d16e00849a&imgtype=0&src=http%3A%2F%2Fhiphotos.baidu.com%2Ffeed%2Fpic%2Fitem%2F8601a18b87d6277f914afaef22381f30e824fc89.jpg",
                 ]
     }()
     override func viewDidLoad() {
@@ -32,7 +34,17 @@ class CollectionViewController: UICollectionViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    public override var preferredStatusBarStyle: UIStatusBarStyle {
+        debugPrint("啊？")
+        return UIStatusBarStyle.default
+    }
+    public override var prefersStatusBarHidden: Bool {
+        debugPrint("啊！")
+        return false
+    }
+    public override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return UIStatusBarAnimation.fade
+    }
     /*
     // MARK: - Navigation
 
@@ -53,7 +65,7 @@ class CollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 3
+        return 4
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -75,6 +87,10 @@ class CollectionViewController: UICollectionViewController {
         }) { (indexPath, state) -> UIImageView? in
             if state == .begin {
                 return (collectionView.cellForItem(at: indexPath) as? CollectionViewCell)?.imgView
+            } else if state == .finish {
+                if let imgView = (collectionView.cellForItem(at: indexPath) as? CollectionViewCell)?.imgView {
+                    imgView.startAnimating()
+                }
             }
             return nil
         }

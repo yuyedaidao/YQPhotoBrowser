@@ -233,8 +233,8 @@ class YQPhotoDismissAnimater: NSObject, UIViewControllerAnimatedTransitioning, U
             fromView.alpha = 0
         }, completion: {finished in
             tempImgView.removeFromSuperview()
-            self.transitionContext?.completeTransition(true)
             self.transitionContext?.finishInteractiveTransition()
+            self.transitionContext?.completeTransition(true)
             self.animater?.delegate?.animaterDidEndInteractiveTransition(self.animater, self.toImgView)
         })
     }
@@ -248,8 +248,8 @@ class YQPhotoDismissAnimater: NSObject, UIViewControllerAnimatedTransitioning, U
             fromView.alpha = 1
         }, completion: {finished in
             imgView.removeFromSuperview()
-            self.transitionContext?.completeTransition(false)
             self.transitionContext?.cancelInteractiveTransition()
+            self.transitionContext?.completeTransition(false)//MARK:这个方法必须放在cancelInteractiveTransition后面，否则会造成StatusBar样式跟presenting view controller样式一样
             self.animater?.delegate?.animaterDidEndInteractiveTransition(self.animater, self.toImgView)
         })
     }

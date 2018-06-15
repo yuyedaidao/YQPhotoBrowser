@@ -36,6 +36,7 @@ public class YQPhotoBrowser: UIViewController {
     private var bottomOperationView: UIView!
     private var isHiddenStatusBar = false
 
+
     override open func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.black
@@ -47,10 +48,6 @@ public class YQPhotoBrowser: UIViewController {
         animater.delegate = self
         animater.tempImgView = tempImgView
         transitioningDelegate = animater
-    }
-
-    open override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
     }
 
     func prepareViews() {
@@ -108,7 +105,6 @@ public class YQPhotoBrowser: UIViewController {
                 }
                 make.height.equalTo(44)
             })
-
         }
     }
 
@@ -154,6 +150,22 @@ public class YQPhotoBrowser: UIViewController {
         super.didReceiveMemoryWarning()
     }
 
+    public override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        debugPrint("willDisappear")
+    }
+
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+//        setNeedsStatusBarAppearanceUpdate()
+
+        debugPrint("willAppear")
+    }
+
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        debugPrint("didAppear")
+    }
 }
 
 // MARK: - Action
@@ -161,9 +173,6 @@ extension YQPhotoBrowser {
     @objc func panAction(gesture: UIPanGestureRecognizer) {
         switch gesture.state {
         case .began:
-            guard let indexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)), let cell = collectionView.cellForItem(at: indexPath) as? YQPhotoCell else {
-                return
-            }
             beginPoint = gesture.location(in: view)
             dismiss(animated: true)
         case .changed:
@@ -204,14 +213,17 @@ extension YQPhotoBrowser {
 // MARK: - StatusBar
 extension YQPhotoBrowser {
     public override var preferredStatusBarStyle: UIStatusBarStyle {
+        debugPrint("style")
         return .lightContent
     }
     public override var prefersStatusBarHidden: Bool {
+        debugPrint("isHiddenStatusBar \(isHiddenStatusBar)")
         return isHiddenStatusBar
     }
     public override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
         return UIStatusBarAnimation.fade
     }
+
 }
 
 // MARK: UICollectionView
@@ -294,6 +306,7 @@ extension YQPhotoBrowser: YQPhotoAimaterDelegate {
         collectionView.isHidden = false
         let _ = dismission?(selectedIndex,.finish)
         toImageView?.isHidden = false
+        setNeedsStatusBarAppearanceUpdate()
     }
 
 }

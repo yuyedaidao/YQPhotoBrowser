@@ -56,7 +56,7 @@ class YQPhotoCell: UICollectionViewCell {
             }
 
             if u.isFileURL {
-                imageView.image = UIImage(contentsOfFile: u.path)
+                imageView.kf.setImage(with: u)
                 self.resizeSubviews()
             } else {
                 self.progressLayer.strokeEnd = 0
@@ -76,7 +76,7 @@ class YQPhotoCell: UICollectionViewCell {
     }
     let scrollView: UIScrollView
     let imageContainerView: UIView
-    let imageView: UIImageView
+    let imageView: AnimatedImageView
     lazy var progressLayer: YQProgressLayer = {
         let layer = YQProgressLayer.create()
         self.scrollView.layer.addSublayer(layer)
@@ -86,8 +86,9 @@ class YQPhotoCell: UICollectionViewCell {
     override init(frame: CGRect) {
         scrollView = UIScrollView()
         imageContainerView = UIView()
-        imageView = UIImageView()
+        imageView = AnimatedImageView()
         imageView.contentMode = .scaleAspectFill
+        imageView.runLoopMode = RunLoopMode.defaultRunLoopMode
         super.init(frame: frame)
         scrollView.frame = bounds
         scrollView.delegate = self

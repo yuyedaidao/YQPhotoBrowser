@@ -11,13 +11,17 @@ import Kingfisher
 
 class CollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var imgView: UIImageView!
+    @IBOutlet weak var imgView: AnimatedImageView!
 
     var url: String! {
         didSet {
             imgView.kf.setImage(with: URL(string: url), placeholder: nil, options: [.transition(.flipFromTop(0.3))], progressBlock: nil) { (image, error, type, url) in
-
             }
         }
+    }
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        imgView.runLoopMode = .defaultRunLoopMode
     }
 }
