@@ -89,6 +89,9 @@
                             <outlet property="delegate" destination="ARp-JV-EuL" id="U6u-kT-63K"/>
                         </connections>
                     </collectionView>
+                    <connections>
+                        <outlet property="collectionLayout" destination="j0U-BS-dM2" id="Scz-qm-kkH"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rRP-Pg-zY4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
