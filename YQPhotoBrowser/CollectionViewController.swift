@@ -23,7 +23,8 @@ class CollectionViewController: UICollectionViewController {
     @IBOutlet weak var collectionLayout: UICollectionViewFlowLayout!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        let videoUrl = Bundle.main.path(forResource: "test", ofType: "MOV")
+        self.dataArray.append(videoUrl!)
         let width = UIScreen.main.width / 3
         collectionLayout.itemSize = CGSize(width: width, height: width)
         collectionLayout.minimumInteritemSpacing = 0
@@ -61,7 +62,7 @@ class CollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 6
+        return 7
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -76,8 +77,11 @@ class CollectionViewController: UICollectionViewController {
         let imageView = (collectionView.cellForItem(at: indexPath) as! CollectionViewCell).imgView
         YQPhotoBrowser.presented(by: self, with: imageView, numberOfSections: {40}, numberOfItems: { section in
             return self.dataArray.count
-        }, defaultIndex: indexPath, itemUrl: { (indexPath) -> URL in
-            return URL(string: self.dataArray[indexPath.item])!
+        }, defaultIndex: indexPath, itemUrl: { (indexPath) -> (URL, YQPhotoItemType) in
+            if indexPath.item == 6 {
+                return (URL(fileURLWithPath: self.dataArray[indexPath.item]), .video)
+            }
+            return (URL(string: self.dataArray[indexPath.item])!, .jpeg)
         }, selected: { (indexPath) in
             collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .centeredVertically)
         }) { (indexPath, state) -> UIImageView? in

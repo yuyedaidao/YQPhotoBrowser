@@ -56,7 +56,7 @@ public class YQPhotoBrowser: UIViewController {
         prepareCollectionView()
         prepareViews()
         animater.delegate = self
-        animater.tempImgView = tempImgView
+        animater.tempView = tempImgView
         transitioningDelegate = animater
     }
 
@@ -279,6 +279,13 @@ extension YQPhotoBrowser: UICollectionViewDelegate, UICollectionViewDataSource, 
 
 extension YQPhotoBrowser: YQPhotoAimaterDelegate {
 
+    fileprivate func animatableImageView(_ image: UIImage?) -> UIImageView {
+        let imgView = UIImageView(image: image)
+        imgView.contentMode = .scaleAspectFill
+        imgView.clipsToBounds = true
+        return imgView
+    }
+    
     func animaterWillStartPresentTransition(_ animater: YQPhotoAnimater?) {
         collectionView.isHidden = true
     }
@@ -287,12 +294,16 @@ extension YQPhotoBrowser: YQPhotoAimaterDelegate {
         collectionView.isHidden = false
     }
 
-    func animaterWillStartInteractiveTransition(_ animater: YQPhotoAnimater?) -> (UIImageView, UIImageView?){
+    func animaterWillStartInteractiveTransition(_ animater: YQPhotoAnimater?) -> (UIView, UIImageView?){
         collectionView.isHidden = true
         let fromImgView = (collectionView.cellForItem(at: selectedIndex) as! YQPhotoCell).imageView
+        let tempImgView = animatableImageView(fromImgView.image)
+        if let fromSuperView = fromImgView.superview  {
+            tempImgView.frame = fromSuperView.convert(fromImgView.frame, to: nil)
+        }
         let toImgView = dismission?(selectedIndex,.begin)
         toImgView?.isHidden = true
-        return (fromImgView, toImgView)
+        return (tempImgView, toImgView)
     }
 
     func animaterDidEndInteractiveTransition(_ animater: YQPhotoAnimater?, _ toImageView: UIImageView?) {
