@@ -23,7 +23,7 @@ class CollectionViewController: UICollectionViewController {
     @IBOutlet weak var collectionLayout: UICollectionViewFlowLayout!
     override func viewDidLoad() {
         super.viewDidLoad()
-        let videoUrl = Bundle.main.path(forResource: "test", ofType: "MOV")
+        let videoUrl = Bundle.main.path(forResource: "IMG_0097", ofType: "MOV")
         self.dataArray.append(videoUrl!)
         let width = UIScreen.main.width / 3
         collectionLayout.itemSize = CGSize(width: width, height: width)
@@ -35,6 +35,7 @@ class CollectionViewController: UICollectionViewController {
         // Register cell classes
 
         // Do any additional setup after loading the view.
+        
     }
 
     override func didReceiveMemoryWarning() {

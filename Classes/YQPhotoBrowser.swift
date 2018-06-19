@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import AVFoundation
 
 public enum YQPhotoDismissState{
     case begin
@@ -46,6 +47,10 @@ public class YQPhotoBrowser: UIViewController {
     private var bottomOperationView: UIView!
     private var isHiddenStatusBar = false
 
+    /// 如果当前视图是视频视图，拖拽时再创建浮动视图会造成屏幕闪动现象，因此提前准备一个辅助视图
+    private lazy var assistantPlayerView = {
+        return YQPlayerView(player: nil)
+    }()
 
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +63,7 @@ public class YQPhotoBrowser: UIViewController {
         animater.delegate = self
         animater.tempView = tempImgView
         transitioningDelegate = animater
+        
     }
 
     func prepareViews() {
@@ -253,6 +259,10 @@ extension YQPhotoBrowser: UICollectionViewDelegate, UICollectionViewDataSource, 
         clearScreen()
     }
 
+    func videoCell(_ cell: YQPhotoCellCompatible, replacePlayer player: AVPlayer?) {
+        self.assistantPlayerView.player = player
+    }
+
     func findCurrentIndex() {
         for cell in collectionView.visibleCells {
             if cell.frame.minX == collectionView.contentOffset.x {
@@ -285,7 +295,7 @@ extension YQPhotoBrowser: YQPhotoAimaterDelegate {
         imgView.clipsToBounds = true
         return imgView
     }
-    
+
     func animaterWillStartPresentTransition(_ animater: YQPhotoAnimater?) {
         collectionView.isHidden = true
     }
@@ -294,19 +304,33 @@ extension YQPhotoBrowser: YQPhotoAimaterDelegate {
         collectionView.isHidden = false
     }
 
-    func animaterWillStartInteractiveTransition(_ animater: YQPhotoAnimater?) -> (UIView, UIImageView?){
+    func animaterWillStartInteractiveTransition(_ animater: YQPhotoAnimater?) -> (UIView, UIImageView?) {
         collectionView.isHidden = true
-        let fromImgView = (collectionView.cellForItem(at: selectedIndex) as! YQPhotoCell).imageView
-        let tempImgView = animatableImageView(fromImgView.image)
-        if let fromSuperView = fromImgView.superview  {
-            tempImgView.frame = fromSuperView.convert(fromImgView.frame, to: nil)
-        }
         let toImgView = dismission?(selectedIndex,.begin)
         toImgView?.isHidden = true
-        return (tempImgView, toImgView)
+        var tempView: UIView!
+        let cell = collectionView.cellForItem(at: selectedIndex)
+        if let photoCell = cell as? YQPhotoCell {
+            let fromImgView = photoCell.imageView
+            let tempImgView = animatableImageView(fromImgView.image)
+            if let fromSuperView = fromImgView.superview  {
+                tempImgView.frame = fromSuperView.convert(fromImgView.frame, to: nil)
+            }
+            tempView = tempImgView
+        } else if let videoCell = cell as? YQPhotoVideoCell {
+            let fromView = videoCell.playerView
+            tempView = assistantPlayerView
+            if videoCell.player != assistantPlayerView.player {
+                assistantPlayerView.player = videoCell.player
+            }
+            if let fromSuperView = fromView.superview {
+                tempView.frame = fromSuperView.convert(fromView.frame, to: nil)
+            }
+        }
+        return (tempView, toImgView)
     }
 
-    func animaterDidEndInteractiveTransition(_ animater: YQPhotoAnimater?, _ toImageView: UIImageView?) {
+    func animaterDidEndInteractiveTransition(_ animater: YQPhotoAnimater?, _ toImageView: UIImageView?, _ isCanceled: Bool) {
         collectionView.isHidden = false
         let _ = dismission?(selectedIndex,.finish)
         toImageView?.isHidden = false

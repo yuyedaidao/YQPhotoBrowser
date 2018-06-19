@@ -10,44 +10,66 @@ import UIKit
 import AVFoundation
 
 class YQPhotoVideoCell: UICollectionViewCell, YQPhotoCellCompatible {
-    var url: URL?
+    var url: URL? {
+        didSet {
+            if oldValue != url {
+                guard let url = url else {
+                    playerItem = nil
+                    return
+                }
+                playerItem = AVPlayerItem(url: url)
+            }
+        }
+    }
     weak var delegate: YQPhotoCellDelegate?
-    var playButton: UIButton!
+    private var playButton: UIButton!
     var player = AVPlayer()
-    var playItem: AVPlayerItem?
-
+    private var playerItem: AVPlayerItem?
     lazy var playerView: UIView = {
-        let view =  UIView()
-        let playerLayer = AVPlayerLayer(player: player)
-        playerLayer.videoGravity = .resizeAspect
-        playerLayer.contentsScale = UIScreen.main.scale
-        view.layer.insertSublayer(playerLayer, at: 0)
-        return view
+        return YQPlayerView(frame: bounds, player: player)
     }()
 
     override init(frame: CGRect) {
         playButton = UIButton(type: .custom)
         super.init(frame: frame)
         addSubview(self.playerView)
-        playButton.setImage(UIImage(named: "play"), for: .normal)
-        playButton.setImage(UIImage(named: "pause"), for: .selected)
-        playButton.addTarget(self, action: #selector(playOrPauseAction(_:)), for: .touchUpInside)
+        playButton.yq.then { (button) in
+            button.setImage(UIImage(named: "play"), for: .normal)
+            button.setImage(UIImage(named: "pause"), for: .selected)
+            button.addTarget(self, action: #selector(playOrPauseAction(_:)), for: .touchUpInside)
+            button.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
+            addSubview(button)
+        }
         let oneTap = UITapGestureRecognizer(target: self, action: #selector(oneTapAction(gesture:)))
         oneTap.numberOfTapsRequired = 1
         addGestureRecognizer(oneTap)
+
+        NotificationCenter.default.yq.then { (center) in
+            center.addObserver(self, selector: #selector(playerItemAction(_:)), name: .AVPlayerItemNewErrorLogEntry, object: nil)
+            center.addObserver(self, selector: #selector(playerItemAction(_:)), name: .AVPlayerItemNewAccessLogEntry, object: nil)
+            center.addObserver(self, selector: #selector(playerItemAction(_:)), name: .AVPlayerItemDidPlayToEndTime, object: nil)
+            center.addObserver(self, selector: #selector(playerItemAction(_:)), name: .AVPlayerItemTimeJumped, object: nil)
+            center.addObserver(self, selector: #selector(playerItemAction(_:)), name: .AVPlayerItemPlaybackStalled, object: nil)
+            center.addObserver(self, selector: #selector(playerItemAction(_:)), name: .AVPlayerItemFailedToPlayToEndTime, object: nil)
+        }
+
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     override func layoutSubviews() {
+        super.layoutSubviews()
         self.playerView.frame = self.bounds
+        self.playButton.center = self.playerView.center
     }
 
     @objc func oneTapAction(gesture: UITapGestureRecognizer) {
         delegate?.clickOnce(self)
-
     }
 
     @objc func playOrPauseAction(_ sender: UIButton) {
@@ -56,13 +78,28 @@ class YQPhotoVideoCell: UICollectionViewCell, YQPhotoCellCompatible {
             player.pause()
             playButton.isSelected = false
         } else {
-            if player.currentItem == nil {
-                let item = AVPlayerItem(url: url!)
-                player.replaceCurrentItem(with: item)
+            if player.currentItem != playerItem {
+                player.replaceCurrentItem(with: playerItem)
             }
             player.play()
+            delegate?.videoCell(self, replacePlayer: player)
             playButton.isSelected = true
         }
+    }
+}
 
+// MARK: - Observer
+extension YQPhotoVideoCell {
+
+    @objc func playerItemAction(_ notification: Notification) {
+        guard let item = notification.object as? AVPlayerItem, self.player.currentItem == item else {return}
+        switch notification.name {
+        case .AVPlayerItemDidPlayToEndTime:
+            player.seek(to: kCMTimeZero)
+            playButton.isSelected = false
+        default:
+            debugPrint(notification.name)
+            break
+        }
     }
 }

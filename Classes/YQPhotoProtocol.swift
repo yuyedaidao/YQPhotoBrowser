@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import AVFoundation
 
 protocol YQPhotoCellCompatible where Self: UICollectionViewCell {
     var url: URL? {get set}
@@ -16,4 +17,11 @@ protocol YQPhotoCellCompatible where Self: UICollectionViewCell {
 
 protocol YQPhotoCellDelegate: NSObjectProtocol {
     func clickOnce(_ cell: YQPhotoCellCompatible)
+    func videoCell(_ cell: YQPhotoCellCompatible, replacePlayer player: AVPlayer?)
+}
+
+extension YQPhotoCellDelegate {
+    func videoCell(_ cell: YQPhotoCellCompatible, replacePlayer player: AVPlayer?) {
+        debugPrint("videoCell(_ cell: YQPhotoCellCompatible, replacePlayer player: AVPlayer?) 空实现")
+    }
 }

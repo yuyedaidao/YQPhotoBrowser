@@ -31,7 +31,7 @@ import UIKit
 
 protocol YQPhotoAimaterDelegate {
     func animaterWillStartInteractiveTransition(_ animater: YQPhotoAnimater?) -> (UIView, UIImageView?)
-    func animaterDidEndInteractiveTransition(_ animater: YQPhotoAnimater?, _ toImageView: UIImageView?)
+    func animaterDidEndInteractiveTransition(_ animater: YQPhotoAnimater?, _ toImageView: UIImageView?, _ isCanceled: Bool)
     func animaterWillStartPresentTransition(_ animater: YQPhotoAnimater?)
     func animaterDidEndPresentTransition(_ animater: YQPhotoAnimater?)
 }
@@ -173,7 +173,7 @@ class YQPhotoDismissAnimater: NSObject, UIViewControllerAnimatedTransitioning, U
             tempView.removeFromSuperview()
             self.transitionContext?.completeTransition(true)
             self.transitionContext?.finishInteractiveTransition()
-            self.animater?.delegate?.animaterDidEndInteractiveTransition(self.animater, self.toImgView)
+            self.animater?.delegate?.animaterDidEndInteractiveTransition(self.animater, self.toImgView, false)
         })
     }
 
@@ -228,7 +228,7 @@ class YQPhotoDismissAnimater: NSObject, UIViewControllerAnimatedTransitioning, U
             tempView.removeFromSuperview()
             self.transitionContext?.finishInteractiveTransition()
             self.transitionContext?.completeTransition(true)
-            self.animater?.delegate?.animaterDidEndInteractiveTransition(self.animater, self.toImgView)
+            self.animater?.delegate?.animaterDidEndInteractiveTransition(self.animater, self.toImgView, false)
         })
     }
 
@@ -243,7 +243,7 @@ class YQPhotoDismissAnimater: NSObject, UIViewControllerAnimatedTransitioning, U
             tempView.removeFromSuperview()
             self.transitionContext?.cancelInteractiveTransition()
             self.transitionContext?.completeTransition(false)//MARK:这个方法必须放在cancelInteractiveTransition后面，否则会造成StatusBar样式跟presenting view controller样式一样
-            self.animater?.delegate?.animaterDidEndInteractiveTransition(self.animater, self.toImgView)
+            self.animater?.delegate?.animaterDidEndInteractiveTransition(self.animater, self.toImgView, true)
         })
     }
 

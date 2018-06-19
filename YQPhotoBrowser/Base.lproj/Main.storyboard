@@ -97,5 +97,23 @@
             </objects>
             <point key="canvasLocation" x="285.60000000000002" y="666.11694152923542"/>
         </scene>
+        <!--Player View Controller-->
+        <scene sceneID="tsR-A4-0XF">
+            <objects>
+                <viewController id="U2u-LM-EhN" customClass="PlayerViewController" customModule="YQPhotoBrowser" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="gld-TR-CXA"/>
+                        <viewControllerLayoutGuide type="bottom" id="cFf-vD-ma5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="MhO-Rt-lzg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Q7W-fG-Qgm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="286" y="1342"/>
+        </scene>
     </scenes>
 </document>
