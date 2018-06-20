@@ -18,6 +18,7 @@ class CollectionViewController: UICollectionViewController {
                 "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528996792630&di=13eea2e39d7523a52c1fdc46297a36db&imgtype=0&src=http%3A%2F%2Fs13.sinaimg.cn%2Fmw690%2F006d2iVGgy6VEqNAKM48c%26690",
                 "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1496406031513&di=3f05bfecba0688fe0b1002ab8108b756&imgtype=0&src=http%3A%2F%2Fimg17.3lian.com%2Fd%2Ffile%2F201702%2F16%2Fc739f33257cb00cc209b533fdfebe85d.jpg",
                 "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528996905414&di=d972614c1216afb1fcc4e7ca140ccff3&imgtype=0&src=http%3A%2F%2Fs17.mogucdn.com%2Fp1%2F160420%2F130571905_ie4geytggbsgcojqhazdambqgiyde_640x960.jpg_468x468.jpg",
+                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1529518746968&di=31f255c07a16f2f1a8ba0bbeea4f2aee&imgtype=0&src=http%3A%2F%2Fimg.mp.itc.cn%2Fupload%2F20161115%2F6163765431c44d538b37d6efb32ee885_th.jpg"
                 ]
     }()
     @IBOutlet weak var collectionLayout: UICollectionViewFlowLayout!
@@ -63,7 +64,7 @@ class CollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 7
+        return 8
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -79,7 +80,7 @@ class CollectionViewController: UICollectionViewController {
         YQPhotoBrowser.presented(by: self, with: imageView, numberOfSections: {40}, numberOfItems: { section in
             return self.dataArray.count
         }, defaultIndex: indexPath, itemUrl: { (indexPath) -> (URL,YQThumbnailResource?,YQPhotoItemType) in
-            if indexPath.item == 6 {
+            if indexPath.item == 7 {
                 return (URL(fileURLWithPath: self.dataArray[indexPath.item]),URL(string: self.dataArray[0]), .video)
             }
             return (URL(string: self.dataArray[indexPath.item])!, nil, .jpeg)
