@@ -11,7 +11,7 @@ import UIKit
 import AVFoundation
 
 protocol YQPhotoCellCompatible where Self: UICollectionViewCell {
-    var url: URL? {get set}
+    var resource: YQPhotoResource? {get set}
     var delegate: YQPhotoCellDelegate? {get set}
 }
 

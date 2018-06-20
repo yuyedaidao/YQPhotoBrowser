@@ -8,24 +8,32 @@
 
 import UIKit
 import AVFoundation
+import Kingfisher
 
 class YQPhotoVideoCell: UICollectionViewCell, YQPhotoCellCompatible {
-    var url: URL? {
+    var resource: YQPhotoResource? {
         didSet {
-            if oldValue != url {
-                guard let url = url else {
-                    playerItem = nil
-                    return
+            guard let resource = self.resource else {return}
+            let identifier = resource.url?.absoluteString
+            if identifier != self.identifier {
+                self.identifier = identifier
+                playerItem = AVPlayerItem(url: resource.url!)
+                if let thumbnail = resource.thumbnail as? UIImage {
+                    playerView.thumbnail = thumbnail
+                } else if let thumbnail = resource.thumbnail as? URL {
+                    ImageDownloader(name: "YQPhotoBrowser").downloadImage(with: thumbnail, retrieveImageTask: nil, options: [.cacheOriginalImage], progressBlock: nil) { (image, error, url, data) in
+                        self.playerView.thumbnail = image
+                    }
                 }
-                playerItem = AVPlayerItem(url: url)
             }
         }
     }
+    private var identifier: String?
     weak var delegate: YQPhotoCellDelegate?
     private var playButton: UIButton!
     var player = AVPlayer()
     private var playerItem: AVPlayerItem?
-    lazy var playerView: UIView = {
+    lazy var playerView: YQPlayerView = {
         return YQPlayerView(frame: bounds, player: player)
     }()
 
@@ -68,6 +76,23 @@ class YQPhotoVideoCell: UICollectionViewCell, YQPhotoCellCompatible {
         self.playButton.center = self.playerView.center
     }
 
+    public func play() {
+        guard let item = playerItem else {return}
+        if player.currentItem == item {
+            player.play()
+        } else {
+            player.replaceCurrentItem(with: item)
+            player.play()
+        }
+        delegate?.videoCell(self, replacePlayer: player)
+        playButton.isSelected = true
+    }
+
+    private func pause() {
+        player.pause()
+        playButton.isSelected = false
+    }
+
     @objc func oneTapAction(gesture: UITapGestureRecognizer) {
         delegate?.clickOnce(self)
     }
@@ -75,17 +100,12 @@ class YQPhotoVideoCell: UICollectionViewCell, YQPhotoCellCompatible {
     @objc func playOrPauseAction(_ sender: UIButton) {
         if playButton.isSelected {
             //点击后暂停
-            player.pause()
-            playButton.isSelected = false
+            pause()
         } else {
-            if player.currentItem != playerItem {
-                player.replaceCurrentItem(with: playerItem)
-            }
-            player.play()
-            delegate?.videoCell(self, replacePlayer: player)
-            playButton.isSelected = true
+            play()
         }
     }
+
 }
 
 // MARK: - Observer

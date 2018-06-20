@@ -22,7 +22,7 @@ public enum YQPhotoItemType {
     case video
 }
 
-public typealias  YQPhotoURLGetter = (IndexPath) -> (URL, YQPhotoItemType)
+public typealias  YQPhotoURLGetter = (IndexPath) -> (URL, YQThumbnailResource?, YQPhotoItemType)
 private let kTriggerOffset: CGFloat = 60.0
 
 public class YQPhotoBrowser: UIViewController {
@@ -226,13 +226,13 @@ extension YQPhotoBrowser: UICollectionViewDelegate, UICollectionViewDataSource, 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let item = itemUrl(indexPath)
         var cell: YQPhotoCellCompatible
-        if item.1 == .video {
+        if item.2 == .video {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(YQPhotoVideoCell.self)", for: indexPath) as! YQPhotoCellCompatible
         } else {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(YQPhotoCell.self)", for: indexPath) as! YQPhotoCellCompatible
         }
         cell.delegate = self
-        cell.url = item.0
+        cell.resource = YQPhotoResource(url: item.0, thumbnail: item.1)
         return cell as! UICollectionViewCell
     }
 

@@ -28,7 +28,7 @@ class YQPlayerView: UIView {
     private var isDisplayed = false
     var thumbnail: UIImage? {
         didSet {
-
+            playerLayer.contents = thumbnail?.cgImage
         }
     }
     init(frame: CGRect = CGRect.zero, player: AVPlayer?) {

@@ -78,11 +78,11 @@ class CollectionViewController: UICollectionViewController {
         let imageView = (collectionView.cellForItem(at: indexPath) as! CollectionViewCell).imgView
         YQPhotoBrowser.presented(by: self, with: imageView, numberOfSections: {40}, numberOfItems: { section in
             return self.dataArray.count
-        }, defaultIndex: indexPath, itemUrl: { (indexPath) -> (URL, YQPhotoItemType) in
+        }, defaultIndex: indexPath, itemUrl: { (indexPath) -> (URL,YQThumbnailResource?,YQPhotoItemType) in
             if indexPath.item == 6 {
-                return (URL(fileURLWithPath: self.dataArray[indexPath.item]), .video)
+                return (URL(fileURLWithPath: self.dataArray[indexPath.item]),URL(string: self.dataArray[0]), .video)
             }
-            return (URL(string: self.dataArray[indexPath.item])!, .jpeg)
+            return (URL(string: self.dataArray[indexPath.item])!, nil, .jpeg)
         }, selected: { (indexPath) in
             collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .centeredVertically)
         }) { (indexPath, state) -> UIImageView? in

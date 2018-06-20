@@ -42,26 +42,30 @@ class YQPhotoCell: UICollectionViewCell, YQPhotoCellCompatible {
 
     var beginPoint = CGPoint.zero
     weak var delegate: YQPhotoCellDelegate?
-    var url: URL? {
-        willSet {
-            guard newValue != url else {
-                return
-            }
+    var resource: YQPhotoResource? {
+        didSet {
+
             scrollView.zoomScale = 1
             scrollView.maximumZoomScale = 1
-            guard let u = newValue else {
+            guard let resource = self.resource, let url = resource.url else {
                 return
             }
-
-            if u.isFileURL {
-                imageView.kf.setImage(with: u)
-                self.resizeSubviews()
+            if let thumbnail = resource.thumbnail as? UIImage {
+                imageView.image = thumbnail
+                resizeSubviews()
+            } else if let thumbnail = resource.thumbnail as? URL {
+                imageView.kf.setImage(with: thumbnail)
+            }
+            if url.isFileURL {
+                imageView.kf.cancelDownloadTask()
+                imageView.kf.setImage(with: url)
+                resizeSubviews()
             } else {
-                self.progressLayer.strokeEnd = 0
-                self.progressLayer.position = CGPoint(x: self.width / 2, y: self.height / 2)
-                self.progressLayer.isHidden = false
-                self.imageContainerView.isHidden = true
-                imageView.kf.setImage(with: u, placeholder: nil, options: [.backgroundDecode], progressBlock: { (receivedSize: Int64, totalSize: Int64) in
+                progressLayer.strokeEnd = 0
+                progressLayer.position = CGPoint(x: self.width / 2, y: self.height / 2)
+                progressLayer.isHidden = false
+                imageContainerView.isHidden = true
+                imageView.kf.setImage(with: url, placeholder: nil, options: [.backgroundDecode], progressBlock: { (receivedSize: Int64, totalSize: Int64) in
                     self.progressLayer.progress = Double(receivedSize) / Double(totalSize)
                 }, completionHandler: { (image, error, cacheType, url) in
                     self.imageView.image = image
