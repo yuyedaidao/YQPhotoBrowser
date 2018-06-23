@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "YQPhotoBrowser"
-  s.version      = "0.0.8"
+  s.version      = "0.0.9"
   s.summary      = "A Swift PhotoBrowser."
 
   # This description is used to generate tags and improve search results.
@@ -24,7 +24,7 @@ Pod::Spec.new do |s|
   #   * Try to keep it short, snappy and to the point.
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
-  s.description  = "Swift版图片浏览器,灵感来自于YYPhotoGroupView"
+  s.description  = "Swift版图片浏览器,简单易用，交互参照系统照片和谷歌相册应用"
 
   s.homepage     = "https://github.com/yuyedaidao/YQPhotoBrowser.git"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
@@ -64,7 +64,7 @@ Pod::Spec.new do |s|
 
   # s.platform     = :ios
   s.platform     = :ios, "8.0"
-
+  s.swift_version = "4.0"
   #  When using multiple platforms
   # s.ios.deployment_target = "5.0"
   # s.osx.deployment_target = "10.7"
