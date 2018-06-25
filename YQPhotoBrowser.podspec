@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "YQPhotoBrowser"
-  s.version      = "0.0.10"
+  s.version      = "0.0.11"
   s.summary      = "A Swift PhotoBrowser."
 
   # This description is used to generate tags and improve search results.
@@ -105,7 +105,9 @@ Pod::Spec.new do |s|
 
   # s.resource  = "icon.png"
   # s.resources = "Resources/*.png"
-
+  s.resource_bundles = {
+    'YQPhotoBrowser' => "YQPhotoBrowser/*.xcassets"
+  }
   # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
 
