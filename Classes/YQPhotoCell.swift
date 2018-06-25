@@ -54,12 +54,17 @@ class YQPhotoCell: UICollectionViewCell, YQPhotoCellCompatible {
                 imageView.image = thumbnail
                 resizeSubviews()
             } else if let thumbnail = resource.thumbnail as? URL {
-                imageView.kf.setImage(with: thumbnail)
+                imageView.kf.setImage(with: thumbnail) { (image, error, type, url) in
+                    self.imageView.image = image
+                    self.resizeSubviews()
+                }
             }
             if url.isFileURL {
                 imageView.kf.cancelDownloadTask()
-                imageView.kf.setImage(with: url)
-                resizeSubviews()
+                imageView.kf.setImage(with: url) { (image, error, type, url) in
+                    self.imageView.image = image
+                    self.resizeSubviews()
+                }
             } else {
                 progressLayer.strokeEnd = 0
                 progressLayer.position = CGPoint(x: self.width / 2, y: self.height / 2)
