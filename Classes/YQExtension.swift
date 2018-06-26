@@ -96,3 +96,10 @@ extension CGRect {
     }
 
 }
+
+extension String {
+    var bundleImage: UIImage? {
+        return UIImage(named: self, in: YQPhotoBundle.shared, compatibleWith: nil)
+    }
+}
+

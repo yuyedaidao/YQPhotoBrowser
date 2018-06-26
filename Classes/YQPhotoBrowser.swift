@@ -84,7 +84,7 @@ public class YQPhotoBrowser: UIViewController {
             backButton = UIButton(type: .custom)
             backButton.yq.then({ (button) in
                 view.addSubview(button)
-                button.setImage(UIImage(named: "back"), for: .normal)
+                button.setImage("yq_pb_back".bundleImage, for: .normal)
                 button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
                 button.snp.makeConstraints({ (make) in
                     make.width.height.equalTo(30)
@@ -96,7 +96,7 @@ public class YQPhotoBrowser: UIViewController {
             shareButton = UIButton(type: .custom)
             shareButton.yq.then({ (button) in
                 view.addSubview(button)
-                button.setImage(UIImage(named: "share"), for: .normal)
+                button.setImage("yq_pb_share".bundleImage, for: .normal)
                 button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
                 button.snp.makeConstraints({ (make) in
                     make.width.height.equalTo(30)

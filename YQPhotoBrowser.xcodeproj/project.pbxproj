@@ -25,6 +25,7 @@
 		5503B57020D90B24000C94E5 /* YQPhotoResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5503B56F20D90B24000C94E5 /* YQPhotoResource.swift */; };
 		555A247B20CE12DC0079D465 /* YQPhotoAnimater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555A247A20CE12DC0079D465 /* YQPhotoAnimater.swift */; };
 		556AD4E820D11CA200415511 /* YQPhotoThen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556AD4E720D11CA200415511 /* YQPhotoThen.swift */; };
+		55ABF01420E23E9A0084E0A8 /* YQPhotoBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ABF01320E23E9A0084E0A8 /* YQPhotoBundle.swift */; };
 		55CD526320D3BE5B003C33B2 /* YQPhotoVideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CD526220D3BE5B003C33B2 /* YQPhotoVideoCell.swift */; };
 		55CD526520D3BEA3003C33B2 /* YQPhotoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CD526420D3BEA3003C33B2 /* YQPhotoProtocol.swift */; };
 		55CD526720D40244003C33B2 /* test.MOV in Resources */ = {isa = PBXBuildFile; fileRef = 55CD526620D40244003C33B2 /* test.MOV */; };
@@ -81,6 +82,7 @@
 		5503B56F20D90B24000C94E5 /* YQPhotoResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YQPhotoResource.swift; sourceTree = "<group>"; };
 		555A247A20CE12DC0079D465 /* YQPhotoAnimater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YQPhotoAnimater.swift; sourceTree = "<group>"; };
 		556AD4E720D11CA200415511 /* YQPhotoThen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YQPhotoThen.swift; sourceTree = "<group>"; };
+		55ABF01320E23E9A0084E0A8 /* YQPhotoBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YQPhotoBundle.swift; sourceTree = "<group>"; };
 		55CD526220D3BE5B003C33B2 /* YQPhotoVideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YQPhotoVideoCell.swift; sourceTree = "<group>"; };
 		55CD526420D3BEA3003C33B2 /* YQPhotoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YQPhotoProtocol.swift; sourceTree = "<group>"; };
 		55CD526620D40244003C33B2 /* test.MOV */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = test.MOV; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 				556AD4E720D11CA200415511 /* YQPhotoThen.swift */,
 				5503B56D20D8E591000C94E5 /* YQPlayerView.swift */,
 				5503B56F20D90B24000C94E5 /* YQPhotoResource.swift */,
+				55ABF01320E23E9A0084E0A8 /* YQPhotoBundle.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -534,6 +537,7 @@
 				21A26E131EE0F73F007AC2A9 /* ViewController.swift in Sources */,
 				5503B56E20D8E591000C94E5 /* YQPlayerView.swift in Sources */,
 				555A247B20CE12DC0079D465 /* YQPhotoAnimater.swift in Sources */,
+				55ABF01420E23E9A0084E0A8 /* YQPhotoBundle.swift in Sources */,
 				21A26E111EE0F73F007AC2A9 /* AppDelegate.swift in Sources */,
 				219BF76C1EEE7DF7005E2861 /* YQPhotoBrowser.swift in Sources */,
 				556AD4E820D11CA200415511 /* YQPhotoThen.swift in Sources */,

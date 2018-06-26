@@ -42,8 +42,8 @@ class YQPhotoVideoCell: UICollectionViewCell, YQPhotoCellCompatible {
         super.init(frame: frame)
         addSubview(self.playerView)
         playButton.yq.then { (button) in
-            button.setImage(UIImage(named: "play"), for: .normal)
-            button.setImage(UIImage(named: "pause"), for: .selected)
+            button.setImage("yq_pb_play".bundleImage, for: .normal)
+            button.setImage("yq_pb_pause".bundleImage, for: .selected)
             button.addTarget(self, action: #selector(playOrPauseAction(_:)), for: .touchUpInside)
             button.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
             addSubview(button)
