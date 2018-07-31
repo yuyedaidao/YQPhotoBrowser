@@ -334,6 +334,11 @@ extension YQPhotoBrowser: YQPhotoAimaterDelegate {
         collectionView.isHidden = false
         let _ = dismission?(selectedIndex,.finish)
         toImageView?.isHidden = false
+        //如果是结束且是视频，要结束当前播放的视频
+        if !isCanceled {
+            guard let cell = collectionView.cellForItem(at: selectedIndex) as? YQPhotoVideoCell else {return}
+            cell.player.pause()
+        }
     }
 
 }
