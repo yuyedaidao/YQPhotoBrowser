@@ -322,6 +322,7 @@ extension YQPhotoBrowser: YQPhotoAimaterDelegate {
             tempView = assistantPlayerView
             if videoCell.player != assistantPlayerView.player {
                 assistantPlayerView.player = videoCell.player
+                assistantPlayerView.thumbnail = videoCell.playerView.thumbnail
             }
             if let fromSuperView = fromView.superview {
                 tempView.frame = fromSuperView.convert(fromView.frame, to: nil)

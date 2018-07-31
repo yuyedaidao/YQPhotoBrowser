@@ -21,7 +21,7 @@ class YQPhotoVideoCell: UICollectionViewCell, YQPhotoCellCompatible {
                 if let thumbnail = resource.thumbnail as? UIImage {
                     playerView.thumbnail = thumbnail
                 } else if let thumbnail = resource.thumbnail as? URL {
-                    ImageDownloader(name: "YQPhotoBrowser").downloadImage(with: thumbnail, retrieveImageTask: nil, options: [.cacheOriginalImage], progressBlock: nil) { (image, error, url, data) in
+                    KingfisherManager.shared.downloader.downloadImage(with: thumbnail, retrieveImageTask: nil, options: nil, progressBlock: nil) { (image, error, url, data) in
                         self.playerView.thumbnail = image
                     }
                 }
