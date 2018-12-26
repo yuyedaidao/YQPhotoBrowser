@@ -236,7 +236,6 @@
 				21A26E0A1EE0F73F007AC2A9 /* Frameworks */,
 				21A26E0B1EE0F73F007AC2A9 /* Resources */,
 				427FCEC5AF9C656B01FB2D9F /* [CP] Embed Pods Frameworks */,
-				789131AE613670A19F1EDD19 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -255,8 +254,6 @@
 				21A26E1D1EE0F73F007AC2A9 /* Sources */,
 				21A26E1E1EE0F73F007AC2A9 /* Frameworks */,
 				21A26E1F1EE0F73F007AC2A9 /* Resources */,
-				A3A05E528340F80CC71FC659 /* [CP] Embed Pods Frameworks */,
-				0D9A9BA788D882B78DBE7198 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -276,8 +273,6 @@
 				21A26E281EE0F73F007AC2A9 /* Sources */,
 				21A26E291EE0F73F007AC2A9 /* Frameworks */,
 				21A26E2A1EE0F73F007AC2A9 /* Resources */,
-				E63F7B7062341096F016890F /* [CP] Embed Pods Frameworks */,
-				F059027FD85F85836CA08C19 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -369,21 +364,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0D9A9BA788D882B78DBE7198 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YQPhotoBrowserTests/Pods-YQPhotoBrowserTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		2ADF53D0FFF2622655529D8A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -411,30 +391,17 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-YQPhotoBrowser/Pods-YQPhotoBrowser-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/YQPhotoBrowser/YQPhotoBrowser.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YQPhotoBrowser.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YQPhotoBrowser/Pods-YQPhotoBrowser-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		789131AE613670A19F1EDD19 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YQPhotoBrowser/Pods-YQPhotoBrowser-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8D128CA856D9AC4E3E556BBE /* [CP] Check Pods Manifest.lock */ = {
@@ -455,21 +422,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A3A05E528340F80CC71FC659 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YQPhotoBrowserTests/Pods-YQPhotoBrowserTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		BD76FDBB338E47EB8A961398 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -486,36 +438,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E63F7B7062341096F016890F /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YQPhotoBrowserUITests/Pods-YQPhotoBrowserUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F059027FD85F85836CA08C19 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YQPhotoBrowserUITests/Pods-YQPhotoBrowserUITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

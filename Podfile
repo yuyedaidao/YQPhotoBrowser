@@ -6,6 +6,7 @@ target 'YQPhotoBrowser' do
   use_frameworks!
   pod 'Kingfisher', '~> 4.0'
   pod 'SnapKit', '~> 4.0.0'
+  pod 'YQPhotoBrowser', :podspec => 'YQPhotoBrowser.podspec'
   # Pods for YQPhotoBrowser
 
   target 'YQPhotoBrowserTests' do
