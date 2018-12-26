@@ -44,7 +44,6 @@ class YQPhotoCell: UICollectionViewCell, YQPhotoCellCompatible {
     weak var delegate: YQPhotoCellDelegate?
     var resource: YQPhotoResource? {
         didSet {
-
             scrollView.zoomScale = 1
             scrollView.maximumZoomScale = 1
             guard let resource = self.resource, let url = resource.url else {
@@ -55,14 +54,12 @@ class YQPhotoCell: UICollectionViewCell, YQPhotoCellCompatible {
                 resizeSubviews()
             } else if let thumbnail = resource.thumbnail as? URL {
                 imageView.kf.setImage(with: thumbnail) { (image, error, type, url) in
-                    self.imageView.image = image
                     self.resizeSubviews()
                 }
             }
             if url.isFileURL {
                 imageView.kf.cancelDownloadTask()
                 imageView.kf.setImage(with: url) { (image, error, type, url) in
-                    self.imageView.image = image
                     self.resizeSubviews()
                 }
             } else {
@@ -73,7 +70,6 @@ class YQPhotoCell: UICollectionViewCell, YQPhotoCellCompatible {
                 imageView.kf.setImage(with: url, placeholder: nil, options: [.backgroundDecode], progressBlock: { (receivedSize: Int64, totalSize: Int64) in
                     self.progressLayer.progress = Double(receivedSize) / Double(totalSize)
                 }, completionHandler: { (image, error, cacheType, url) in
-                    self.imageView.image = image
                     self.imageContainerView.isHidden = false
                     self.progressLayer.isHidden = true
                     self.resizeSubviews()
