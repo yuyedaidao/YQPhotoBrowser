@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14269.12" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ARp-JV-EuL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14252.5"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="YQPhotoBrowser" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -20,82 +20,12 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pfL-ur-Ll3">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="Hrb-vi-1Q4"/>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="B50-Fy-9ek"/>
-                                </connections>
-                            </tableView>
-                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="pfL-ur-Ll3" secondAttribute="bottom" id="MUY-5C-Pi1"/>
-                            <constraint firstItem="pfL-ur-Ll3" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="WZb-bZ-4pv"/>
-                            <constraint firstItem="pfL-ur-Ll3" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-20" id="cEZ-Hw-yQy"/>
-                            <constraint firstItem="pfL-ur-Ll3" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="fik-w5-7hV"/>
-                        </constraints>
                     </view>
-                    <connections>
-                        <outlet property="tableView" destination="pfL-ur-Ll3" id="uOT-Ew-NCh"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="286" y="-28"/>
-        </scene>
-        <!--Collection View Controller-->
-        <scene sceneID="jcf-pG-RWp">
-            <objects>
-                <collectionViewController id="ARp-JV-EuL" customClass="CollectionViewController" customModule="YQPhotoBrowser" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="u5R-c6-naU">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="j0U-BS-dM2">
-                            <size key="itemSize" width="199" height="200"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionViewCell" id="kcS-Dx-irs" customClass="CollectionViewCell" customModule="YQPhotoBrowser" customModuleProvider="target">
-                                <rect key="frame" x="88" y="0.0" width="199" height="200"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                    <rect key="frame" x="0.0" y="0.0" width="199" height="200"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bfa-cx-kGv" customClass="AnimatedImageView" customModule="Kingfisher">
-                                            <rect key="frame" x="0.0" y="0.0" width="199" height="200"/>
-                                        </imageView>
-                                    </subviews>
-                                </view>
-                                <constraints>
-                                    <constraint firstItem="bfa-cx-kGv" firstAttribute="centerY" secondItem="kcS-Dx-irs" secondAttribute="centerY" id="adX-RR-Hnp"/>
-                                    <constraint firstItem="bfa-cx-kGv" firstAttribute="height" secondItem="kcS-Dx-irs" secondAttribute="height" id="kwL-zO-JwS"/>
-                                    <constraint firstItem="bfa-cx-kGv" firstAttribute="width" secondItem="kcS-Dx-irs" secondAttribute="width" id="rl8-5i-Ya9"/>
-                                    <constraint firstItem="bfa-cx-kGv" firstAttribute="centerX" secondItem="kcS-Dx-irs" secondAttribute="centerX" id="sSa-WN-9KF"/>
-                                </constraints>
-                                <connections>
-                                    <outlet property="imgView" destination="bfa-cx-kGv" id="lQz-eE-ISt"/>
-                                </connections>
-                            </collectionViewCell>
-                        </cells>
-                        <connections>
-                            <outlet property="dataSource" destination="ARp-JV-EuL" id="v0O-SV-GuU"/>
-                            <outlet property="delegate" destination="ARp-JV-EuL" id="U6u-kT-63K"/>
-                        </connections>
-                    </collectionView>
-                    <connections>
-                        <outlet property="collectionLayout" destination="j0U-BS-dM2" id="Scz-qm-kkH"/>
-                    </connections>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="rRP-Pg-zY4" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="285.60000000000002" y="666.11694152923542"/>
         </scene>
         <!--Player View Controller-->
         <scene sceneID="tsR-A4-0XF">

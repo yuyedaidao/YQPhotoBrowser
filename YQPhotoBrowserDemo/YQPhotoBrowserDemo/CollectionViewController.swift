@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import YQPhotoBrowser
 
 private let reuseIdentifier = "CollectionViewCell"
 
@@ -26,7 +27,7 @@ class CollectionViewController: UICollectionViewController {
         super.viewDidLoad()
         let videoUrl = Bundle.main.path(forResource: "IMG_0097", ofType: "MOV")
         self.dataArray.append(videoUrl!)
-        let width = UIScreen.main.width / 3
+        let width = UIScreen.main.bounds.width / 3
         collectionLayout.itemSize = CGSize(width: width, height: width)
         collectionLayout.minimumInteritemSpacing = 0
         collectionLayout.minimumLineSpacing = 0
@@ -69,7 +70,7 @@ class CollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! CollectionViewCell
-        cell.url = self.dataArray[indexPath.item]
+        cell.url = self.dataArray[indexPath.item == 7 ? 0 : indexPath.item];
         // Configure the cell
     
         return cell

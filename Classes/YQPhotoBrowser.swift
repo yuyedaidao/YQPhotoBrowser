@@ -318,14 +318,23 @@ extension YQPhotoBrowser: YQPhotoAimaterDelegate {
             }
             tempView = tempImgView
         } else if let videoCell = cell as? YQPhotoVideoCell {
-            let fromView = videoCell.playerView
-            tempView = assistantPlayerView
-            if videoCell.player != assistantPlayerView.player {
-                assistantPlayerView.player = videoCell.player
-                assistantPlayerView.thumbnail = videoCell.playerView.thumbnail
-            }
-            if let fromSuperView = fromView.superview {
-                tempView.frame = fromSuperView.convert(fromView.frame, to: nil)
+            if videoCell.player.status == AVPlayer.Status.unknown {
+                let image = videoCell.playerView.asImage()
+                let tempImgView = animatableImageView(image)
+                if let fromSuperView = videoCell.playerView.superview  {
+                    tempImgView.frame = fromSuperView.convert(videoCell.playerView.frame, to: nil)
+                }
+                tempView = tempImgView
+            } else {
+                let fromView = videoCell.playerView
+                tempView = assistantPlayerView
+                if videoCell.player != assistantPlayerView.player {
+                    assistantPlayerView.player = videoCell.player
+                    assistantPlayerView.thumbnail = videoCell.playerView.thumbnail
+                }
+                if let fromSuperView = fromView.superview {
+                    tempView.frame = fromSuperView.convert(fromView.frame, to: nil)
+                }
             }
         }
         return (tempView, toImgView)
@@ -341,6 +350,25 @@ extension YQPhotoBrowser: YQPhotoAimaterDelegate {
             cell.player.pause()
         }
     }
+}
 
+extension UIView {
+    //将当前视图转为UIImage
+    func asImage() -> UIImage {
+        if #available(iOS 10.0, *) {
+            let renderer = UIGraphicsImageRenderer(bounds: bounds)
+            return renderer.image { rendererContext in
+                layer.render(in: rendererContext.cgContext)
+            }
+        } else {
+            // Fallback on earlier versions
+            UIGraphicsBeginImageContextWithOptions(frame.size, false, 0)
+            layer.render(in: UIGraphicsGetCurrentContext()!)
+            let image = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            return image!
+        }
+        
+    }
 }
 
