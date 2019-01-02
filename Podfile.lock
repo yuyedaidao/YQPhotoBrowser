@@ -1,7 +1,7 @@
 PODS:
   - Kingfisher (4.10.1)
   - SnapKit (4.0.1)
-  - YQPhotoBrowser (0.1.1):
+  - YQPhotoBrowser (0.1.2):
     - Kingfisher (~> 4.0)
     - SnapKit (~> 4.0.0)
 
@@ -22,7 +22,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
-  YQPhotoBrowser: 39d8c35dff573f8afd69884612cb99a767c00f4c
+  YQPhotoBrowser: 39673c46a59fd911a2821e1d3b725b4c33513d04
 
 PODFILE CHECKSUM: a650182a8e1b668716d33e9af25d51bce06c8f55
 

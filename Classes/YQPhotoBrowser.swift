@@ -139,6 +139,7 @@ public class YQPhotoBrowser: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         view.addSubview(collectionView)
+//        collectionView.
         DispatchQueue.main.async {
             self.collectionView.scrollToItem(at: self.selectedIndex, at: .left, animated: false)
         }
@@ -163,6 +164,10 @@ public class YQPhotoBrowser: UIViewController {
         presentedController.present(browser, animated: true)
     }
 
+    //MARK: 视图旋转
+    public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        
+    }
 }
 
 // MARK: - Action
