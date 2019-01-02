@@ -139,7 +139,9 @@ public class YQPhotoBrowser: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         view.addSubview(collectionView)
-//        collectionView.
+        collectionView.snp.makeConstraints { (maker) in
+            maker.edges.equalTo(self.view)
+        }
         DispatchQueue.main.async {
             self.collectionView.scrollToItem(at: self.selectedIndex, at: .left, animated: false)
         }
@@ -166,7 +168,9 @@ public class YQPhotoBrowser: UIViewController {
 
     //MARK: 视图旋转
     public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        
+        super.viewWillTransition(to: size, with: coordinator)
+        (self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize = size
+        self.collectionView.invalidateIntrinsicContentSize()
     }
 }
 
