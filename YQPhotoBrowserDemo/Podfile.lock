@@ -6,9 +6,7 @@ PODS:
     - SnapKit (~> 4.0.0)
 
 DEPENDENCIES:
-  - Kingfisher (~> 4.0)
-  - SnapKit (~> 4.0.0)
-  - YQPhotoBrowser (from `YQPhotoBrowser.podspec`)
+  - YQPhotoBrowser (from `../YQPhotoBrowser.podspec`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -17,13 +15,13 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   YQPhotoBrowser:
-    :podspec: YQPhotoBrowser.podspec
+    :podspec: "../YQPhotoBrowser.podspec"
 
 SPEC CHECKSUMS:
   Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   YQPhotoBrowser: 39673c46a59fd911a2821e1d3b725b4c33513d04
 
-PODFILE CHECKSUM: a650182a8e1b668716d33e9af25d51bce06c8f55
+PODFILE CHECKSUM: cbd41dc1c21c096a751ff9c71957da7d8910a41c
 
 COCOAPODS: 1.5.3

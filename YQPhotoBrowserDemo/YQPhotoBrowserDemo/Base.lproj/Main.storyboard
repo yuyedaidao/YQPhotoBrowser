@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="GKe-mf-ZhI">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Collection View Controller-->
+        <scene sceneID="OLG-Je-Egf">
+            <objects>
+                <collectionViewController id="GKe-mf-ZhI" customClass="CollectionViewController" customModule="YQPhotoBrowserDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="8JK-9D-IOG">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="EYz-ns-K7u">
+                            <size key="itemSize" width="50" height="50"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionViewCell" id="8Bk-Zr-bIK" customClass="CollectionViewCell" customModule="YQPhotoBrowserDemo" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="c2J-iK-aWO" customClass="AnimatedImageView" customModule="Kingfisher">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        </imageView>
+                                    </subviews>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="c2J-iK-aWO" firstAttribute="centerY" secondItem="8Bk-Zr-bIK" secondAttribute="centerY" id="4Q8-1r-bvF"/>
+                                    <constraint firstItem="c2J-iK-aWO" firstAttribute="height" secondItem="8Bk-Zr-bIK" secondAttribute="height" id="H3B-LA-zGM"/>
+                                    <constraint firstItem="c2J-iK-aWO" firstAttribute="width" secondItem="8Bk-Zr-bIK" secondAttribute="width" id="Qz2-dY-o9U"/>
+                                    <constraint firstItem="c2J-iK-aWO" firstAttribute="centerX" secondItem="8Bk-Zr-bIK" secondAttribute="centerX" id="Uwy-4Q-AXz"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="imgView" destination="c2J-iK-aWO" id="i3h-hE-Hfu"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="GKe-mf-ZhI" id="L9E-XG-5hc"/>
+                            <outlet property="delegate" destination="GKe-mf-ZhI" id="g5p-w8-MdY"/>
+                        </connections>
+                    </collectionView>
+                    <connections>
+                        <outlet property="collectionLayout" destination="EYz-ns-K7u" id="jt5-aG-KMp"/>
+                    </connections>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="j1x-Kd-NUH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="484" y="196"/>
+        </scene>
+    </scenes>
+</document>

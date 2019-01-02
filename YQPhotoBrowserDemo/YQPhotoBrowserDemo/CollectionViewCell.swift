@@ -15,13 +15,20 @@ class CollectionViewCell: UICollectionViewCell {
 
     var url: String! {
         didSet {
+            imgView.stopAnimating()
             imgView.kf.setImage(with: URL(string: url), placeholder: nil, options: [.transition(.flipFromTop(0.3))], progressBlock: nil) { (image, error, type, url) in
             }
+            
         }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
     }
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        imgView.runLoopMode = .defaultRunLoopMode
+        imgView.runLoopMode = RunLoop.Mode.default
+        imgView.autoPlayAnimatedImage = false;
     }
 }
