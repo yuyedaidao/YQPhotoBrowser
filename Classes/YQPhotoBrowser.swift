@@ -166,12 +166,6 @@ public class YQPhotoBrowser: UIViewController {
         presentedController.present(browser, animated: true)
     }
 
-    //MARK: 视图旋转
-    public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        (self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize = size
-        self.collectionView.invalidateIntrinsicContentSize()
-    }
 }
 
 // MARK: - Action
@@ -283,7 +277,8 @@ extension YQPhotoBrowser: UICollectionViewDelegate, UICollectionViewDataSource, 
 
     func clearScreen() {
         isHiddenStatusBar = !isHiddenStatusBar
-        UIView.animate(withDuration: 0.15) {
+        NotificationCenter.default.post(name: YQPhotoBrowser.statusBarWillAnimateNotification, object: isHiddenStatusBar)
+        UIView.animate(withDuration: 0.15, animations: {
             self.setNeedsStatusBarAppearanceUpdate()
             if self.isHiddenStatusBar {
                 self.topOperationView.alpha = 0
@@ -292,6 +287,8 @@ extension YQPhotoBrowser: UICollectionViewDelegate, UICollectionViewDataSource, 
                 self.topOperationView.alpha = 1
                 self.bottomOperationView.alpha = 1
             }
+        }) { (finished) in
+            NotificationCenter.default.post(name: YQPhotoBrowser.statusBarDidAnimateNotification, object: self.isHiddenStatusBar)
         }
     }
 }

@@ -103,3 +103,11 @@ extension String {
     }
 }
 
+extension YQPhotoBrowser {
+    static var statusBarWillAnimateNotification: NSNotification.Name {
+        return NSNotification.Name("yq_photoBrowser_statusBar_will_animate")
+    }
+    static var statusBarDidAnimateNotification: NSNotification.Name {
+        return NSNotification.Name("yq_photoBrowser_statusBar_did_animate")
+    }
+}

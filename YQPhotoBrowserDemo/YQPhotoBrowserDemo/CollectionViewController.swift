@@ -27,8 +27,8 @@ class CollectionViewController: UICollectionViewController {
         super.viewDidLoad()
         let videoUrl = Bundle.main.path(forResource: "IMG_0097", ofType: "MOV")
         self.dataArray.append(videoUrl!)
-        let width = UIScreen.main.bounds.width / 3
-        collectionLayout.itemSize = CGSize(width: width, height: width)
+        collectionLayout.itemSize =
+            itemSize(fit: UIScreen.main.bounds.size)
         collectionLayout.minimumInteritemSpacing = 0
         collectionLayout.minimumLineSpacing = 0
         // Uncomment the following line to preserve selection between presentations
@@ -125,4 +125,14 @@ class CollectionViewController: UICollectionViewController {
     }
     */
 
+    public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        (self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize = itemSize(fit: size)
+        self.collectionView.invalidateIntrinsicContentSize()
+    }
+
+    func itemSize(fit size: CGSize) -> CGSize {
+        let width = floor(min(size.width / 3, size.height / 3))
+        return CGSize(width: width, height: width);
+    }
 }

@@ -10,6 +10,8 @@ import UIKit
 import AVFoundation
 import Kingfisher
 
+class NotificationObserver: NSObject {}
+
 class YQPhotoVideoCell: UICollectionViewCell, YQPhotoCellCompatible {
     var resource: YQPhotoResource? {
         didSet {
@@ -33,6 +35,8 @@ class YQPhotoVideoCell: UICollectionViewCell, YQPhotoCellCompatible {
     private var playButton: UIButton!
     var player = AVPlayer()
     private var playerItem: AVPlayerItem?
+    private var hidePlayButtonTask: DispatchWorkItem?
+    
     lazy var playerView: YQPlayerView = {
         return YQPlayerView(frame: bounds, player: player)
     }()
@@ -52,6 +56,11 @@ class YQPhotoVideoCell: UICollectionViewCell, YQPhotoCellCompatible {
         oneTap.numberOfTapsRequired = 1
         addGestureRecognizer(oneTap)
 
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(doubleTapAction(gesture:)))
+        doubleTap.numberOfTapsRequired = 2
+        addGestureRecognizer(doubleTap)
+        oneTap.require(toFail: doubleTap)
+
         NotificationCenter.default.yq.then { (center) in
             center.addObserver(self, selector: #selector(playerItemAction(_:)), name: .AVPlayerItemNewErrorLogEntry, object: nil)
             center.addObserver(self, selector: #selector(playerItemAction(_:)), name: .AVPlayerItemNewAccessLogEntry, object: nil)
@@ -60,7 +69,6 @@ class YQPhotoVideoCell: UICollectionViewCell, YQPhotoCellCompatible {
             center.addObserver(self, selector: #selector(playerItemAction(_:)), name: .AVPlayerItemPlaybackStalled, object: nil)
             center.addObserver(self, selector: #selector(playerItemAction(_:)), name: .AVPlayerItemFailedToPlayToEndTime, object: nil)
         }
-
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -75,6 +83,11 @@ class YQPhotoVideoCell: UICollectionViewCell, YQPhotoCellCompatible {
         self.playerView.frame = self.bounds
         self.playButton.center = self.playerView.center
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.pause()
+    }
 
     public func play() {
         guard let item = playerItem else {return}
@@ -86,15 +99,42 @@ class YQPhotoVideoCell: UICollectionViewCell, YQPhotoCellCompatible {
         }
         delegate?.videoCell(self, replacePlayer: player)
         playButton.isSelected = true
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+            guard self.playButton.isSelected else {
+                self.playButton.alpha = 1
+                return
+            }
+            UIView.animate(withDuration: 0.15, animations: {
+                self.playButton.alpha = 0
+            }, completion: nil)
+        }
     }
 
     private func pause() {
         player.pause()
         playButton.isSelected = false
+        self.playButton.alpha = 1
+        if let task = self.hidePlayButtonTask {
+            task.cancel()
+        }
     }
 
     @objc func oneTapAction(gesture: UITapGestureRecognizer) {
         delegate?.clickOnce(self)
+    }
+    
+    @objc func doubleTapAction(gesture: UITapGestureRecognizer) {
+        guard self.playButton.isSelected else {
+            return
+        }
+        self.playButton.alpha = 1
+        if let task = self.hidePlayButtonTask {
+            task.cancel()
+        }
+        
+        self.hidePlayButtonTask = createHideTask()
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(3), execute: self.hidePlayButtonTask!)
     }
 
     @objc func playOrPauseAction(_ sender: UIButton) {
@@ -106,6 +146,17 @@ class YQPhotoVideoCell: UICollectionViewCell, YQPhotoCellCompatible {
         }
     }
 
+    func createHideTask() -> DispatchWorkItem {
+        return DispatchWorkItem(block: {
+            guard self.playButton.isSelected else {
+                self.playButton.alpha = 1
+                return
+            }
+            UIView.animate(withDuration: 0.15, animations: {
+                self.playButton.alpha = 0
+            }, completion: nil)
+        })
+    }
 }
 
 // MARK: - Observer
@@ -117,6 +168,10 @@ extension YQPhotoVideoCell {
         case .AVPlayerItemDidPlayToEndTime:
             player.seek(to: kCMTimeZero)
             playButton.isSelected = false
+            playButton.alpha = 1
+            if let task = self.hidePlayButtonTask {
+                task.cancel()
+            }
         default:
             debugPrint(notification.name)
             break
