@@ -283,7 +283,7 @@ extension YQPhotoBrowser: UICollectionViewDelegate, UICollectionViewDataSource, 
 
     func clearScreen() {
         isHiddenStatusBar = !isHiddenStatusBar
-        UIView.animate(withDuration: 0.15) {
+        UIView.animate(withDuration: 0.25) {
             self.setNeedsStatusBarAppearanceUpdate()
             if self.isHiddenStatusBar {
                 self.topOperationView.alpha = 0

@@ -16,15 +16,17 @@ extension URL: YQThumbnailResource {}
 extension UIImage: YQThumbnailResource {}
 
 public class YQPhotoResource {
-//    public static func == (lhs: YQPhotoResource, rhs: YQPhotoResource) -> Bool {
-//
-//        return lhs.url == rhs.url && lhs.thumbnail == rhs.thumbnail
-//    }
     var url: URL?
     var thumbnail: YQThumbnailResource?
-
-    init(url: URL?, thumbnail: YQThumbnailResource?) {
+    var isLivePhoto: Bool = false
+    var additionalUrl: URL?
+    init(url: URL?, thumbnail: YQThumbnailResource?, isLivePhoto: Bool = false, additionalUrl: URL? = nil) {
         self.url = url
         self.thumbnail = thumbnail
+        self.isLivePhoto = isLivePhoto
+        if isLivePhoto {
+            assert(additionalUrl != nil, "LivePhoto必须提供相应的视频资源地址")
+            self.additionalUrl = additionalUrl
+        }
     }
 }
