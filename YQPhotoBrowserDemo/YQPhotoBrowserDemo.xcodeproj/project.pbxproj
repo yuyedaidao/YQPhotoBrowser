@@ -186,21 +186,16 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-YQPhotoBrowserDemo/Pods-YQPhotoBrowserDemo-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
-				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
-				"${BUILT_PRODUCTS_DIR}/YQPhotoBrowser/YQPhotoBrowser.framework",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-YQPhotoBrowserDemo/Pods-YQPhotoBrowserDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YQPhotoBrowser.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-YQPhotoBrowserDemo/Pods-YQPhotoBrowserDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YQPhotoBrowserDemo/Pods-YQPhotoBrowserDemo-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-YQPhotoBrowserDemo/Pods-YQPhotoBrowserDemo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9E51870AD72E844723749918 /* [CP] Check Pods Manifest.lock */ = {
