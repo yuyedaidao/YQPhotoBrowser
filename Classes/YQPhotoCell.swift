@@ -30,7 +30,7 @@ class YQProgressLayer: CAShapeLayer {
         layer.fillColor = UIColor.clear.cgColor
         layer.strokeColor = UIColor.white.cgColor
         layer.lineWidth = 4
-        layer.lineCap = kCALineCapRound
+        layer.lineCap = CAShapeLayerLineCap.round
         layer.strokeStart = 0
         layer.strokeEnd = 0
         layer.isHidden = true
@@ -91,7 +91,7 @@ class YQPhotoCell: UICollectionViewCell, YQPhotoCellCompatible {
         imageContainerView = UIView()
         imageView = AnimatedImageView()
         imageView.contentMode = .scaleAspectFill
-        imageView.runLoopMode = RunLoopMode.defaultRunLoopMode
+        imageView.runLoopMode = RunLoop.Mode.default
         super.init(frame: frame)
         scrollView.frame = bounds
         scrollView.delegate = self

@@ -34,7 +34,7 @@ class YQPlayerView: UIView {
     init(frame: CGRect = CGRect.zero, player: AVPlayer?) {
         self.player = player
         let layer = AVPlayerLayer(player: player)
-        layer.contentsGravity = kCAGravityResizeAspect
+        layer.contentsGravity = CALayerContentsGravity.resizeAspect
         self.playerLayer = layer
         super.init(frame: frame)
         layer.frame = bounds

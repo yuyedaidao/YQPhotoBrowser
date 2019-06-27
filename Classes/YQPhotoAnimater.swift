@@ -154,7 +154,7 @@ class YQPhotoDismissAnimater: NSObject, UIViewControllerAnimatedTransitioning, U
         self.transitionContext = transitionContext
         let containerView = transitionContext.containerView
         containerView.addSubview(toView)
-        containerView.sendSubview(toBack: toView)
+        containerView.sendSubviewToBack(toView)
         containerView.addSubview(tempView)
         guard let fromView = transitionContext.view(forKey: .from) else {
             fatalError()
@@ -206,7 +206,7 @@ class YQPhotoDismissAnimater: NSObject, UIViewControllerAnimatedTransitioning, U
         self.transitionContext = transitionContext
         let containerView = transitionContext.containerView
         containerView.addSubview(toView)
-        containerView.sendSubview(toBack: toView)
+        containerView.sendSubviewToBack(toView)
         containerView.addSubview(tempView)
     }
 

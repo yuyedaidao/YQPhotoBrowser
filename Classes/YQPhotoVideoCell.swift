@@ -166,7 +166,7 @@ extension YQPhotoVideoCell {
         guard let item = notification.object as? AVPlayerItem, self.player.currentItem == item else {return}
         switch notification.name {
         case .AVPlayerItemDidPlayToEndTime:
-            player.seek(to: kCMTimeZero)
+            player.seek(to: CMTime.zero)
             playButton.isSelected = false
             playButton.alpha = 1
             if let task = self.hidePlayButtonTask {

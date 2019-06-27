@@ -236,7 +236,7 @@ extension YQPhotoBrowser: UICollectionViewDelegate, UICollectionViewDataSource, 
         }
         cell.delegate = self
         cell.resource = YQPhotoResource(url: item.0, thumbnail: item.1)
-        return cell as! UICollectionViewCell
+        return cell
     }
 
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
