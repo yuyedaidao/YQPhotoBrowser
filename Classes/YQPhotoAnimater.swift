@@ -29,7 +29,7 @@ import UIKit
 //
 //}
 
-protocol YQPhotoAimaterDelegate {
+protocol YQPhotoAimaterDelegate: AnyObject {
     func animaterWillStartInteractiveTransition(_ animater: YQPhotoAnimater?) -> (UIView, UIImageView?)
     func animaterDidEndInteractiveTransition(_ animater: YQPhotoAnimater?, _ toImageView: UIImageView?, _ isCanceled: Bool)
     func animaterWillStartPresentTransition(_ animater: YQPhotoAnimater?)
@@ -46,7 +46,7 @@ class YQPhotoAnimater: NSObject {
             dismissAnimater?.toImgView = toImgView
         }
     }
-    var delegate: YQPhotoAimaterDelegate?
+    weak var delegate: YQPhotoAimaterDelegate?
     fileprivate weak var dismissAnimater: YQPhotoDismissAnimater?
     var isInteractive = true
     public init(_ delegate: YQPhotoAimaterDelegate? = nil) {
