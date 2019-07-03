@@ -163,6 +163,7 @@ public class YQPhotoBrowser: UIViewController {
         browser.selectedIndex = defaultIndex
         browser.dismission = dismiss
         browser.selected = selected
+        browser.modalPresentationStyle = .fullScreen
         presentedController.present(browser, animated: true)
     }
 
