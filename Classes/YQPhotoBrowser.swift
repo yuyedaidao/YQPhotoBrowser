@@ -20,15 +20,16 @@ public enum YQPhotoItemType {
     case png
     case gif
     case video
+    case livePhoto
 }
 
-public typealias  YQPhotoURLGetter = (IndexPath) -> (URL, YQThumbnailResource?, YQPhotoItemType)
+public typealias  YQPhotoResourceGetter = (IndexPath) -> (YQPhotoResource)
 private let kTriggerOffset: CGFloat = 60.0
 
 public class YQPhotoBrowser: UIViewController {
     var numberOfSections:(() -> Int)?
     var numberOfItems:((Int) -> Int)?
-    var itemUrl: YQPhotoURLGetter!
+    var itemResource: YQPhotoResourceGetter!
     var dismission: ((IndexPath, YQPhotoDismissState) -> UIImageView?)?
     var selectedIndex = IndexPath(item: 0, section: 0) {
         didSet {
@@ -40,18 +41,18 @@ public class YQPhotoBrowser: UIViewController {
     private var tempImgView: UIImageView?
     private var beginPoint = CGPoint.zero
     private let animater = YQPhotoAnimater()
-
+    
     private var backButton: UIButton!
     private var shareButton: UIButton!
     private var topOperationView: UIView!
     private var bottomOperationView: UIView!
     private var isHiddenStatusBar = false
-
+    
     /// 如果当前视图是视频视图，拖拽时再创建浮动视图会造成屏幕闪动现象，因此提前准备一个辅助视图
     private lazy var assistantPlayerView = {
         return YQPlayerView(player: nil)
     }()
-
+    
     override open func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.black
@@ -65,7 +66,7 @@ public class YQPhotoBrowser: UIViewController {
         transitioningDelegate = animater
         
     }
-
+    
     func prepareViews() {
         topOperationView = UIView()
         topOperationView.yq.then { (view) in
@@ -106,7 +107,7 @@ public class YQPhotoBrowser: UIViewController {
                 button.addTarget(self, action: #selector(shareAction), for: .touchUpInside)
             })
         }
-
+        
         bottomOperationView = UIView()
         bottomOperationView.yq.then { (view) in
             view.backgroundColor = UIColor.clear
@@ -123,7 +124,7 @@ public class YQPhotoBrowser: UIViewController {
             })
         }
     }
-
+    
     func prepareCollectionView() {
         let rect = UIScreen.main.bounds
         let layout = UICollectionViewFlowLayout()
@@ -135,6 +136,9 @@ public class YQPhotoBrowser: UIViewController {
         collectionView.backgroundColor = UIColor.clear
         collectionView.register(YQPhotoCell.self, forCellWithReuseIdentifier: "\(YQPhotoCell.self)")
         collectionView.register(YQPhotoVideoCell.self, forCellWithReuseIdentifier: "\(YQPhotoVideoCell.self)")
+        if #available(iOS 9.1, *) {
+            collectionView.register(YQLivePhotoCell.self, forCellWithReuseIdentifier: "\(YQLivePhotoCell.self)")
+        }
         collectionView.isPagingEnabled = true
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -146,8 +150,8 @@ public class YQPhotoBrowser: UIViewController {
             self.collectionView.scrollToItem(at: self.selectedIndex, at: .left, animated: false)
         }
     }
-
-    public class func presented(by presentedController: UIViewController, with imageView: UIImageView?, numberOfSections:(() -> Int)? = nil, numberOfItems: ((Int) -> Int)? = nil, defaultIndex: IndexPath, itemUrl: @escaping YQPhotoURLGetter, selected:((IndexPath) -> Void)? = nil, dismiss:((IndexPath,YQPhotoDismissState) -> UIImageView?)? = nil) {
+    
+    public class func presented(by presentedController: UIViewController, with imageView: UIImageView?, numberOfSections:(() -> Int)? = nil, numberOfItems: ((Int) -> Int)? = nil, defaultIndex: IndexPath, itemResource: @escaping YQPhotoResourceGetter, selected:((IndexPath) -> Void)? = nil, dismiss:((IndexPath,YQPhotoDismissState) -> UIImageView?)? = nil) {
         let browser = YQPhotoBrowser()
         if let imgView = imageView {
             let rect = imgView.superview!.convert(imgView.frame, to: nil)
@@ -159,14 +163,20 @@ public class YQPhotoBrowser: UIViewController {
         }
         browser.numberOfSections = numberOfSections
         browser.numberOfItems = numberOfItems
-        browser.itemUrl = itemUrl
+        browser.itemResource = itemResource
         browser.selectedIndex = defaultIndex
         browser.dismission = dismiss
         browser.selected = selected
         browser.modalPresentationStyle = .fullScreen
         presentedController.present(browser, animated: true)
     }
-
+    
+    //MARK: 视图旋转
+    public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        (self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize = size
+        self.collectionView.invalidateIntrinsicContentSize()
+    }
 }
 
 // MARK: - Action
@@ -193,19 +203,19 @@ extension YQPhotoBrowser {
             break
         }
     }
-
+    
     @objc func backAction() {
         animater.isInteractive = false
         dismiss(animated: true)
     }
-
+    
     @objc func shareAction() {
         guard let cell = self.collectionView.cellForItem(at: self.selectedIndex) as? YQPhotoCell, let image = cell.imageView.image else {
             return
         }
         let shareController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
         shareController.completionWithItemsHandler = {(activityType, completed, returnItems, error) in
-
+            
         }
         present(shareController, animated: true)
     }
@@ -222,51 +232,58 @@ extension YQPhotoBrowser {
     public override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
         return UIStatusBarAnimation.fade
     }
-
+    
 }
 
 // MARK: UICollectionView
 extension YQPhotoBrowser: UICollectionViewDelegate, UICollectionViewDataSource, YQPhotoCellDelegate {
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let item = itemUrl(indexPath)
+        let item = itemResource(indexPath)
         var cell: YQPhotoCellCompatible
-        if item.2 == .video {
+        switch item.type {
+        case .video:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(YQPhotoVideoCell.self)", for: indexPath) as! YQPhotoCellCompatible
-        } else {
+        case .livePhoto:
+            if #available(iOS 9.1, *) {
+                cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(YQLivePhotoCell.self)", for: indexPath) as! YQPhotoCellCompatible
+            } else {
+                 cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(YQPhotoCell.self)", for: indexPath) as! YQPhotoCellCompatible
+            }
+        default:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(YQPhotoCell.self)", for: indexPath) as! YQPhotoCellCompatible
         }
         cell.delegate = self
-        cell.resource = YQPhotoResource(url: item.0, thumbnail: item.1)
+        cell.resource = item
         return cell
     }
-
+    
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return numberOfItems?(section) ?? 0
     }
-
+    
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
         return numberOfSections?() ?? 1
     }
-
+    
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         findCurrentIndex()
     }
-
+    
     public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         guard !decelerate else {
             return
         }
         findCurrentIndex()
     }
-
+    
     func clickOnce(_ cell: YQPhotoCellCompatible) {
         clearScreen()
     }
-
+    
     func videoCell(_ cell: YQPhotoCellCompatible, replacePlayer player: AVPlayer?) {
         self.assistantPlayerView.player = player
     }
-
+    
     func findCurrentIndex() {
         for cell in collectionView.visibleCells {
             if cell.frame.minX == collectionView.contentOffset.x {
@@ -275,11 +292,10 @@ extension YQPhotoBrowser: UICollectionViewDelegate, UICollectionViewDataSource, 
             }
         }
     }
-
+    
     func clearScreen() {
         isHiddenStatusBar = !isHiddenStatusBar
-        NotificationCenter.default.post(name: YQPhotoBrowser.statusBarWillAnimateNotification, object: isHiddenStatusBar)
-        UIView.animate(withDuration: 0.15, animations: {
+        UIView.animate(withDuration: 0.25) {
             self.setNeedsStatusBarAppearanceUpdate()
             if self.isHiddenStatusBar {
                 self.topOperationView.alpha = 0
@@ -288,29 +304,27 @@ extension YQPhotoBrowser: UICollectionViewDelegate, UICollectionViewDataSource, 
                 self.topOperationView.alpha = 1
                 self.bottomOperationView.alpha = 1
             }
-        }) { (finished) in
-            NotificationCenter.default.post(name: YQPhotoBrowser.statusBarDidAnimateNotification, object: self.isHiddenStatusBar)
         }
     }
 }
 
 extension YQPhotoBrowser: YQPhotoAimaterDelegate {
-
+    
     fileprivate func animatableImageView(_ image: UIImage?) -> UIImageView {
         let imgView = UIImageView(image: image)
         imgView.contentMode = .scaleAspectFill
         imgView.clipsToBounds = true
         return imgView
     }
-
+    
     func animaterWillStartPresentTransition(_ animater: YQPhotoAnimater?) {
         collectionView.isHidden = true
     }
-
+    
     func animaterDidEndPresentTransition(_ animater: YQPhotoAnimater?) {
         collectionView.isHidden = false
     }
-
+    
     func animaterWillStartInteractiveTransition(_ animater: YQPhotoAnimater?) -> (UIView, UIImageView?) {
         collectionView.isHidden = true
         let toImgView = dismission?(selectedIndex,.begin)
@@ -343,10 +357,21 @@ extension YQPhotoBrowser: YQPhotoAimaterDelegate {
                     tempView.frame = fromSuperView.convert(fromView.frame, to: nil)
                 }
             }
+        } else {
+            if #available(iOS 9.1, *) {
+                if let livePhotoCell = cell as? YQLivePhotoCell {
+                    let fromImgView = livePhotoCell.livePhotoView
+                    let tempImgView = animatableImageView(livePhotoCell.coverImage ?? fromImgView.asImage())
+                    if let fromSuperView = fromImgView.superview  {
+                        tempImgView.frame = fromSuperView.convert(fromImgView.frame, to: nil)
+                    }
+                    tempView = tempImgView
+                }
+            }
         }
         return (tempView, toImgView)
     }
-
+    
     func animaterDidEndInteractiveTransition(_ animater: YQPhotoAnimater?, _ toImageView: UIImageView?, _ isCanceled: Bool) {
         collectionView.isHidden = false
         let _ = dismission?(selectedIndex,.finish)
