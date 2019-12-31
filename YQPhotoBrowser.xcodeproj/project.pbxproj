@@ -364,7 +364,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-YQPhotoBrowser/Pods-YQPhotoBrowser-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-YQPhotoBrowser/Pods-YQPhotoBrowser-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 			);
@@ -375,7 +375,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YQPhotoBrowser/Pods-YQPhotoBrowser-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-YQPhotoBrowser/Pods-YQPhotoBrowser-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8D128CA856D9AC4E3E556BBE /* [CP] Check Pods Manifest.lock */ = {

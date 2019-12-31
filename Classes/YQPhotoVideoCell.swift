@@ -118,7 +118,6 @@ extension YQPhotoVideoCell {
             player.seek(to: kCMTimeZero)
             playButton.isSelected = false
         default:
-            debugPrint(notification.name)
             break
         }
     }
