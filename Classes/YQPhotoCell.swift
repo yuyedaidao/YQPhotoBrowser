@@ -66,11 +66,11 @@ class YQPhotoCell: UICollectionViewCell, YQPhotoCellCompatible {
                 progressLayer.strokeEnd = 0
                 progressLayer.position = CGPoint(x: self.width / 2, y: self.height / 2)
                 progressLayer.isHidden = false
-                imageContainerView.isHidden = true
-                imageView.kf.setImage(with: url, placeholder: nil, options: [.backgroundDecode], progressBlock: { (receivedSize: Int64, totalSize: Int64) in
+//                imageContainerView.isHidden = true
+                imageView.kf.setImage(with: url, placeholder: imageView.image, options: [.backgroundDecode], progressBlock: { (receivedSize: Int64, totalSize: Int64) in
                     self.progressLayer.progress = Double(receivedSize) / Double(totalSize)
                 }, completionHandler: { (image, error, cacheType, url) in
-                    self.imageContainerView.isHidden = false
+//                    self.imageContainerView.isHidden = false
                     self.progressLayer.isHidden = true
                     self.resizeSubviews()
                 })
