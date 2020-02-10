@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "YQPhotoBrowser"
-  s.version      = "0.1.5"
+  s.version      = "0.2.0"
   s.summary      = "A Swift PhotoBrowser."
 
   # This description is used to generate tags and improve search results.
@@ -64,7 +64,7 @@ Pod::Spec.new do |s|
 
   # s.platform     = :ios
   s.platform     = :ios, "8.0"
-  s.swift_version = "4.0"
+  s.swift_version = "5.0"
   #  When using multiple platforms
   # s.ios.deployment_target = "5.0"
   # s.osx.deployment_target = "10.7"
@@ -88,7 +88,6 @@ Pod::Spec.new do |s|
   #  For header files it will include any header in the folder.
   #  Not including the public_header_files will make all headers public.
   #
-
   s.source_files  =  "Classes/**.{swift}"
   #s.exclude_files = "Classes/Exclude"
 

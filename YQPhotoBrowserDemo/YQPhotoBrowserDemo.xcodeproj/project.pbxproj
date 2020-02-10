@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		55759F2C22CE39D600A185AE /* a.MOV in Resources */ = {isa = PBXBuildFile; fileRef = 55759F2A22CE39D500A185AE /* a.MOV */; };
+		55759F2D22CE39D600A185AE /* a.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 55759F2B22CE39D600A185AE /* a.jpeg */; };
 		558C5E3821D375E500F0632B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558C5E3721D375E500F0632B /* AppDelegate.swift */; };
 		558C5E3A21D375E500F0632B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558C5E3921D375E500F0632B /* ViewController.swift */; };
 		558C5E3D21D375E500F0632B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 558C5E3B21D375E500F0632B /* Main.storyboard */; };
@@ -25,6 +27,8 @@
 /* Begin PBXFileReference section */
 		05EAF7A57B3E3B9A88D4464E /* Pods_YQPhotoBrowserDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YQPhotoBrowserDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		47954E1C9DBE17BE545CF469 /* Pods-YQPhotoBrowserDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YQPhotoBrowserDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YQPhotoBrowserDemo/Pods-YQPhotoBrowserDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		55759F2A22CE39D500A185AE /* a.MOV */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = a.MOV; sourceTree = "<group>"; };
+		55759F2B22CE39D600A185AE /* a.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = a.jpeg; sourceTree = "<group>"; };
 		558C5E3421D375E500F0632B /* YQPhotoBrowserDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YQPhotoBrowserDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		558C5E3721D375E500F0632B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		558C5E3921D375E500F0632B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -91,6 +95,8 @@
 				558C5E4F21D3769E00F0632B /* TableViewCell.swift */,
 				558C5E4921D3769D00F0632B /* TableViewCell.xib */,
 				558C5E4B21D3769D00F0632B /* test.MOV */,
+				55759F2B22CE39D600A185AE /* a.jpeg */,
+				55759F2A22CE39D500A185AE /* a.MOV */,
 				558C5E3721D375E500F0632B /* AppDelegate.swift */,
 				558C5E3921D375E500F0632B /* ViewController.swift */,
 				558C5E3B21D375E500F0632B /* Main.storyboard */,
@@ -172,7 +178,9 @@
 				558C5E4221D375E700F0632B /* LaunchScreen.storyboard in Resources */,
 				558C5E5021D3769E00F0632B /* TableViewCell.xib in Resources */,
 				558C5E5321D3769E00F0632B /* IMG_0097.MOV in Resources */,
+				55759F2D22CE39D600A185AE /* a.jpeg in Resources */,
 				558C5E3F21D375E700F0632B /* Assets.xcassets in Resources */,
+				55759F2C22CE39D600A185AE /* a.MOV in Resources */,
 				558C5E5221D3769E00F0632B /* test.MOV in Resources */,
 				558C5E3D21D375E500F0632B /* Main.storyboard in Resources */,
 			);
@@ -186,21 +194,16 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-YQPhotoBrowserDemo/Pods-YQPhotoBrowserDemo-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
-				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
-				"${BUILT_PRODUCTS_DIR}/YQPhotoBrowser/YQPhotoBrowser.framework",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-YQPhotoBrowserDemo/Pods-YQPhotoBrowserDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YQPhotoBrowser.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-YQPhotoBrowserDemo/Pods-YQPhotoBrowserDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YQPhotoBrowserDemo/Pods-YQPhotoBrowserDemo-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-YQPhotoBrowserDemo/Pods-YQPhotoBrowserDemo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9E51870AD72E844723749918 /* [CP] Check Pods Manifest.lock */ = {
@@ -317,6 +320,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -371,6 +375,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -389,7 +394,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.wyq.YQPhotoBrowserDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -408,7 +413,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.wyq.YQPhotoBrowserDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

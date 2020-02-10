@@ -16,7 +16,7 @@ class YQPlayerView: UIView {
     // An empty implementation adversely affects performance during animation.
     override func draw(_ rect: CGRect) {
         // Drawing code
-    }
+    } 
     */
     weak var player: AVPlayer? {
         didSet {
@@ -34,7 +34,7 @@ class YQPlayerView: UIView {
     init(frame: CGRect = CGRect.zero, player: AVPlayer?) {
         self.player = player
         let layer = AVPlayerLayer(player: player)
-        layer.contentsGravity = kCAGravityResizeAspect
+        layer.contentsGravity = CALayerContentsGravity.resizeAspect
         self.playerLayer = layer
         super.init(frame: frame)
         layer.frame = bounds

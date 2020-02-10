@@ -9,7 +9,7 @@
 import UIKit
 
 public protocol YQThumbnailResource {
-
+    
 }
 
 extension URL: YQThumbnailResource {}
@@ -18,13 +18,13 @@ extension UIImage: YQThumbnailResource {}
 public class YQPhotoResource {
     var url: URL?
     var thumbnail: YQThumbnailResource?
-    var isLivePhoto: Bool = false
+    var type: YQPhotoItemType = .jpeg
     var additionalUrl: URL?
-    init(url: URL?, thumbnail: YQThumbnailResource?, isLivePhoto: Bool = false, additionalUrl: URL? = nil) {
+    public init(url: URL?, thumbnail: YQThumbnailResource?, type: YQPhotoItemType = .jpeg, additionalUrl: URL? = nil) {
         self.url = url
         self.thumbnail = thumbnail
-        self.isLivePhoto = isLivePhoto
-        if isLivePhoto {
+        self.type = type
+        if type == .livePhoto {
             assert(additionalUrl != nil, "LivePhoto必须提供相应的视频资源地址")
             self.additionalUrl = additionalUrl
         }
