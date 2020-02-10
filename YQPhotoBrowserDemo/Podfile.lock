@@ -1,0 +1,27 @@
+PODS:
+  - Kingfisher (4.10.1)
+  - SnapKit (4.0.1)
+  - YQPhotoBrowser (0.2.0):
+    - Kingfisher (~> 4.0)
+    - SnapKit (~> 4.0.0)
+
+DEPENDENCIES:
+  - YQPhotoBrowser (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - Kingfisher
+    - SnapKit
+
+EXTERNAL SOURCES:
+  YQPhotoBrowser:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
+  SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
+  YQPhotoBrowser: f3667980c551da7365b90e75a917dd0654e2eec2
+
+PODFILE CHECKSUM: 4416c7e96635e5436bfea95561eec7408148e6e2
+
+COCOAPODS: 1.8.1

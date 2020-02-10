@@ -16,7 +16,6 @@
 		558C5E4221D375E700F0632B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 558C5E4021D375E700F0632B /* LaunchScreen.storyboard */; };
 		558C5E5021D3769E00F0632B /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 558C5E4921D3769D00F0632B /* TableViewCell.xib */; };
 		558C5E5121D3769E00F0632B /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558C5E4A21D3769D00F0632B /* PlayerViewController.swift */; };
-		558C5E5221D3769E00F0632B /* test.MOV in Resources */ = {isa = PBXBuildFile; fileRef = 558C5E4B21D3769D00F0632B /* test.MOV */; };
 		558C5E5321D3769E00F0632B /* IMG_0097.MOV in Resources */ = {isa = PBXBuildFile; fileRef = 558C5E4C21D3769D00F0632B /* IMG_0097.MOV */; };
 		558C5E5421D3769E00F0632B /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558C5E4D21D3769D00F0632B /* CollectionViewController.swift */; };
 		558C5E5521D3769E00F0632B /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558C5E4E21D3769E00F0632B /* CollectionViewCell.swift */; };
@@ -181,7 +180,6 @@
 				55759F2D22CE39D600A185AE /* a.jpeg in Resources */,
 				558C5E3F21D375E700F0632B /* Assets.xcassets in Resources */,
 				55759F2C22CE39D600A185AE /* a.MOV in Resources */,
-				558C5E5221D3769E00F0632B /* test.MOV in Resources */,
 				558C5E3D21D375E500F0632B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
