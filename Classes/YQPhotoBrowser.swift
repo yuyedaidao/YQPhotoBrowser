@@ -210,12 +210,37 @@ extension YQPhotoBrowser {
     }
     
     @objc func shareAction() {
-        guard let cell = self.collectionView.cellForItem(at: self.selectedIndex) as? YQPhotoCell, let image = cell.imageView.image else {
+        guard let cell = self.collectionView.cellForItem(at: self.selectedIndex) as? YQPhotoCellCompatible, let resource = cell.resource, let url = resource.url else {
             return
         }
-        let shareController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+        var items: [Any] = []
+        debugPrint("type \(resource.type)")
+        switch resource.type {
+        case .jpeg, .png, .video:
+            items = [url]
+        case .gif:
+            do {
+                debugPrint(url)
+                let data = try Data(contentsOf: url)
+                items = [data]
+            } catch let error {
+                debugPrint(error)
+            }
+        case .livePhoto:
+            if #available(iOS 9.1, *) {
+                let lp = cell as! YQLivePhotoCell
+                guard let livePhoto = lp.livePhotoView.livePhoto else {
+                    return
+                }
+                items = [livePhoto]
+            } else {
+                return
+            }
+        }
+        
+        let shareController = UIActivityViewController(activityItems: items, applicationActivities: nil)
         shareController.completionWithItemsHandler = {(activityType, completed, returnItems, error) in
-            
+
         }
         present(shareController, animated: true)
     }
