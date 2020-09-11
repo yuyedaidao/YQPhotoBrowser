@@ -214,7 +214,6 @@ extension YQPhotoBrowser {
             return
         }
         var items: [Any] = []
-        debugPrint("type \(resource.type)")
         switch resource.type {
         case .jpeg, .png, .video:
             items = [url]

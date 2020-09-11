@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "YQPhotoBrowser"
-  s.version      = "0.2.2"
+  s.version      = "0.2.3"
   s.summary      = "A Swift PhotoBrowser."
 
   # This description is used to generate tags and improve search results.
@@ -63,7 +63,7 @@ Pod::Spec.new do |s|
   #
 
   # s.platform     = :ios
-  s.platform     = :ios, "8.0"
+  s.platform     = :ios, "10.0"
   s.swift_version = "5.0"
   #  When using multiple platforms
   # s.ios.deployment_target = "5.0"
@@ -132,7 +132,7 @@ Pod::Spec.new do |s|
   # s.requires_arc = true
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-  s.dependency 'Kingfisher', '~> 4.0'
-  s.dependency 'SnapKit', '~> 4.0.0'
+  s.dependency 'Kingfisher'
+  s.dependency 'SnapKit'
 
 end
