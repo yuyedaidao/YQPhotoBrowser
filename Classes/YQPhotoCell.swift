@@ -53,27 +53,32 @@ class YQPhotoCell: UICollectionViewCell, YQPhotoCellCompatible {
                 imageView.image = thumbnail
                 resizeSubviews()
             } else if let thumbnail = resource.thumbnail as? URL {
-                imageView.kf.setImage(with: thumbnail) { (image, error, type, url) in
+                imageView.kf.setImage(with: thumbnail, placeholder: nil, options: nil, progressBlock: nil) {[weak self] (_) in
+                    guard let self = self else {return}
                     self.resizeSubviews()
                 }
             }
             if url.isFileURL {
                 imageView.kf.cancelDownloadTask()
-                imageView.kf.setImage(with: url) { (image, error, type, url) in
+                imageView.kf.setImage(with: url, placeholder: nil, options: nil, progressBlock: nil) {[weak self] (_) in
+                    guard let self = self else {return}
                     self.resizeSubviews()
                 }
             } else {
                 progressLayer.strokeEnd = 0
                 progressLayer.position = CGPoint(x: self.width / 2, y: self.height / 2)
                 progressLayer.isHidden = false
-//                imageContainerView.isHidden = true
-                imageView.kf.setImage(with: url, placeholder: imageView.image, options: [.backgroundDecode], progressBlock: { (receivedSize: Int64, totalSize: Int64) in
+
+                imageView.kf.setImage(with: url, placeholder: imageView.image, options: [.backgroundDecode]) {[weak self] (receivedSize: Int64, totalSize: Int64) in
+                    guard let self = self else {return}
                     self.progressLayer.progress = Double(receivedSize) / Double(totalSize)
-                }, completionHandler: { (image, error, cacheType, url) in
-//                    self.imageContainerView.isHidden = false
+                } completionHandler: {[weak self] (_) in
+                    guard let self = self else {return}
                     self.progressLayer.isHidden = true
                     self.resizeSubviews()
-                })
+                }
+
+                
             }
         }
     }

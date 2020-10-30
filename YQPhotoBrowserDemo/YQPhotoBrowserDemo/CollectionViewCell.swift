@@ -19,6 +19,7 @@ class CollectionViewCell: UICollectionViewCell {
             imgView.kf.setImage(with: URL(string: url), placeholder: nil, options: [.transition(.flipFromTop(0.3))], progressBlock: nil) { (image, error, type, url) in
             }
             
+            
         }
     }
     

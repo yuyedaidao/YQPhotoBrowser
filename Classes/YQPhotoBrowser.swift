@@ -289,6 +289,13 @@ extension YQPhotoBrowser: UICollectionViewDelegate, UICollectionViewDataSource, 
         return numberOfSections?() ?? 1
     }
     
+    public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let videoCell = cell as? YQPhotoVideoCell else {
+            return
+        }
+        videoCell.pause()
+    }
+    
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         findCurrentIndex()
     }
