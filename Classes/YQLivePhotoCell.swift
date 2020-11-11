@@ -25,7 +25,7 @@ class YQLivePhotoCell: UICollectionViewCell, YQPhotoCellCompatible {
             if let thumbnail = resource.thumbnail as? UIImage {
                 fetchLivePhoto(placeholder: thumbnail, fileURLs: urls)
             } else if let thumbnail = resource.thumbnail as? URL {
-                KingfisherManager.shared.downloader.downloadImage(with: thumbnail, options: [], completionHandler:  {[weak self] (result) in
+                KingfisherManager.shared.retrieveImage(with: thumbnail, options: [.backgroundDecode], completionHandler:  {[weak self] (result) in
                     guard let self = self else {return}
                     switch result {
                     case .success(let value):
@@ -35,9 +35,9 @@ class YQLivePhotoCell: UICollectionViewCell, YQPhotoCellCompatible {
                     }
                 })
             }
-            KingfisherManager.shared.downloader.downloadImage(with: resource.url!, options: nil, progressBlock: nil) {[weak self] (result) in
+            KingfisherManager.shared.retrieveImage(with: resource.url!, options: [.backgroundDecode], progressBlock: nil) {[weak self] (result) in
                 guard let self = self else {return}
-                guard case .success(let value) = result, value.url == self.resource?.url else {
+                guard case .success(let value) = result, value.originalSource.url == self.resource?.url else {
                     return
                 }
                 self.coverImage = value.image
