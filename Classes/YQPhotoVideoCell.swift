@@ -23,7 +23,7 @@ class YQPhotoVideoCell: UICollectionViewCell, YQPhotoCellCompatible {
                 if let thumbnail = resource.thumbnail as? UIImage {
                     playerView.thumbnail = thumbnail
                 } else if let thumbnail = resource.thumbnail as? URL {
-                    KingfisherManager.shared.downloader.downloadImage(with: thumbnail, options: KingfisherParsedOptionsInfo(nil)) {[weak self] (result) in
+                    KingfisherManager.shared.retrieveImage(with: thumbnail, completionHandler: {[weak self] (result) in
                         guard let self = self else {return}
                         switch result {
                         case .success(let value):
@@ -31,7 +31,7 @@ class YQPhotoVideoCell: UICollectionViewCell, YQPhotoCellCompatible {
                         default:
                             break
                         }
-                    }
+                    })
                 }
             }
         }
