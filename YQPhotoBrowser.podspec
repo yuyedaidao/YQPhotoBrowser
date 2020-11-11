@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "YQPhotoBrowser"
-  s.version      = "0.2.5"
+  s.version      = "0.2.6"
   s.summary      = "A Swift PhotoBrowser."
 
   # This description is used to generate tags and improve search results.
