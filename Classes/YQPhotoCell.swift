@@ -58,9 +58,11 @@ class YQPhotoCell: UICollectionViewCell, YQPhotoCellCompatible {
                     self.resizeSubviews()
                 }
             }
+            var options: KingfisherOptionsInfo = [.backgroundDecode]
             if url.isFileURL {
+                options.append(.forceRefresh)
                 imageView.kf.cancelDownloadTask()
-                imageView.kf.setImage(with: url, placeholder: nil, options: nil, progressBlock: nil) {[weak self] (_) in
+                imageView.kf.setImage(with: url, placeholder: nil, options: options, progressBlock: nil) {[weak self] (_) in
                     guard let self = self else {return}
                     self.resizeSubviews()
                 }
@@ -68,8 +70,7 @@ class YQPhotoCell: UICollectionViewCell, YQPhotoCellCompatible {
                 progressLayer.strokeEnd = 0
                 progressLayer.position = CGPoint(x: self.width / 2, y: self.height / 2)
                 progressLayer.isHidden = false
-
-                imageView.kf.setImage(with: url, placeholder: imageView.image, options: [.backgroundDecode]) {[weak self] (receivedSize: Int64, totalSize: Int64) in
+                imageView.kf.setImage(with: url, placeholder: imageView.image, options: options) {[weak self] (receivedSize: Int64, totalSize: Int64) in
                     guard let self = self else {return}
                     self.progressLayer.progress = Double(receivedSize) / Double(totalSize)
                 } completionHandler: {[weak self] (_) in
@@ -77,8 +78,6 @@ class YQPhotoCell: UICollectionViewCell, YQPhotoCellCompatible {
                     self.progressLayer.isHidden = true
                     self.resizeSubviews()
                 }
-
-                
             }
         }
     }
