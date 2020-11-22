@@ -322,6 +322,20 @@ extension YQPhotoBrowser: UICollectionViewDelegate, UICollectionViewDataSource, 
                 break
             }
         }
+        
+        pauseVideos()
+    }
+    
+    func pauseVideos() {
+        let current = collectionView.cellForItem(at: selectedIndex)
+        for cell in collectionView.visibleCells {
+            guard current != cell else {
+                continue
+            }
+            if let item = cell as? YQPhotoVideoCell {
+                item.pause()
+            }
+        }
     }
     
     func clearScreen() {

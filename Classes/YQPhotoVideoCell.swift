@@ -19,6 +19,8 @@ class YQPhotoVideoCell: UICollectionViewCell, YQPhotoCellCompatible {
             let identifier = resource.url?.absoluteString
             if identifier != self.identifier {
                 self.identifier = identifier
+                player = AVPlayer()
+                playerView.player = player
                 playerItem = AVPlayerItem(url: resource.url!)
                 if let thumbnail = resource.thumbnail as? UIImage {
                     playerView.thumbnail = thumbnail
