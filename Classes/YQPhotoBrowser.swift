@@ -373,7 +373,7 @@ extension YQPhotoBrowser: YQPhotoAimaterDelegate {
     func animaterWillStartInteractiveTransition(_ animater: YQPhotoAnimater?) -> (UIView, UIImageView?) {
         collectionView.isHidden = true
         let toImgView = dismission?(selectedIndex,.begin)
-        toImgView?.isHidden = true
+        toImgView?.alpha = 0
         var tempView: UIView!
         let cell = collectionView.cellForItem(at: selectedIndex)
         if let photoCell = cell as? YQPhotoCell {
@@ -420,7 +420,7 @@ extension YQPhotoBrowser: YQPhotoAimaterDelegate {
     func animaterDidEndInteractiveTransition(_ animater: YQPhotoAnimater?, _ toImageView: UIImageView?, _ isCanceled: Bool) {
         collectionView.isHidden = false
         let _ = dismission?(selectedIndex,.finish)
-        toImageView?.isHidden = false
+        toImageView?.alpha = 1
         //如果是结束且是视频，要结束当前播放的视频
         if !isCanceled {
             guard let cell = collectionView.cellForItem(at: selectedIndex) as? YQPhotoVideoCell else {return}
