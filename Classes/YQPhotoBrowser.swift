@@ -56,15 +56,16 @@ public class YQPhotoBrowser: UIViewController {
     override open func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.black
-        let pan = UIPanGestureRecognizer(target: self, action: #selector(panAction(gesture:)))
-        view.isUserInteractionEnabled = true
-        view.addGestureRecognizer(pan)
         prepareCollectionView()
         prepareViews()
-        animater.delegate = self
-        animater.tempView = tempImgView
-        transitioningDelegate = animater
-        
+        if tempImgView != nil {
+            let pan = UIPanGestureRecognizer(target: self, action: #selector(panAction(gesture:)))
+            view.isUserInteractionEnabled = true
+            view.addGestureRecognizer(pan)
+            animater.delegate = self
+            animater.tempView = tempImgView
+            transitioningDelegate = animater
+        }
     }
     
     func prepareViews() {
