@@ -132,21 +132,32 @@ Pod::Spec.new do |s|
   # s.requires_arc = true
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
+  remove_kingfisher_swiftui = <<-CMD
+    # 解决 xcode13 Kingfisher Release模式下SwiftUI报错问题
+    system("rm -rf ./Pods/Kingfisher/Sources/SwiftUI")
+    code_file = "./Pods/Kingfisher/Sources/General/KFOptionsSetter.swift"
+    code_text = File.read(code_file)
+    code_text.gsub!(/#if canImport\(SwiftUI\) \&\& canImport\(Combine\)(.|\n)+#endif/,'')
+    system("rm -rf " + code_file)
+    aFile = File.new(code_file, 'w+')
+    aFile.syswrite(code_text)
+    aFile.close()
+  CMD
 
   s.dependency 'Kingfisher'
   s.dependency 'SnapKit'
 
-  # s.script_phase = {:name => 'remove kingfisher swiftui file', :script => remove_kingfisher_swiftui, :shell_path => '/bin/sh', :execution_position => :before_compile}
-  s.prepare_command = <<-CMD
-                        # 解决 xcode13 Kingfisher Release模式下SwiftUI报错问题
-                        system("rm -rf ./Pods/Kingfisher/Sources/SwiftUI")
-                        code_file = "./Pods/Kingfisher/Sources/General/KFOptionsSetter.swift"
-                        code_text = File.read(code_file)
-                        code_text.gsub!(/#if canImport\(SwiftUI\) \&\& canImport\(Combine\)(.|\n)+#endif/,'')
-                        system("rm -rf " + code_file)
-                        aFile = File.new(code_file, 'w+')
-                        aFile.syswrite(code_text)
-                        aFile.close()
-                      CMD
+  s.script_phase = {:name => 'remove kingfisher swiftui file', :script => remove_kingfisher_swiftui, :shell_path => '/usr/bin/ruby', :execution_position => :before_compile}
+  # s.prepare_command =  <<-CMD
+  #                       # 解决 xcode13 Kingfisher Release模式下SwiftUI报错问题
+  #                       system("rm -rf ./Pods/Kingfisher/Sources/SwiftUI")
+  #                       code_file = "./Pods/Kingfisher/Sources/General/KFOptionsSetter.swift"
+  #                       code_text = File.read(code_file)
+  #                       code_text.gsub!(/#if canImport\(SwiftUI\) \&\& canImport\(Combine\)(.|\n)+#endif/,'')
+  #                       system("rm -rf " + code_file)
+  #                       aFile = File.new(code_file, 'w+')
+  #                       aFile.syswrite(code_text)
+  #                       aFile.close()
+  #                     CMD
 
 end
