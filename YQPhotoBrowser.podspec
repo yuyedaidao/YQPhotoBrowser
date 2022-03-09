@@ -88,7 +88,7 @@ Pod::Spec.new do |s|
   #  For header files it will include any header in the folder.
   #  Not including the public_header_files will make all headers public.
   #
-  s.source_files  =  "Classes/**.{swift}"
+  s.source_files  =  "Classes/**.{swift,rb}"
   #s.exclude_files = "Classes/Exclude"
 
   # s.public_header_files = "Classes/**/*.h"
@@ -147,7 +147,7 @@ Pod::Spec.new do |s|
   s.dependency 'Kingfisher'
   s.dependency 'SnapKit'
 
-  s.script_phase = {:name => 'remove kingfisher swiftui file', :script => remove_kingfisher_swiftui, :shell_path => '/usr/bin/ruby', :execution_position => :before_compile}
+  # s.script_phase = {:name => 'remove kingfisher swiftui file', :script => remove_kingfisher_swiftui, :shell_path => '/usr/bin/ruby', :execution_position => :before_compile}
   # s.prepare_command =  <<-CMD
   #                       # 解决 xcode13 Kingfisher Release模式下SwiftUI报错问题
   #                       system("rm -rf ./Pods/Kingfisher/Sources/SwiftUI")
@@ -159,5 +159,6 @@ Pod::Spec.new do |s|
   #                       aFile.syswrite(code_text)
   #                       aFile.close()
   #                     CMD
-
+  
+  s.prepare_command = 'ruby remove_kingfisher_swiftui.rb'
 end
