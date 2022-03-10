@@ -88,7 +88,7 @@ Pod::Spec.new do |s|
   #  For header files it will include any header in the folder.
   #  Not including the public_header_files will make all headers public.
   #
-  s.source_files  =  "Classes/**/*.{swift,rb}"
+  s.source_files  =  "Classes/**/*.{swift}"
 
   # s.public_header_files = "Classes/**/*.h"
 
@@ -131,20 +131,20 @@ Pod::Spec.new do |s|
   # s.requires_arc = true
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-  remove_kingfisher_swiftui = <<-CMD
-    puts "~~~~~~~~~~~~~~~~~~~~~~~~"
-    system("pwd")
-    system("ls Kingfisher")
-    system("rm -rf ./Kingfisher/Sources/SwiftUI")
-    code_file = "./Kingfisher/Sources/General/KFOptionsSetter.swift"
-    code_text = File.read(code_file)
-    code_text.gsub!(/#if canImport\(SwiftUI\) \&\& canImport\(Combine\)(.|\n)+#endif/,'')
-    puts code_text
-    system("rm -rf " + code_file)
-    aFile = File.new(code_file, 'w+')
-    aFile.syswrite(code_text)
-    aFile.close()
-  CMD
+  # remove_kingfisher_swiftui = <<-CMD
+  #   puts "~~~~~~~~~~~~~~~~~~~~~~~~"
+  #   system("pwd")
+  #   system("ls Kingfisher")
+  #   system("rm -rf ./Kingfisher/Sources/SwiftUI")
+  #   code_file = "./Kingfisher/Sources/General/KFOptionsSetter.swift"
+  #   code_text = File.read(code_file)
+  #   code_text.gsub!(/#if canImport\(SwiftUI\) \&\& canImport\(Combine\)(.|\n)+#endif/,'')
+  #   puts code_text
+  #   system("rm -rf " + code_file)
+  #   aFile = File.new(code_file, 'w+')
+  #   aFile.syswrite(code_text)
+  #   aFile.close()
+  # CMD
 
   s.dependency 'Kingfisher'
   s.dependency 'SnapKit'
@@ -162,7 +162,7 @@ Pod::Spec.new do |s|
   #                       aFile.close()
   #                     CMD
   
-  s.prepare_command = <<-CMD
-     ruby ./Classes/remove_kingfisher_swiftui.rb
-  CMD
+  # s.prepare_command = <<-CMD
+  #    ruby ./Classes/remove_kingfisher_swiftui.rb
+  # CMD
 end
