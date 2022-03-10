@@ -1,8 +1,6 @@
 # 解决 xcode13 Kingfisher Release模式下SwiftUI报错问题
-puts "-------------------->>>"
+puts "<<<-------------------->>>"
 dir = Dir.pwd
-puts dir
-system("ls Pods/Kingfisher/Sources/General")
 system("rm -rf Pods/Kingfisher/Sources/SwiftUI")
 # files = Dir.entries(dir + "Pods/Kingfisher/Sources")
 code_file = dir + "/Pods/Kingfisher/Sources/General/KFOptionsSetter.swift"
@@ -13,4 +11,6 @@ if File.exist?(code_file) then
     aFile = File.new(code_file, 'w+')
     aFile.syswrite(code_text)
     aFile.close()
+else
+    Pod::UI.puts "未找到#{code_file}"
 end
