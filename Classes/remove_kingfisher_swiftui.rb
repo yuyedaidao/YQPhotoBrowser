@@ -1,6 +1,6 @@
 # 解决 xcode13 Kingfisher Release模式下SwiftUI报错问题
 puts "-------------------->>>"
-dir = sh("pwd")
+dir = Dir.pwd
 puts dir
 system("ls Pods/Kingfisher/Sources/General")
 system("rm -rf Pods/Kingfisher/Sources/SwiftUI")
