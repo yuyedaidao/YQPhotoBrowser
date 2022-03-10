@@ -76,6 +76,7 @@ class CollectionViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let imageView = (collectionView.cellForItem(at: indexPath) as! CollectionViewCell).imgView
+    
         YQPhotoBrowser.presented(by: self, with: imageView, numberOfSections: {40}, numberOfItems: { section in
             return self.dataArray.count + 1
         }, defaultIndex: indexPath, itemResource: { (indexPath) -> YQPhotoResource in

@@ -8,6 +8,7 @@
 
 import UIKit
 import Kingfisher
+import YQPhotoBrowser
 
 class TableViewCell: UITableViewCell {
 
@@ -15,9 +16,7 @@ class TableViewCell: UITableViewCell {
     
     var url: String! {
         didSet {
-            imgView.kf.setImage(with: URL(string: url), placeholder: nil, options: [.transition(.flipFromTop(0.3))], progressBlock: nil) { (image, error, type, url) in
-                
-            }
+            imgView.kf.setImage(with: URL(string: url))
         }
     }
     
