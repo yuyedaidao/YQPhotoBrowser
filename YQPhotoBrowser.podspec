@@ -132,7 +132,6 @@ Pod::Spec.new do |s|
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   remove_kingfisher_swiftui = <<-CMD
-    # 解决 xcode13 Kingfisher Release模式下SwiftUI报错问题
     system("pwd")
     system("rm -rf ./Kingfisher/Sources/SwiftUI")
     code_file = "./Kingfisher/Sources/General/KFOptionsSetter.swift"
@@ -147,7 +146,7 @@ Pod::Spec.new do |s|
   s.dependency 'Kingfisher'
   s.dependency 'SnapKit'
 
-  #  s.script_phase = {:name => 'remove kingfisher swiftui file', :script => remove_kingfisher_swiftui, :shell_path => '/usr/bin/ruby', :execution_position => :before_compile}
+   s.script_phase = {:name => 'remove kingfisher swiftui file', :script => remove_kingfisher_swiftui, :shell_path => '/usr/bin/ruby', :execution_position => :before_compile}
   # s.prepare_command =  <<-CMD
   #                       # 解决 xcode13 Kingfisher Release模式下SwiftUI报错问题
   #                       system("rm -rf ./Pods/Kingfisher/Sources/SwiftUI")
@@ -160,7 +159,7 @@ Pod::Spec.new do |s|
   #                       aFile.close()
   #                     CMD
   
- s.prepare_command = <<-CMD
-    ruby ./Classes/remove_kingfisher_swiftui.rb
- CMD
+#  s.prepare_command = <<-CMD
+#     ruby ./Classes/remove_kingfisher_swiftui.rb
+#  CMD
 end

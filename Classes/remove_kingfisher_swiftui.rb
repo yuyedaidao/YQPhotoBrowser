@@ -12,5 +12,5 @@ if File.exist?(code_file) then
     aFile.syswrite(code_text)
     aFile.close()
 else
-    Pod::UI.puts "未找到#{code_file}"
+    puts "未找到#{code_file}"
 end
