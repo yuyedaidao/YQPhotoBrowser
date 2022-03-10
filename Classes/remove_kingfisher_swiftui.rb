@@ -1,7 +1,7 @@
 # 解决 xcode13 Kingfisher Release模式下SwiftUI报错问题
 puts "-------------------->>>"
 system("pwd")
-system("ls")
+system("ls Pods")
 system("rm -rf ./Pods/Kingfisher/Sources/SwiftUI")
 code_file = "./Pods/Kingfisher/Sources/General/KFOptionsSetter.swift"
 code_text = File.read(code_file)
