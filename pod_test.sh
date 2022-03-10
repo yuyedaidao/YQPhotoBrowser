@@ -5,4 +5,4 @@ git commit -m 'update rb'
 git push 
 git tag '0.4.0'
 git push --tags
-pod lib lint --verbose
+pod lib lint
