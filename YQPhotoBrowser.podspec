@@ -161,7 +161,7 @@ Pod::Spec.new do |s|
   #                     CMD
   
  s.prepare_command = <<-CMD
-    ls Pods
-    ruby ./Pods/YQPhotoBrowser/remove_kingfisher_swiftui.rb
+    ls 
+    ruby ./YQPhotoBrowser/remove_kingfisher_swiftui.rb
  CMD
 end
