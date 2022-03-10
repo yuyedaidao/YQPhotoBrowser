@@ -161,7 +161,6 @@ Pod::Spec.new do |s|
   #                     CMD
   
  s.prepare_command = <<-CMD
-    ls 
     ruby ./Classes/remove_kingfisher_swiftui.rb
  CMD
 end
