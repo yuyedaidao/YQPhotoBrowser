@@ -26,5 +26,5 @@ git commit -m "$MESSAGE"
 git push 
 git tag "$TAG"
 git push --tags
-pod lib lint
-pob trunk push --allow-warnings
+# pod lib lint
+pod trunk push --allow-warnings
