@@ -8,7 +8,7 @@
 
 import UIKit
 import AVFoundation
-import Kingfisher
+import YQKingfisher
 
 class NotificationObserver: NSObject {}
 

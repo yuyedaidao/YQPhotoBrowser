@@ -9,7 +9,7 @@
 import UIKit
 import PhotosUI
 import Photos
-import Kingfisher
+import YQKingfisher
 
 /// 暂时只支持本地LivePhoto
 

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Kingfisher
+import YQKingfisher
 
 class CollectionViewCell: UICollectionViewCell {
     

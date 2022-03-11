@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Kingfisher
+import YQKingfisher
 
 func yq_clamp<T: Comparable>(_ x: T, _ low: T, _ high: T) -> T {
     return min(max(x, low), high)

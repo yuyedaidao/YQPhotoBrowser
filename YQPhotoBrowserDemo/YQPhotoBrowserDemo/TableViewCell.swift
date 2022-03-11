@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Kingfisher
+import YQKingfisher
 import YQPhotoBrowser
 
 class TableViewCell: UITableViewCell {
