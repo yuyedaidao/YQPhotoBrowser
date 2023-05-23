@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "YQPhotoBrowser"
-  s.version      = "0.4.0"
+  s.version      = "0.5.0"
   s.summary      = "A Swift PhotoBrowser." 
 
   # This description is used to generate tags and improve search results.
@@ -63,7 +63,7 @@ Pod::Spec.new do |s|
   #
 
   # s.platform     = :ios
-  s.platform     = :ios, "10.0"
+  s.platform     = :ios, "11.0"
   s.swift_version = "5.0"
   #  When using multiple platforms
   # s.ios.deployment_target = "5.0"
@@ -108,7 +108,7 @@ Pod::Spec.new do |s|
   }
 
 
-  s.dependency 'YQKingfisher'
+  s.dependency 'Kingfisher', '~> 6.0'
   s.dependency 'SnapKit'
 
 end
