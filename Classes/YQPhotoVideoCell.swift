@@ -19,13 +19,21 @@ class YQPhotoVideoCell: UICollectionViewCell, YQPhotoCellCompatible {
             let identifier = resource.url?.absoluteString
             if identifier != self.identifier {
                 self.identifier = identifier
+                player = AVPlayer()
+                playerView.player = player
                 playerItem = AVPlayerItem(url: resource.url!)
                 if let thumbnail = resource.thumbnail as? UIImage {
                     playerView.thumbnail = thumbnail
                 } else if let thumbnail = resource.thumbnail as? URL {
-                    KingfisherManager.shared.downloader.downloadImage(with: thumbnail, retrieveImageTask: nil, options: nil, progressBlock: nil) { (image, error, url, data) in
-                        self.playerView.thumbnail = image
-                    }
+                    KingfisherManager.shared.retrieveImage(with: thumbnail, completionHandler: {[weak self] (result) in
+                        guard let self = self else {return}
+                        switch result {
+                        case .success(let value):
+                            self.playerView.thumbnail = value.image
+                        default:
+                            break
+                        }
+                    })
                 }
             }
         }
@@ -111,7 +119,7 @@ class YQPhotoVideoCell: UICollectionViewCell, YQPhotoCellCompatible {
         }
     }
 
-    private func pause() {
+    public func pause() {
         player.pause()
         playButton.isSelected = false
         self.playButton.alpha = 1

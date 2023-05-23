@@ -16,8 +16,8 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "YQPhotoBrowser"
-  s.version      = "0.2.0"
-  s.summary      = "A Swift PhotoBrowser."
+  s.version      = "0.5.0"
+  s.summary      = "A Swift PhotoBrowser." 
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
@@ -63,7 +63,7 @@ Pod::Spec.new do |s|
   #
 
   # s.platform     = :ios
-  s.platform     = :ios, "8.0"
+  s.platform     = :ios, "11.0"
   s.swift_version = "5.0"
   #  When using multiple platforms
   # s.ios.deployment_target = "5.0"
@@ -88,8 +88,7 @@ Pod::Spec.new do |s|
   #  For header files it will include any header in the folder.
   #  Not including the public_header_files will make all headers public.
   #
-  s.source_files  =  "Classes/**.{swift}"
-  #s.exclude_files = "Classes/Exclude"
+  s.source_files  =  "Classes/**/*.{swift}"
 
   # s.public_header_files = "Classes/**/*.h"
 
@@ -107,32 +106,9 @@ Pod::Spec.new do |s|
   s.resource_bundles = {
     'YQPhotoBrowser' => "YQPhotoBrowser/*.xcassets"
   }
-  # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
 
-  # ――― Project Linking ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  Link your library with frameworks, or libraries. Libraries do not include
-  #  the lib prefix of their name.
-  #
-
-  # s.framework  = "SomeFramework"
-  # s.frameworks = "SomeFramework", "AnotherFramework"
-
-  # s.library   = "iconv"
-  # s.libraries = "iconv", "xml2"
-
-
-  # ――― Project Settings ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  If your library depends on compiler flags you can set them in the xcconfig hash
-  #  where they will only apply to your library. If you depend on other Podspecs
-  #  you can include multiple dependencies to ensure it works.
-
-  # s.requires_arc = true
-
-  # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-  s.dependency 'Kingfisher', '~> 4.0'
-  s.dependency 'SnapKit', '~> 4.0.0'
+  s.dependency 'Kingfisher', '~> 6.0'
+  s.dependency 'SnapKit'
 
 end

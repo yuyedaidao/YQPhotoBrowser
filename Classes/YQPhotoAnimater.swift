@@ -145,7 +145,10 @@ class YQPhotoPresentAnimater: NSObject, UIViewControllerAnimatedTransitioning {
 class YQPhotoDismissAnimater: NSObject, UIViewControllerAnimatedTransitioning, UIViewControllerInteractiveTransitioning  {
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         guard let (tempView, toImgView) = animater?.delegate?.animaterWillStartInteractiveTransition(animater) else {
-            fatalError("需要在animaterWillStartInteractiveTransition里返回当前的浮动的UIView,并设置好其在UIScareen中的位置")
+            fatalError("需要在animaterWillStartInteractiveTransition里返回当前的浮动的UIView,并设置好其在UIScreen中的位置")
+        }
+        guard let fromView = transitionContext.view(forKey: .from) else {
+            return
         }
         self.tempView = tempView
         self.toImgView = toImgView
@@ -156,9 +159,7 @@ class YQPhotoDismissAnimater: NSObject, UIViewControllerAnimatedTransitioning, U
         containerView.addSubview(toView)
         containerView.sendSubviewToBack(toView)
         containerView.addSubview(tempView)
-        guard let fromView = transitionContext.view(forKey: .from) else {
-            fatalError()
-        }
+        
         var rect: CGRect
         if let imgView = toImgView, let superView = imgView.superview {
             rect = superView.convert(imgView.frame, to: nil)
@@ -212,7 +213,7 @@ class YQPhotoDismissAnimater: NSObject, UIViewControllerAnimatedTransitioning, U
 
     func finish() {
         guard let tempView = tempView, let fromView = self.transitionContext?.view(forKey: .from) else {
-            fatalError()
+            return
         }
         var rect: CGRect
         if let imgView = toImgView, let superView = imgView.superview {
@@ -234,7 +235,7 @@ class YQPhotoDismissAnimater: NSObject, UIViewControllerAnimatedTransitioning, U
 
     func cancel() {
         guard let tempView = self.tempView, let fromView = self.transitionContext?.view(forKey: .from) else {
-            fatalError()
+            return
         }
         UIView.animate(withDuration: 0.2, delay: 0.0, options: [.curveEaseIn, .beginFromCurrentState], animations: {
             tempView.frame = self.beginFrame

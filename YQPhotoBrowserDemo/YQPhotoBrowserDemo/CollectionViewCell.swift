@@ -16,8 +16,7 @@ class CollectionViewCell: UICollectionViewCell {
     var url: String! {
         didSet {
             imgView.stopAnimating()
-            imgView.kf.setImage(with: URL(string: url), placeholder: nil, options: [.transition(.flipFromTop(0.3))], progressBlock: nil) { (image, error, type, url) in
-            }
+            imgView.kf.setImage(with: URL(string: url))
             
         }
     }

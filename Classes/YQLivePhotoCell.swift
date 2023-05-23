@@ -25,18 +25,22 @@ class YQLivePhotoCell: UICollectionViewCell, YQPhotoCellCompatible {
             if let thumbnail = resource.thumbnail as? UIImage {
                 fetchLivePhoto(placeholder: thumbnail, fileURLs: urls)
             } else if let thumbnail = resource.thumbnail as? URL {
-                KingfisherManager.shared.downloader.downloadImage(with: thumbnail, retrieveImageTask: nil, options: nil, progressBlock: nil) { (image, error, url, data) in
-                    guard let image = image else {
+                KingfisherManager.shared.retrieveImage(with: thumbnail, options: [.backgroundDecode], completionHandler:  {[weak self] (result) in
+                    guard let self = self else {return}
+                    switch result {
+                    case .success(let value):
+                        self.fetchLivePhoto(placeholder: value.image, fileURLs: urls)
+                    case .failure:
                         self.fetchLivePhoto(placeholder: nil, fileURLs: urls)
-                        return
                     }
-                    self.fetchLivePhoto(placeholder: image, fileURLs: urls)
-                }
+                })
             }
-            KingfisherManager.shared.downloader.downloadImage(with: resource.url!, retrieveImageTask: nil, options: nil, progressBlock: nil) { (image, error, url, data) in
-                /// 这是本地加载，较快
-                guard url == self.resource?.url else {return}
-                self.coverImage = image
+            KingfisherManager.shared.retrieveImage(with: resource.url!, options: [.backgroundDecode], progressBlock: nil) {[weak self] (result) in
+                guard let self = self else {return}
+                guard case .success(let value) = result, value.originalSource.url == self.resource?.url else {
+                    return
+                }
+                self.coverImage = value.image
             }
         }
     }

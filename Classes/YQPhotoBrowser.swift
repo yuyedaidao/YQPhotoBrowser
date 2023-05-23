@@ -56,15 +56,16 @@ public class YQPhotoBrowser: UIViewController {
     override open func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.black
-        let pan = UIPanGestureRecognizer(target: self, action: #selector(panAction(gesture:)))
-        view.isUserInteractionEnabled = true
-        view.addGestureRecognizer(pan)
         prepareCollectionView()
         prepareViews()
-        animater.delegate = self
-        animater.tempView = tempImgView
-        transitioningDelegate = animater
-        
+        if tempImgView != nil {
+            let pan = UIPanGestureRecognizer(target: self, action: #selector(panAction(gesture:)))
+            view.isUserInteractionEnabled = true
+            view.addGestureRecognizer(pan)
+            animater.delegate = self
+            animater.tempView = tempImgView
+            transitioningDelegate = animater
+        }
     }
     
     func prepareViews() {
@@ -210,12 +211,36 @@ extension YQPhotoBrowser {
     }
     
     @objc func shareAction() {
-        guard let cell = self.collectionView.cellForItem(at: self.selectedIndex) as? YQPhotoCell, let image = cell.imageView.image else {
+        guard let cell = self.collectionView.cellForItem(at: self.selectedIndex) as? YQPhotoCellCompatible, let resource = cell.resource, let url = resource.url else {
             return
         }
-        let shareController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+        var items: [Any] = []
+        switch resource.type {
+        case .jpeg, .png, .video:
+            items = [url]
+        case .gif:
+            do {
+                debugPrint(url)
+                let data = try Data(contentsOf: url)
+                items = [data]
+            } catch let error {
+                debugPrint(error)
+            }
+        case .livePhoto:
+            if #available(iOS 9.1, *) {
+                let lp = cell as! YQLivePhotoCell
+                guard let livePhoto = lp.livePhotoView.livePhoto else {
+                    return
+                }
+                items = [livePhoto]
+            } else {
+                return
+            }
+        }
+        
+        let shareController = UIActivityViewController(activityItems: items, applicationActivities: nil)
         shareController.completionWithItemsHandler = {(activityType, completed, returnItems, error) in
-            
+
         }
         present(shareController, animated: true)
     }
@@ -265,6 +290,13 @@ extension YQPhotoBrowser: UICollectionViewDelegate, UICollectionViewDataSource, 
         return numberOfSections?() ?? 1
     }
     
+    public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let videoCell = cell as? YQPhotoVideoCell else {
+            return
+        }
+        videoCell.pause()
+    }
+    
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         findCurrentIndex()
     }
@@ -289,6 +321,20 @@ extension YQPhotoBrowser: UICollectionViewDelegate, UICollectionViewDataSource, 
             if cell.frame.minX == collectionView.contentOffset.x {
                 selectedIndex = collectionView.indexPath(for: cell)!
                 break
+            }
+        }
+        
+        pauseVideos()
+    }
+    
+    func pauseVideos() {
+        let current = collectionView.cellForItem(at: selectedIndex)
+        for cell in collectionView.visibleCells {
+            guard current != cell else {
+                continue
+            }
+            if let item = cell as? YQPhotoVideoCell {
+                item.pause()
             }
         }
     }
@@ -328,7 +374,7 @@ extension YQPhotoBrowser: YQPhotoAimaterDelegate {
     func animaterWillStartInteractiveTransition(_ animater: YQPhotoAnimater?) -> (UIView, UIImageView?) {
         collectionView.isHidden = true
         let toImgView = dismission?(selectedIndex,.begin)
-        toImgView?.isHidden = true
+        toImgView?.alpha = 0
         var tempView: UIView!
         let cell = collectionView.cellForItem(at: selectedIndex)
         if let photoCell = cell as? YQPhotoCell {
@@ -375,7 +421,7 @@ extension YQPhotoBrowser: YQPhotoAimaterDelegate {
     func animaterDidEndInteractiveTransition(_ animater: YQPhotoAnimater?, _ toImageView: UIImageView?, _ isCanceled: Bool) {
         collectionView.isHidden = false
         let _ = dismission?(selectedIndex,.finish)
-        toImageView?.isHidden = false
+        toImageView?.alpha = 1
         //如果是结束且是视频，要结束当前播放的视频
         if !isCanceled {
             guard let cell = collectionView.cellForItem(at: selectedIndex) as? YQPhotoVideoCell else {return}
