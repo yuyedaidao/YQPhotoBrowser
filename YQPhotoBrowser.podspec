@@ -104,7 +104,7 @@ Pod::Spec.new do |s|
   # s.resource  = "icon.png"
   # s.resources = "Resources/*.png"
   s.resource_bundles = {
-    'YQPhotoBrowser' => "YQPhotoBrowser/*.xcassets"
+    'YQPhotoBrowser' => "Assets/*.xcassets"
   }
 
 

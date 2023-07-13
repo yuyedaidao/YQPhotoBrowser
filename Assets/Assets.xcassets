@@ -1,0 +1,8 @@
+tree master:YQPhotoBrowser/Assets.xcassets
+
+AppIcon.appiconset/
+Contents.json
+yq_pb_back.imageset/
+yq_pb_pause.imageset/
+yq_pb_play.imageset/
+yq_pb_share.imageset/
