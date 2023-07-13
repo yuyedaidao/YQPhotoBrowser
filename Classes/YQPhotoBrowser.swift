@@ -34,8 +34,12 @@ public class YQPhotoBrowser: UIViewController {
     var selectedIndex = IndexPath(item: 0, section: 0) {
         didSet {
             selected?(selectedIndex)
+            updateNumber(with: selectedIndex)
         }
     }
+    /// 是否展示序号索引
+    private var showNumber: Bool = false
+    
     private var selected: ((IndexPath) -> Void)?
     private var collectionView: UICollectionView!
     private var tempImgView: UIImageView?
@@ -46,6 +50,7 @@ public class YQPhotoBrowser: UIViewController {
     private var shareButton: UIButton!
     private var topOperationView: UIView!
     private var bottomOperationView: UIView!
+    private var numberLabel: YQBackgroundLabel?
     private var isHiddenStatusBar = false
     
     /// 如果当前视图是视频视图，拖拽时再创建浮动视图会造成屏幕闪动现象，因此提前准备一个辅助视图
@@ -68,6 +73,15 @@ public class YQPhotoBrowser: UIViewController {
         }
     }
     
+    func updateNumber(with indexPath: IndexPath) {
+        guard showNumber, let total = numberOfItems?(indexPath.section) else {return}
+        var numberText = "\(indexPath.item + 1)/\(total)"
+        if (numberOfSections?() ?? 0) > 1 {
+            numberText = "\(numberText)-\(indexPath.section + 1)"
+        }
+        numberLabel?.text = numberText
+    }
+    
     func prepareViews() {
         topOperationView = UIView()
         topOperationView.yq.then { (view) in
@@ -76,9 +90,8 @@ public class YQPhotoBrowser: UIViewController {
             view.snp.makeConstraints({ (make) in
                 make.leading.trailing.equalToSuperview()
                 if #available(iOS 11.0, *) {
-                    make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(20)
+                    make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(20)
                 } else {
-                    // Fallback on earlier versions
                     make.top.equalTo(20)
                 }
                 make.height.equalTo(44)
@@ -116,13 +129,33 @@ public class YQPhotoBrowser: UIViewController {
             view.snp.makeConstraints({ (make) in
                 make.leading.trailing.equalToSuperview()
                 if #available(iOS 11.0, *) {
-                    make.bottom.equalTo(self.bottomLayoutGuide.snp.top).offset(-20)
+                    make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-20)
                 } else {
                     // Fallback on earlier versions
                     make.bottom.equalTo(-20)
                 }
                 make.height.equalTo(44)
             })
+        }.then { view in
+            guard showNumber else {
+                return
+            }
+            numberLabel = YQBackgroundLabel(nil, contentInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10), configure: { view, label in
+                label.textColor = UIColor.white
+                label.font = UIFont.systemFont(ofSize: 15)
+            })
+            numberLabel?.yq.then { label in
+                label.color = UIColor(white: 1, alpha: 0.2)
+                view.addSubview(label)
+                label.snp.makeConstraints { make in
+                    make.leading.equalTo(25)
+                    make.height.equalTo(26)
+                    make.centerY.equalToSuperview()
+                }
+                label.clipsToBounds = true
+                label.layer.cornerRadius = 13
+            }
+            updateNumber(with: selectedIndex)
         }
     }
     
@@ -152,7 +185,7 @@ public class YQPhotoBrowser: UIViewController {
         }
     }
     
-    public class func presented(by presentedController: UIViewController, with imageView: UIImageView?, numberOfSections:(() -> Int)? = nil, numberOfItems: ((Int) -> Int)? = nil, defaultIndex: IndexPath, itemResource: @escaping YQPhotoResourceGetter, selected:((IndexPath) -> Void)? = nil, dismiss:((IndexPath,YQPhotoDismissState) -> UIImageView?)? = nil) {
+    public class func presented(by presentedController: UIViewController, with imageView: UIImageView?, numberOfSections:(() -> Int)? = nil, numberOfItems: ((Int) -> Int)? = nil, defaultIndex: IndexPath, itemResource: @escaping YQPhotoResourceGetter, selected:((IndexPath) -> Void)? = nil, dismiss:((IndexPath,YQPhotoDismissState) -> UIImageView?)? = nil, showNumber: Bool = false) {
         let browser = YQPhotoBrowser()
         if let imgView = imageView {
             let rect = imgView.superview!.convert(imgView.frame, to: nil)
@@ -165,6 +198,7 @@ public class YQPhotoBrowser: UIViewController {
         browser.numberOfSections = numberOfSections
         browser.numberOfItems = numberOfItems
         browser.itemResource = itemResource
+        browser.showNumber = showNumber
         browser.selectedIndex = defaultIndex
         browser.dismission = dismiss
         browser.selected = selected

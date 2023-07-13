@@ -13,14 +13,14 @@ private let reuseIdentifier = "CollectionViewCell"
 
 class CollectionViewController: UICollectionViewController {
     lazy var dataArray: [String]  = {
-        return ["https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1496405460191&di=480afcff086c1a4a1e4afce0341830dd&imgtype=0&src=http%3A%2F%2Fmvimg1.meitudata.com%2F56cea5d03f5493829.jpg",
-                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528993047751&di=997c4dbe0724041005216940ba87de8f&imgtype=0&src=http%3A%2F%2Fwww.sinaimg.cn%2Fdy%2Fslidenews%2F3_img%2F2017_12%2F85178_417292_127040.jpg",
-                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1496405460181&di=276302b3cf58c4f4331f8ba4be550e2c&imgtype=0&src=http%3A%2F%2Fimg02.tooopen.com%2Fimages%2F20160427%2Ftooopen_sy_160701449393.jpg",
-                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528996792630&di=13eea2e39d7523a52c1fdc46297a36db&imgtype=0&src=http%3A%2F%2Fs13.sinaimg.cn%2Fmw690%2F006d2iVGgy6VEqNAKM48c%26690",
-                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1496406031513&di=3f05bfecba0688fe0b1002ab8108b756&imgtype=0&src=http%3A%2F%2Fimg17.3lian.com%2Fd%2Ffile%2F201702%2F16%2Fc739f33257cb00cc209b533fdfebe85d.jpg",
-                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528996905414&di=d972614c1216afb1fcc4e7ca140ccff3&imgtype=0&src=http%3A%2F%2Fs17.mogucdn.com%2Fp1%2F160420%2F130571905_ie4geytggbsgcojqhazdambqgiyde_640x960.jpg_468x468.jpg",
-                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1529518746968&di=31f255c07a16f2f1a8ba0bbeea4f2aee&imgtype=0&src=http%3A%2F%2Fimg.mp.itc.cn%2Fupload%2F20161115%2F6163765431c44d538b37d6efb32ee885_th.jpg",
-                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528993047751&di=997c4dbe0724041005216940ba87de8f&imgtype=0&src=http%3A%2F%2Fwww.sinaimg.cn%2Fdy%2Fslidenews%2F3_img%2F2017_12%2F85178_417292_127040.jpg",
+        return ["https://t7.baidu.com/it/u=848096684,3883475370&fm=193&f=GIF",
+                "https://t7.baidu.com/it/u=4162611394,4275913936&fm=193&f=GIF",
+                "https://t7.baidu.com/it/u=4254919379,3719403362&fm=193&f=GIF",
+                "https://t7.baidu.com/it/u=1653814446,2847580380&fm=193&f=GIF",
+                "https://t7.baidu.com/it/u=1517419723,1472324058&fm=193&f=GIF",
+                "https://t7.baidu.com/it/u=3919052749,3204254734&fm=193&f=GIF",
+                "https://t7.baidu.com/it/u=3458259832,1200281189&fm=193&f=GIF",
+                "https://t7.baidu.com/it/u=3019859441,4021962683&fm=193&f=GIF",
         ]
     }()
     @IBOutlet weak var collectionLayout: UICollectionViewFlowLayout!
@@ -104,12 +104,12 @@ class CollectionViewController: UICollectionViewController {
             
         }, selected: { (indexPath) in
             collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .centeredVertically)
-        }) { (indexPath, state) -> UIImageView? in
-            if state == .begin {
-                return (collectionView.cellForItem(at: indexPath) as? CollectionViewCell)?.imgView
-            }
-            return nil
-        }
+        }, dismiss: { (indexPath, state) -> UIImageView? in
+                if state == .begin {
+                    return (collectionView.cellForItem(at: indexPath) as? CollectionViewCell)?.imgView
+                }
+                return nil
+        }, showNumber: true)
     }
     // MARK: UICollectionViewDelegate
     
