@@ -24,6 +24,21 @@ public enum YQPhotoItemType {
 }
 
 public typealias  YQPhotoResourceGetter = (IndexPath) -> (YQPhotoResource)
+
+public struct YQPhotoBottomActionItem {
+    public let id: String
+    public let icon: UIImage
+    public let title: String
+    public let onTap: ((IndexPath) -> Void)?
+
+    public init(id: String, icon: UIImage, title: String, onTap: ((IndexPath) -> Void)? = nil) {
+        self.id = id
+        self.icon = icon
+        self.title = title
+        self.onTap = onTap
+    }
+}
+
 private let kTriggerOffset: CGFloat = 60.0
 
 public class YQPhotoBrowser: UIViewController {
@@ -38,7 +53,15 @@ public class YQPhotoBrowser: UIViewController {
         }
     }
     /// 是否展示序号索引
-    private var showNumber: Bool = false
+    public var showNumber: Bool = false
+    /// 是否展示分享按钮
+    public var showShareButton: Bool = true {
+        didSet {
+            shareButton?.isHidden = !showShareButton
+        }
+    }
+    /// 底部操作面板按钮
+    public var bottomActionItems: [YQPhotoBottomActionItem] = []
     
     private var selected: ((IndexPath) -> Void)?
     private var collectionView: UICollectionView!
@@ -57,6 +80,10 @@ public class YQPhotoBrowser: UIViewController {
     private lazy var assistantPlayerView = {
         return YQPlayerView(player: nil)
     }()
+
+    private var displayedBottomActionItems: [YQPhotoBottomActionItem] {
+        return Array(bottomActionItems.prefix(5))
+    }
     
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -119,27 +146,49 @@ public class YQPhotoBrowser: UIViewController {
                     make.centerY.equalTo(view)
                 })
                 button.addTarget(self, action: #selector(shareAction), for: .touchUpInside)
+                button.isHidden = !self.showShareButton
             })
         }
-        
+
+        let actionItems = displayedBottomActionItems
+        let hasBottomActions = !actionItems.isEmpty
         bottomOperationView = UIView()
         bottomOperationView.yq.then { (view) in
             view.backgroundColor = UIColor.clear
             self.view.addSubview(view)
             view.snp.makeConstraints({ (make) in
                 make.leading.trailing.equalToSuperview()
-                if #available(iOS 11.0, *) {
-                    make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-20)
+                if hasBottomActions {
+                    if #available(iOS 11.0, *) {
+                        make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
+                    } else {
+                        make.bottom.equalToSuperview()
+                    }
+                    make.height.equalTo(self.showNumber ? 96 : 60)
                 } else {
-                    // Fallback on earlier versions
-                    make.bottom.equalTo(-20)
+                    if #available(iOS 11.0, *) {
+                        make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-20)
+                    } else {
+                        make.bottom.equalTo(-20)
+                    }
+                    make.height.equalTo(44)
                 }
-                make.height.equalTo(44)
             })
         }.then { view in
-            guard showNumber else {
-                return
+            var actionBar: UIView?
+            if hasBottomActions {
+                let bar = UIView()
+                bar.backgroundColor = UIColor.clear
+                view.addSubview(bar)
+                bar.snp.makeConstraints { make in
+                    make.leading.trailing.bottom.equalToSuperview()
+                    make.height.equalTo(60)
+                }
+                self.prepareBottomActions(in: bar, items: actionItems)
+                actionBar = bar
             }
+
+            guard self.showNumber else { return }
             numberLabel = YQBackgroundLabel(nil, contentInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10), configure: { view, label in
                 label.textColor = UIColor.white
                 label.font = UIFont.systemFont(ofSize: 15)
@@ -150,12 +199,60 @@ public class YQPhotoBrowser: UIViewController {
                 label.snp.makeConstraints { make in
                     make.leading.equalTo(25)
                     make.height.equalTo(26)
-                    make.centerY.equalToSuperview()
+                    if let actionBar = actionBar {
+                        make.bottom.equalTo(actionBar.snp.top).offset(-8)
+                    } else {
+                        make.centerY.equalToSuperview()
+                    }
                 }
                 label.clipsToBounds = true
                 label.layer.cornerRadius = 13
             }
-            updateNumber(with: selectedIndex)
+            self.updateNumber(with: self.selectedIndex)
+        }
+    }
+
+    func prepareBottomActions(in containerView: UIView, items: [YQPhotoBottomActionItem]) {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.alignment = .fill
+        stackView.spacing = 0
+        containerView.addSubview(stackView)
+        stackView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+
+        for (index, item) in items.enumerated() {
+            let button = UIButton(type: .custom)
+            button.tag = index
+            button.accessibilityIdentifier = item.id
+            button.addTarget(self, action: #selector(bottomActionTapped(_:)), for: .touchUpInside)
+            stackView.addArrangedSubview(button)
+
+            let iconView = UIImageView(image: item.icon)
+            iconView.contentMode = .scaleAspectFit
+            button.addSubview(iconView)
+            iconView.snp.makeConstraints { make in
+                make.centerX.equalToSuperview()
+                make.top.equalTo(8)
+                make.width.height.equalTo(18)
+            }
+
+            let titleLabel = UILabel()
+            titleLabel.text = item.title
+            titleLabel.textAlignment = .center
+            titleLabel.textColor = .white
+            titleLabel.font = UIFont.systemFont(ofSize: 12)
+            titleLabel.numberOfLines = 1
+            button.addSubview(titleLabel)
+            titleLabel.snp.makeConstraints { make in
+                make.centerX.equalToSuperview()
+                make.top.equalTo(iconView.snp.bottom).offset(6)
+                make.leading.greaterThanOrEqualTo(6)
+                make.trailing.lessThanOrEqualTo(-6)
+                make.bottom.lessThanOrEqualToSuperview().offset(-8)
+            }
         }
     }
     
@@ -185,7 +282,17 @@ public class YQPhotoBrowser: UIViewController {
         }
     }
     
-    public class func presented(by presentedController: UIViewController, with imageView: UIImageView?, numberOfSections:(() -> Int)? = nil, numberOfItems: ((Int) -> Int)? = nil, defaultIndex: IndexPath, itemResource: @escaping YQPhotoResourceGetter, selected:((IndexPath) -> Void)? = nil, dismiss:((IndexPath,YQPhotoDismissState) -> UIImageView?)? = nil, showNumber: Bool = false) {
+    public class func presented(by presentedController: UIViewController,
+                                with imageView: UIImageView?,
+                                numberOfSections: (() -> Int)? = nil,
+                                numberOfItems: ((Int) -> Int)? = nil,
+                                defaultIndex: IndexPath,
+                                itemResource: @escaping YQPhotoResourceGetter,
+                                selected: ((IndexPath) -> Void)? = nil,
+                                dismiss: ((IndexPath, YQPhotoDismissState) -> UIImageView?)? = nil,
+                                showNumber: Bool = false,
+                                showShareButton: Bool = true,
+                                bottomActionItems: [YQPhotoBottomActionItem] = []) {
         let browser = YQPhotoBrowser()
         if let imgView = imageView {
             let rect = imgView.superview!.convert(imgView.frame, to: nil)
@@ -199,6 +306,8 @@ public class YQPhotoBrowser: UIViewController {
         browser.numberOfItems = numberOfItems
         browser.itemResource = itemResource
         browser.showNumber = showNumber
+        browser.showShareButton = showShareButton
+        browser.bottomActionItems = bottomActionItems
         browser.selectedIndex = defaultIndex
         browser.dismission = dismiss
         browser.selected = selected
@@ -242,6 +351,14 @@ extension YQPhotoBrowser {
     @objc func backAction() {
         animater.isInteractive = false
         dismiss(animated: true)
+    }
+
+    @objc func bottomActionTapped(_ sender: UIButton) {
+        let actions = displayedBottomActionItems
+        guard actions.indices.contains(sender.tag) else {
+            return
+        }
+        actions[sender.tag].onTap?(selectedIndex)
     }
     
     @objc func shareAction() {
@@ -483,4 +600,3 @@ extension UIView {
         
     }
 }
-

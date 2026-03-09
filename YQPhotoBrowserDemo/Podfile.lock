@@ -1,28 +1,27 @@
 PODS:
-  - Kingfisher (6.3.1)
-  - SnapKit (4.0.1)
+  - Kingfisher (8.8.0)
+  - SnapKit (5.7.1)
   - YQPhotoBrowser (0.5.0):
-    - Kingfisher (~> 6.0)
+    - Kingfisher
     - SnapKit
 
 DEPENDENCIES:
   - YQPhotoBrowser (from `../`)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
-    - SnapKit
   trunk:
     - Kingfisher
+    - SnapKit
 
 EXTERNAL SOURCES:
   YQPhotoBrowser:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Kingfisher: 016c8b653a35add51dd34a3aba36b580041acc74
-  SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
-  YQPhotoBrowser: e568df8c3899829e1b8dad40a4f479cffca09801
+  Kingfisher: beeaf65ed57dfa710d416aea4093277e8a9b1968
+  SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
+  YQPhotoBrowser: 90592a0cd8fc1c29cbbc3a038e71ebbbc3cc6b69
 
-PODFILE CHECKSUM: 24f6ab56e86c549f7e6342b423b0e7ea449ae169
+PODFILE CHECKSUM: 37fc421972199616a19581c7e615008575c3b0da
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.16.2

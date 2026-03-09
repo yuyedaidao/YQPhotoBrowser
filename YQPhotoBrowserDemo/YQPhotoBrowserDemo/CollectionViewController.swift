@@ -76,6 +76,24 @@ class CollectionViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let imageView = (collectionView.cellForItem(at: indexPath) as! CollectionViewCell).imgView
+        let symbolConfig = UIImage.SymbolConfiguration(pointSize: 18, weight: .regular)
+        let makeIcon: (String) -> UIImage = { name in
+            guard let image = UIImage(systemName: name, withConfiguration: symbolConfig) else {
+                return UIImage()
+            }
+            return image.withTintColor(.white, renderingMode: .alwaysOriginal)
+        }
+        let bottomActions = [
+            YQPhotoBottomActionItem(id: "share", icon: makeIcon("square.and.arrow.up"), title: "共享", onTap: { selectedIndex in
+                print("点击共享: \(selectedIndex)")
+            }),
+            YQPhotoBottomActionItem(id: "download", icon: makeIcon("arrow.down.to.line"), title: "下载", onTap: { selectedIndex in
+                print("点击下载: \(selectedIndex)")
+            }),
+            YQPhotoBottomActionItem(id: "more", icon: makeIcon("ellipsis"), title: "更多", onTap: { selectedIndex in
+                print("点击更多: \(selectedIndex)")
+            })
+        ]
     
         YQPhotoBrowser.presented(by: self, with: imageView, numberOfSections: {40}, numberOfItems: { section in
             return self.dataArray.count + 1
@@ -109,7 +127,7 @@ class CollectionViewController: UICollectionViewController {
                     return (collectionView.cellForItem(at: indexPath) as? CollectionViewCell)?.imgView
                 }
                 return nil
-        }, showNumber: true)
+        }, showNumber: true, showShareButton: true, bottomActionItems: bottomActions)
     }
     // MARK: UICollectionViewDelegate
     

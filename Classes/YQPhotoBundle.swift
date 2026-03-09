@@ -8,10 +8,17 @@
 
 import Foundation
 
-class YQPhotoBundle: Bundle {
-    static let shared = YQPhotoBundle()
-    private init() {
-        let path = Bundle(for:  YQPhotoBrowser.classForCoder()).resourcePath?.appending("/YQPhotoBrowser.bundle")
-        super.init(path: path!)!
+enum YQPhotoBundle {
+    static var shared: Bundle {
+#if SWIFT_PACKAGE
+        return Bundle.module
+#else
+        let currentBundle = Bundle(for: YQPhotoBrowser.self)
+        guard let resourcePath = currentBundle.resourcePath,
+              let resourceBundle = Bundle(path: resourcePath.appending("/YQPhotoBrowser.bundle")) else {
+            return currentBundle
+        }
+        return resourceBundle
+#endif
     }
 }

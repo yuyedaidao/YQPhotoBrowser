@@ -63,7 +63,7 @@ Pod::Spec.new do |s|
   #
 
   # s.platform     = :ios
-  s.platform     = :ios, "11.0"
+  s.platform     = :ios, "13.0"
   s.swift_version = "5.0"
   #  When using multiple platforms
   # s.ios.deployment_target = "5.0"
@@ -108,7 +108,7 @@ Pod::Spec.new do |s|
   }
 
 
-  s.dependency 'Kingfisher', '~> 6.0'
+  s.dependency 'Kingfisher'
   s.dependency 'SnapKit'
 
 end
