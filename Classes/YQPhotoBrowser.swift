@@ -62,6 +62,8 @@ public class YQPhotoBrowser: UIViewController {
     }
     /// 底部操作面板按钮
     public var bottomActionItems: [YQPhotoBottomActionItem] = []
+    /// 是否自动加载原图
+    public var autoLoadOriginalImage: Bool = true
     
     private var selected: ((IndexPath) -> Void)?
     private var collectionView: UICollectionView!
@@ -292,7 +294,8 @@ public class YQPhotoBrowser: UIViewController {
                                 dismiss: ((IndexPath, YQPhotoDismissState) -> UIImageView?)? = nil,
                                 showNumber: Bool = false,
                                 showShareButton: Bool = true,
-                                bottomActionItems: [YQPhotoBottomActionItem] = []) {
+                                bottomActionItems: [YQPhotoBottomActionItem] = [],
+                                autoLoadOriginalImage: Bool = true) {
         let browser = YQPhotoBrowser()
         if let imgView = imageView {
             let rect = imgView.superview!.convert(imgView.frame, to: nil)
@@ -308,6 +311,7 @@ public class YQPhotoBrowser: UIViewController {
         browser.showNumber = showNumber
         browser.showShareButton = showShareButton
         browser.bottomActionItems = bottomActionItems
+        browser.autoLoadOriginalImage = autoLoadOriginalImage
         browser.selectedIndex = defaultIndex
         browser.dismission = dismiss
         browser.selected = selected
@@ -428,6 +432,10 @@ extension YQPhotoBrowser: UICollectionViewDelegate, UICollectionViewDataSource, 
         default:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(YQPhotoCell.self)", for: indexPath) as! YQPhotoCellCompatible
         }
+        if let photoCell = cell as? YQPhotoCell {
+            photoCell.autoLoadOriginalImage = autoLoadOriginalImage
+            photoCell.setOverlayControlsHidden(isHiddenStatusBar)
+        }
         cell.delegate = self
         cell.resource = item
         return cell
@@ -492,6 +500,9 @@ extension YQPhotoBrowser: UICollectionViewDelegate, UICollectionViewDataSource, 
     
     func clearScreen() {
         isHiddenStatusBar = !isHiddenStatusBar
+        for cell in collectionView.visibleCells {
+            (cell as? YQPhotoCell)?.setOverlayControlsHidden(isHiddenStatusBar)
+        }
         UIView.animate(withDuration: 0.25) {
             self.setNeedsStatusBarAppearanceUpdate()
             if self.isHiddenStatusBar {

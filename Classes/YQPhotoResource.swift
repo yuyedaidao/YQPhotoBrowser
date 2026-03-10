@@ -20,10 +20,12 @@ public class YQPhotoResource {
     var thumbnail: YQThumbnailResource?
     var type: YQPhotoItemType = .jpeg
     var additionalUrl: URL?
-    public init(url: URL?, thumbnail: YQThumbnailResource?, type: YQPhotoItemType = .jpeg, additionalUrl: URL? = nil) {
+    var originalImageByteSize: Int64?
+    public init(url: URL?, thumbnail: YQThumbnailResource?, type: YQPhotoItemType = .jpeg, additionalUrl: URL? = nil, originalImageByteSize: Int64? = nil) {
         self.url = url
         self.thumbnail = thumbnail
         self.type = type
+        self.originalImageByteSize = originalImageByteSize
         if type == .livePhoto {
             assert(additionalUrl != nil, "LivePhoto必须提供相应的视频资源地址")
             self.additionalUrl = additionalUrl

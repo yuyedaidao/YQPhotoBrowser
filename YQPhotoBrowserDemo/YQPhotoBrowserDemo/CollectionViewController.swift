@@ -127,7 +127,7 @@ class CollectionViewController: UICollectionViewController {
                     return (collectionView.cellForItem(at: indexPath) as? CollectionViewCell)?.imgView
                 }
                 return nil
-        }, showNumber: true, showShareButton: true, bottomActionItems: bottomActions)
+        }, showNumber: true, showShareButton: true, bottomActionItems: bottomActions, autoLoadOriginalImage: false)
     }
     // MARK: UICollectionViewDelegate
     
